@@ -1,0 +1,22 @@
+# Qt build files
+*.o
+*.obj
+*.exe
+*.dll
+*.so
+*.a
+*.lib
+*.pro.user
+*.qmake.stash
+moc_*
+ui_*
+qrc_*
+
+# Build directories
+build-*/
+debug/
+release/
+
+# QtCreator specific
+.idea/
+.vscode/
