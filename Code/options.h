@@ -12,6 +12,11 @@ public:
     void setBasalRate(int basal);
     void deleteProfile();
 
+    //getters
+
+    //setters
+
+
 private:
     //User* user;
 };

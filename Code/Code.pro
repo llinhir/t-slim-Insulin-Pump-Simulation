@@ -9,13 +9,17 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    bolus.cpp \
     main.cpp \
     mainwindow.cpp \
-    options.cpp
+    options.cpp \
+    simulation.cpp
 
 HEADERS += \
+    bolus.h \
     mainwindow.h \
-    options.h
+    options.h \
+    simulation.h
 
 FORMS += \
     mainwindow.ui

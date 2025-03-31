@@ -5,7 +5,7 @@
 
 class Bolus{
 
-    public:
+	public:
         // constructor
         Bolus();
 
@@ -19,10 +19,10 @@ class Bolus{
         // administer bolus??
 
         // features
-        // quickBolus();
-        // extendedBolus();
-        // cancelBolus();
-        // stopOngoingBolus();
+		// quickBolus();
+		// extendedBolus();
+		// cancelBolus();
+		// stopOngoingBolus();
 
         // getters
         float getGlucose(){return currGlucose;};
@@ -31,8 +31,8 @@ class Bolus{
         // setters
         void setGlucose(float glucose){currGlucose = glucose;};
         void setCarbs(int carbs){carbohydrates = carbs;};
-
-    private:
+		
+	private:
         float currGlucose; // mmol/L
         int carbohydrates; // grams
 
