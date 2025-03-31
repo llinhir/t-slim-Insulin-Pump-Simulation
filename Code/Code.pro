@@ -10,17 +10,21 @@ CONFIG += c++11
 
 SOURCES += \
     bolus.cpp \
+    createprofile.cpp \
     machine.cpp \
     main.cpp \
     mainwindow.cpp \
     options.cpp \
+    profile.cpp \
     simulation.cpp
 
 HEADERS += \
     bolus.h \
+    createprofile.h \
     machine.h \
     mainwindow.h \
     options.h \
+    profile.h \
     simulation.h
 
 FORMS += \
