@@ -10,6 +10,7 @@ CONFIG += c++11
 
 SOURCES += \
     bolus.cpp \
+    machine.cpp \
     main.cpp \
     mainwindow.cpp \
     options.cpp \
@@ -17,6 +18,7 @@ SOURCES += \
 
 HEADERS += \
     bolus.h \
+    machine.h \
     mainwindow.h \
     options.h \
     simulation.h

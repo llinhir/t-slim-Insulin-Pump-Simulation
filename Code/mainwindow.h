@@ -2,9 +2,13 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "machine.h" //testing
 
 QT_BEGIN_NAMESPACE
-namespace Ui { class MainWindow; }
+namespace Ui
+{
+    class MainWindow;
+}
 QT_END_NAMESPACE
 
 class MainWindow : public QMainWindow
@@ -17,5 +21,6 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    machine *m; // testing
 };
 #endif // MAINWINDOW_H
