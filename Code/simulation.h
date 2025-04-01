@@ -1,17 +1,24 @@
 #ifndef SIMULATION_H
 #define SIMULATION_H
 
+#include <QCoreApplication>
+#include <QTextStream>
+#include <iostream>
+
+#include "machine.h"
+#include "profile.h"
 
 class Simulation
 {
 public:
     Simulation();
     void startSimulation();
-    bool enterPassword();
+    bool enterPassword(Profile* p, string input);
 
 private:
     bool isCharging;
-    //Machine* machine;
+    machine* m;
+    Profile* profile;
 };
 
 #endif // SIMULATION_H
