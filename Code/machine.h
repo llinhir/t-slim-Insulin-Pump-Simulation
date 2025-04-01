@@ -6,17 +6,19 @@
 #include <vector>
 
 #include <string>
+#include "ui_mainwindow.h"
 
 using namespace std;
 
 class machine
 {
 public:
-    machine();
+    machine(Ui::MainWindow* ui);
     ~machine();
     void getCurrentTime();           // Get current time
     void addToHistory(string event); // Add event to history
     void stepMachine();              // TODO: Implement machine step function
+    void updateBatteryLevel();
 
     // Getters
     struct tm *getCurrentTimeStruct() { return currentTime; }
@@ -26,6 +28,7 @@ public:
     int getCurrentBatteryLevel() { return currentBatteryLevel; }
 
 private:
+    Ui::MainWindow* ui;
     time_t rawTime;         // Raw time data
     struct tm *currentTime; // Current time structure
     int currentHour;        // Current hour

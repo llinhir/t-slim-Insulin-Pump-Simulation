@@ -1,7 +1,11 @@
 #include "machine.h"
 
-machine::machine()
+machine::machine(Ui::MainWindow* ui) : ui(ui)
 {
+    //initliaze variables and classes
+    currentBatteryLevel = 100;
+    ui->batteryBar->setValue(currentBatteryLevel);
+
     getCurrentTime(); // Get current and apply time and date
 
     // print for testing
@@ -34,4 +38,10 @@ void machine::addToHistory(string event)
     // Add event to history
     history.push_back(event);
     cout << "Event added to history: " << event << endl;
+}
+
+void machine::updateBatteryLevel(){
+
+    int updatedBatteryLevel = 1;
+    currentBatteryLevel = updatedBatteryLevel;
 }

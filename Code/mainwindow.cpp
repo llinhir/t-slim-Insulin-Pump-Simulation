@@ -2,16 +2,33 @@
 #include "ui_mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent), ui(new Ui::MainWindow), m(new machine())
+    : QMainWindow(parent), ui(new Ui::MainWindow), isCharging(false), isLoggedIn(false)
 {
     // initializing values and classes
     ui->setupUi(this);
-    ui->stackedWidget->setCurrentIndex(LOGIN_PAGE);
-    profile = new Profile(1, 1, 1, 1, "Bean senjamin", "terrorism");
-    m = new machine();
+    ui->simulation->setCurrentIndex(OFF);
+    ui->stackedWidget->setCurrentIndex(LOGIN_PAGE); // This is cucrrently uncommented for testing (so you can test which qStackedWidget page youre working on)
+    profile = new Profile(1, 1, 1, 1, "Bean senjamin", 666);
+    m = new machine(ui);
 
-    // connecting slots
+    // mapping previous pages for the Back button
+    setPrevPages();
+
+    // connecting slots for when OFF
+    connect(ui->powerOnButton, &QPushButton::clicked, this, [this]() { turnOnOff(ON); });
+    connect(ui->chargeButton, &QPushButton::clicked, this, [this]() { chargeBattery(); });
+
+    // connecting slots for when ON
     connect(ui->submitPassword, &QPushButton::clicked, this, &MainWindow::submitPassword);
+    connect(ui->homeButton, &QPushButton::clicked, this, [this]() { switchPage(HOME_PAGE); });
+    connect(ui->optionsButton, &QPushButton::clicked, this, [this]() { switchPage(OPTIONS_PAGE); });
+    connect(ui->bolusButton, &QPushButton::clicked, this, [this]() { switchPage(BOLUS_PAGE); });
+    connect(ui->createProfileButton, &QPushButton::clicked, this, [this]() { switchPage(CREATE_PROFILE_PAGE); });
+
+    // connecting slots for the back buttons
+    connect(ui->optionsBack, &QPushButton::clicked, this, [this]() { switchPage(prevPageMap[OPTIONS_PAGE]); });
+    connect(ui->createProfileBack, &QPushButton::clicked, this, [this]() { switchPage(prevPageMap[CREATE_PROFILE_PAGE]); });
+    connect(ui->bolusBack, &QPushButton::clicked, this, [this]() { switchPage(prevPageMap[BOLUS_PAGE]); });
 }
 
 MainWindow::~MainWindow()
@@ -21,13 +38,42 @@ MainWindow::~MainWindow()
 
 bool MainWindow::submitPassword(){
     QString password = ui->passwordInput->text(); // Assuming "passwordInput" is your QLineEdit
-    if(password.toStdString() == profile->getPassword()){
+    if(password.toInt() == profile->getPassword()){
         qInfo("Correct Password");
-        ui->stackedWidget->setCurrentIndex(HOME_PAGE);
+        isLoggedIn = true;
+        switchPage(HOME_PAGE);
         return true;
     }else{
         qInfo("Incorrect Password");
         return false;
     }
-
 }
+
+void MainWindow::turnOnOff(PageIndex pageName){
+    if(isCharging){
+        ui->simulation->setCurrentIndex(pageName);
+    }
+}
+
+void MainWindow::switchPage(PageIndex pageName){
+    if(isLoggedIn){
+        ui->stackedWidget->setCurrentIndex(pageName);
+    }
+}
+
+// this one currently
+void MainWindow::chargeBattery(){
+    isCharging = true;
+    ui->batteryLabel->setText("Battery ⚡");
+    ui->batteryBar->setStyleSheet("QProgressBar::chunk {background-color: green}");
+}
+
+void MainWindow::setPrevPages(){
+    prevPageMap[LOGIN_PAGE] = LOGIN_PAGE;
+    prevPageMap[HOME_PAGE] = LOGIN_PAGE;
+    prevPageMap[OPTIONS_PAGE] = HOME_PAGE;
+    prevPageMap[BOLUS_PAGE] = HOME_PAGE;
+    prevPageMap[CREATE_PROFILE_PAGE] = OPTIONS_PAGE;
+}
+
+void MainWindow::charge
