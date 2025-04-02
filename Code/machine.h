@@ -8,6 +8,7 @@
 #include <string>
 #include "ui_mainwindow.h"
 #include "profile.h"
+#include "options.h"
 
 using namespace std;
 
@@ -32,6 +33,7 @@ public:
     bool getIsCharging() { return isCharging; }
     bool getIsTurnedOn() { return isTurnedOn; }
     bool getIsLoggedIn() { return isLoggedIn; }
+    Profile* getCurrentProfile() { return currentProfile; }
 
 private:
     Ui::MainWindow *ui;
@@ -55,5 +57,6 @@ private:
     string password;            // Password for login
     vector<Profile *> profiles; // List of profiles
     Profile *currentProfile;    // Current profile
+    Options* options;           // System Options
 };
 #endif // MACHINE_H

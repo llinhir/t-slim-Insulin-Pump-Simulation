@@ -4,3 +4,7 @@ Options::Options()
 {
 
 }
+
+Profile* Options::createProfile(){
+    return _createProfile->completeProfile();
+}

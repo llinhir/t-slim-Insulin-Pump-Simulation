@@ -1,6 +1,7 @@
 #ifndef OPTIONS_H
 #define OPTIONS_H
 
+#include "createprofile.h"
 
 class Options
 {
@@ -11,6 +12,7 @@ public:
     void sleep();
     void setBasalRate(int basal);
     void deleteProfile();
+    Profile* createProfile();
 
     //getters
 
@@ -19,6 +21,7 @@ public:
 
 private:
     //User* user;
+    CreateProfile* _createProfile;
 };
 
 #endif // OPTIONS_H

@@ -34,6 +34,8 @@ MainWindow::MainWindow(QWidget *parent)
             { switchPage(BOLUS_PAGE); });
     connect(ui->createProfileButton, &QPushButton::clicked, this, [this]()
             { switchPage(CREATE_PROFILE_PAGE); });
+    connect(ui->createProfileSaveButton, &QPushButton::clicked, this, [this]()
+            { switchPage(CREATE_PROFILE_PAGE); }); //TODO: Map this to the options.createProfile() function
 
     // connecting slots for the back buttons
     connect(ui->optionsBack, &QPushButton::clicked, this, [this]()

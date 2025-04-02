@@ -23,6 +23,7 @@ machine::machine(Ui::MainWindow *ui)
     // print for testing
     cout << "Current time: " << currentHour << ":" << currentMinute << " " << currentDay << "/" << currentMonth << "/" << currentYear << endl;
     cout << "Current Date: " << currentDay << "/" << currentMonth << "/" << currentYear << endl;
+    options = new Options();
 }
 
 machine::~machine()

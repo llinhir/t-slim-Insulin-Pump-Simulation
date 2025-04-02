@@ -361,7 +361,7 @@
          </rect>
         </property>
        </widget>
-       <widget class="QPushButton" name="pushButton_4">
+       <widget class="QPushButton" name="createProfileSaveButton">
         <property name="geometry">
          <rect>
           <x>52</x>
@@ -451,7 +451,7 @@
        <zorder>label_7</zorder>
        <zorder>editCarbohydrateRatio</zorder>
        <zorder>editBasalRate</zorder>
-       <zorder>pushButton_4</zorder>
+       <zorder>createProfileSaveButton</zorder>
        <zorder>createProfileBack</zorder>
        <zorder>editTargetGlucose</zorder>
        <zorder>editCorrectionFactor</zorder>
