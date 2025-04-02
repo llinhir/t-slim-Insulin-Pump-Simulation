@@ -4,16 +4,13 @@
 #include <QMainWindow>
 #include <QTextBrowser>
 #include "profile.h"
-
-QT_BEGIN_NAMESPACE
-namespace Ui { class MainWindow; }
-QT_END_NAMESPACE
+#include "ui_mainwindow.h"
 
 class CreateProfile {
 public:
     CreateProfile(Ui::MainWindow *ui);
 
-    Profile completeProfile();
+    Profile* completeProfile();
 
 private:
     Ui::MainWindow *_ui;

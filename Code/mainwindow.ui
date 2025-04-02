@@ -24,7 +24,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="off">
      <widget class="QPushButton" name="chargeButton">
@@ -78,7 +78,7 @@
        </rect>
       </property>
       <property name="currentIndex">
-       <number>3</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="loginPage">
        <widget class="QLabel" name="label_8">
@@ -292,7 +292,7 @@
          <set>Qt::AlignCenter</set>
         </property>
        </widget>
-       <widget class="QLineEdit" name="lineEdit">
+       <widget class="QLineEdit" name="editProfileName">
         <property name="geometry">
          <rect>
           <x>300</x>
@@ -325,7 +325,7 @@
          </rect>
         </property>
         <property name="text">
-         <string>Thingy thingy</string>
+         <string>Carbohydrate Ratio</string>
         </property>
        </widget>
        <widget class="QLabel" name="label_7">
@@ -341,7 +341,7 @@
          <string>Profile Name</string>
         </property>
        </widget>
-       <widget class="QLineEdit" name="lineEdit_2">
+       <widget class="QLineEdit" name="editCarbohydrateRatio">
         <property name="geometry">
          <rect>
           <x>300</x>
@@ -351,7 +351,7 @@
          </rect>
         </property>
        </widget>
-       <widget class="QLineEdit" name="lineEdit_3">
+       <widget class="QLineEdit" name="editBasalRate">
         <property name="geometry">
          <rect>
           <x>300</x>
@@ -397,16 +397,66 @@
          </rect>
         </property>
        </widget>
+       <widget class="QLineEdit" name="editTargetGlucose">
+        <property name="geometry">
+         <rect>
+          <x>300</x>
+          <y>190</y>
+          <width>221</width>
+          <height>25</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="editCorrectionFactor">
+        <property name="geometry">
+         <rect>
+          <x>300</x>
+          <y>160</y>
+          <width>221</width>
+          <height>25</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_12">
+        <property name="geometry">
+         <rect>
+          <x>50</x>
+          <y>200</y>
+          <width>171</width>
+          <height>17</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Target Glucose Level</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_14">
+        <property name="geometry">
+         <rect>
+          <x>50</x>
+          <y>170</y>
+          <width>171</width>
+          <height>17</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Correction Factor</string>
+        </property>
+       </widget>
        <zorder>textBrowser_4</zorder>
        <zorder>label_4</zorder>
-       <zorder>lineEdit</zorder>
+       <zorder>editProfileName</zorder>
        <zorder>label_5</zorder>
        <zorder>label_6</zorder>
        <zorder>label_7</zorder>
-       <zorder>lineEdit_2</zorder>
-       <zorder>lineEdit_3</zorder>
+       <zorder>editCarbohydrateRatio</zorder>
+       <zorder>editBasalRate</zorder>
        <zorder>pushButton_4</zorder>
        <zorder>createProfileBack</zorder>
+       <zorder>editTargetGlucose</zorder>
+       <zorder>editCorrectionFactor</zorder>
+       <zorder>label_12</zorder>
+       <zorder>label_14</zorder>
       </widget>
       <widget class="QWidget" name="optionsPage">
        <widget class="QLabel" name="label_2">
