@@ -7,6 +7,7 @@
 #include "machine.h" //testing
 #include "profile.h" //testing
 #include "simulation.h"
+#include "defs.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui
@@ -29,18 +30,6 @@ private:
     Simulation *sim; // testing
     bool isCharging; // Remove this later
     bool isLoggedIn;
-
-    // page names for swapping between pages
-    enum PageIndex
-    {
-        OFF = 0,
-        ON = 1,
-        LOGIN_PAGE = 0,
-        HOME_PAGE = 1,
-        CREATE_PROFILE_PAGE = 2,
-        OPTIONS_PAGE = 3,
-        BOLUS_PAGE = 4,
-    };
 
     // page mappings for what their previous page was
     QMap<PageIndex, PageIndex> prevPageMap;

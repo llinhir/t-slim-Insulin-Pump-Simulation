@@ -29,6 +29,9 @@ public:
     int getCurrentPage() { return currentPage; }
     int getCurrentBolusPrecent() { return currentBolusPrecent; }
     int getCurrentBatteryLevel() { return currentBatteryLevel; }
+    bool getIsCharging() { return isCharging; }
+    bool getIsTurnedOn() { return isTurnedOn; }
+    bool getIsLoggedIn() { return isLoggedIn; }
 
 private:
     Ui::MainWindow *ui;
