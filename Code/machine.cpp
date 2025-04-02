@@ -1,9 +1,21 @@
 #include "machine.h"
 
-machine::machine(Ui::MainWindow* ui) : ui(ui)
+machine::machine(Ui::MainWindow *ui)
 {
-    //initliaze variables and classes
+    // PAGE NUMBER:
+    currentPage = 0;
+
+    // PASSWORD:
+    password = "666";
+
+    // initliaze variables and classes
     currentBatteryLevel = 100;
+    currentBolusPrecent = 100;
+
+    isLoggedIn = false;
+    isTurnedOn = true;
+    isCharging = false;
+
     ui->batteryBar->setValue(currentBatteryLevel);
 
     getCurrentTime(); // Get current and apply time and date
@@ -40,8 +52,24 @@ void machine::addToHistory(string event)
     cout << "Event added to history: " << event << endl;
 }
 
-void machine::updateBatteryLevel(){
-
+void machine::updateBatteryLevel()
+{
     int updatedBatteryLevel = 1;
     currentBatteryLevel = updatedBatteryLevel;
+}
+
+bool machine::loginAttempt(string passwordGuess)
+{
+    // Check if the password is correct
+    if (passwordGuess == password)
+    {
+        cout << "Correct Password" << endl;
+        isLoggedIn = true;
+        return true;
+    }
+    else
+    {
+        cout << "Incorrect Password" << endl;
+        return false;
+    }
 }

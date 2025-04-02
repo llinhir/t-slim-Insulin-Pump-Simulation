@@ -4,21 +4,25 @@
 #include <QCoreApplication>
 #include <QTextStream>
 #include <iostream>
+#include "ui_mainwindow.h"
+
+#include <string>
 
 #include "machine.h"
 #include "profile.h"
 
+using namespace std;
+
 class Simulation
 {
 public:
-    Simulation();
+    Simulation(Ui::MainWindow *ui);
     void startSimulation();
-    bool enterPassword(Profile* p, string input);
+    bool enterPassword(string input);
 
 private:
-    bool isCharging;
-    machine* m;
-    Profile* profile;
+    machine *m;
+    Ui::MainWindow *ui;
 };
 
 #endif // SIMULATION_H

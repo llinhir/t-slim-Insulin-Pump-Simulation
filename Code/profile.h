@@ -6,16 +6,16 @@
 
 using namespace std;
 
-class Profile {
+class Profile
+{
 public:
-    Profile(int basalRate, int carbohydrateRatio, int correctionFactor, int targetGlucoseLevel, string profileName, int password);
+    Profile(int basalRate, int carbohydrateRatio, int correctionFactor, int targetGlucoseLevel, string profileName);
 
-    int getBasalRate() {return _basalRate; }
-    int getCarbohydrateRatio() {return _carbohydrateRatio; }
-    int getCorrectionFactor() {return _correctionFactor; }
-    int getTargetGlucoseLevel() {return _targetGlucoseLevel; }
-    string getProfileName() {return _profileName; }
-    int getPassword() {return _password; }
+    int getBasalRate() { return _basalRate; }
+    int getCarbohydrateRatio() { return _carbohydrateRatio; }
+    int getCorrectionFactor() { return _correctionFactor; }
+    int getTargetGlucoseLevel() { return _targetGlucoseLevel; }
+    string getProfileName() { return _profileName; }
 
 private:
     int _basalRate;
@@ -23,7 +23,6 @@ private:
     int _correctionFactor;
     int _targetGlucoseLevel;
     string _profileName;
-    int _password;
 };
 
 #endif // PROFILE_H
