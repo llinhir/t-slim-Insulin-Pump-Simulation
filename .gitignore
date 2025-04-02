@@ -12,7 +12,6 @@ moc_*
 ui_*
 qrc_*
 Makefile
-Code
 
 # Build directories
 build-*/
@@ -22,5 +21,6 @@ release/
 # QtCreator specific
 .idea/
 .vscode/
+Code/Code
 
 
