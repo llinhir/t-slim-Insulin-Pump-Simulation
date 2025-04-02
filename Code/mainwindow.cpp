@@ -6,13 +6,14 @@
 using namespace std;
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent), ui(new Ui::MainWindow), isCharging(false), isLoggedIn(false)
+    : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     // initializing values and classes
     ui->setupUi(this);
     ui->simulation->setCurrentIndex(OFF);
     ui->stackedWidget->setCurrentIndex(LOGIN_PAGE); // This is cucrrently uncommented for testing (so you can test which qStackedWidget page youre working on)
-    sim = new Simulation(ui);                       // testing
+    sim = new Simulation(ui);
+    mach = sim->getMachine();
     cout << "Simulation Made: " << endl;
 
     // mapping previous pages for the Back button
@@ -35,7 +36,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->createProfileButton, &QPushButton::clicked, this, [this]()
             { switchPage(CREATE_PROFILE_PAGE); });
     connect(ui->createProfileSaveButton, &QPushButton::clicked, this, [this]()
-            { switchPage(CREATE_PROFILE_PAGE); }); //TODO: Map this to the options.createProfile() function
+            { switchPage(CREATE_PROFILE_PAGE); }); // TODO: Map this to the options.createProfile() function
 
     // connecting slots for the back buttons
     connect(ui->optionsBack, &QPushButton::clicked, this, [this]()
@@ -58,7 +59,7 @@ bool MainWindow::submitPassword()
     if (sim->enterPassword(password.toStdString()))
     {
         qInfo("Correct Password");
-        isLoggedIn = true;
+        mach->setIsLoggedIn(true);
         switchPage(HOME_PAGE);
         return true;
     }
@@ -71,7 +72,7 @@ bool MainWindow::submitPassword()
 
 void MainWindow::turnOnOff(PageIndex pageName)
 {
-    if (isCharging)
+    if (mach->getCurrentBatteryLevel()>0)
     {
         ui->simulation->setCurrentIndex(pageName);
     }
@@ -79,7 +80,7 @@ void MainWindow::turnOnOff(PageIndex pageName)
 
 void MainWindow::switchPage(PageIndex pageName)
 {
-    if (isLoggedIn)
+    if (mach->getIsLoggedIn())
     {
         ui->stackedWidget->setCurrentIndex(pageName);
     }
@@ -88,7 +89,6 @@ void MainWindow::switchPage(PageIndex pageName)
 // this one currently
 void MainWindow::chargeBattery()
 {
-    isCharging = true;
     ui->batteryLabel->setText("Battery ⚡");
     ui->batteryBar->setStyleSheet("QProgressBar::chunk {background-color: green}");
 }
