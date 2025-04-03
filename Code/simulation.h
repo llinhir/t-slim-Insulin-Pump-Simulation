@@ -20,6 +20,8 @@ public:
     void startSimulation();
     bool enterPassword(string input);
 
+    machine *getMachine() { return m; }
+
 private:
     machine *m;
     Ui::MainWindow *ui;

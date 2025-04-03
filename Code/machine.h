@@ -15,11 +15,11 @@ using namespace std;
 class machine
 {
 public:
-    // machine(Ui::MainWindow *ui); // test
-    machine(Ui::MainWindow *ui); // this is temp
+    machine(Ui::MainWindow *ui);
     ~machine();
     void getCurrentTime();           // Get current time
     void addToHistory(string event); // Add event to history
+    void stepTime();                 // Update time every second
     void stepMachine();              // TODO: Implement machine step function
     void updateBatteryLevel();
     bool loginAttempt(string passwordGuess);
@@ -33,7 +33,11 @@ public:
     bool getIsCharging() { return isCharging; }
     bool getIsTurnedOn() { return isTurnedOn; }
     bool getIsLoggedIn() { return isLoggedIn; }
-    Profile* getCurrentProfile() { return currentProfile; }
+    Profile *getCurrentProfile() { return currentProfile; }
+
+    // Setters
+    void setCurrentBatteryLevel(int level) { currentBatteryLevel = level; }
+    void setIsLoggedIn(bool loggedIn) { isLoggedIn = loggedIn; }
 
 private:
     Ui::MainWindow *ui;
@@ -57,6 +61,6 @@ private:
     string password;            // Password for login
     vector<Profile *> profiles; // List of profiles
     Profile *currentProfile;    // Current profile
-    Options* options;           // System Options
+    Options *options;           // System Options
 };
 #endif // MACHINE_H

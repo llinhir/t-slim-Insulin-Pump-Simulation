@@ -53,10 +53,24 @@ void machine::addToHistory(string event)
     cout << "Event added to history: " << event << endl;
 }
 
-void machine::updateBatteryLevel()
+void machine::updateBatteryLevel() // this will be called every step
 {
-    int updatedBatteryLevel = 1;
-    currentBatteryLevel = updatedBatteryLevel;
+    if (isCharging)
+    {
+        currentBatteryLevel += 1;
+        if (currentBatteryLevel > 100)
+        {
+            currentBatteryLevel = 100;
+        }
+    }
+    else
+    {
+        currentBatteryLevel -= 1;
+        if (currentBatteryLevel < 0)
+        {
+            currentBatteryLevel = 0;
+        }
+    }
 }
 
 bool machine::loginAttempt(string passwordGuess)
@@ -73,4 +87,26 @@ bool machine::loginAttempt(string passwordGuess)
         cout << "Incorrect Password" << endl;
         return false;
     }
+}
+
+void machine::stepTime()
+{
+    // add 5 minutes to the current time
+    currentMinute += 5;
+    if (currentMinute >= 60)
+    {
+        currentMinute -= 60;
+        currentHour += 1;
+    }
+    if (currentHour >= 24)
+    {
+        currentHour -= 24;
+        currentDay += 1;
+    }
+}
+
+void machine::stepMachine()
+{
+    stepTime();
+    updateBatteryLevel();
 }

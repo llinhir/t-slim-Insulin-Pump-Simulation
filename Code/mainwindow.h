@@ -7,6 +7,7 @@
 #include "machine.h" //testing
 #include "profile.h" //testing
 #include "simulation.h"
+
 #include "defs.h"
 
 QT_BEGIN_NAMESPACE
@@ -27,9 +28,8 @@ public:
 
 private:
     Ui::MainWindow *ui;
-    Simulation *sim; // testing
-    bool isCharging; // Remove this later
-    bool isLoggedIn;
+    Simulation *sim;
+    machine *mach;
 
     // page mappings for what their previous page was
     QMap<PageIndex, PageIndex> prevPageMap;
