@@ -731,6 +731,14 @@
        <zorder>textBrowser</zorder>
        <zorder>label_11</zorder>
        <zorder>bolusBack</zorder>
+        <zorder>label_15</zorder>
+       <zorder>editManualBolus</zorder>
+       <zorder>startManualBolus</zorder>
+       <zorder>addCarbs</zorder>
+       <zorder>label_16</zorder>
+       <zorder>addGlucoseButton</zorder>
+       <zorder>label_17</zorder>
+       <zorder>viewCalculationButton</zorder>
       </widget>
       <widget class="QWidget" name="profilesPage">
        <widget class="QPushButton" name="createProfileButton">

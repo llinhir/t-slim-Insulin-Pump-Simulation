@@ -36,7 +36,11 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->createProfileButton, &QPushButton::clicked, this, [this]()
             { switchPage(CREATE_PROFILE_PAGE); });
     connect(ui->createProfileSaveButton, &QPushButton::clicked, this, [this]()
-            { switchPage(CREATE_PROFILE_PAGE); }); //TODO: Map this to the options.createProfile() function
+            { switchPage(CREATE_PROFILE_PAGE); }); // TODO: Map this to the options.createProfile() function
+    connect(ui->profilesButton, &QPushButton::clicked, this, [this]()
+            { switchPage(PROFILES_PAGE); });
+    connect(ui->editProfileButton, &QPushButton::clicked, this, [this]()
+            { switchPage(EDIT_PROFILE_PAGE); });
 
     // connecting slots for the back buttons
     connect(ui->optionsBack, &QPushButton::clicked, this, [this]()
@@ -72,7 +76,7 @@ bool MainWindow::submitPassword()
 
 void MainWindow::turnOnOff(PageIndex pageName)
 {
-    if (mach->getCurrentBatteryLevel()>0)
+    if (mach->getCurrentBatteryLevel() > 0)
     {
         ui->simulation->setCurrentIndex(pageName);
     }
