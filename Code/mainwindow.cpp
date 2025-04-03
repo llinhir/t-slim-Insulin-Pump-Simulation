@@ -14,7 +14,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui->stackedWidget->setCurrentIndex(LOGIN_PAGE); // This is cucrrently uncommented for testing (so you can test which qStackedWidget page youre working on)
     sim = new Simulation(ui);
     mach = sim->getMachine();
-    cout << "Simulation Made: " << endl;
+    tm *timeInfo = mach->getCurrentTimeStruct();
+    ui->dateTimeEdit->setDateTime(QDateTime::fromSecsSinceEpoch(mktime(timeInfo)));
 
     // mapping previous pages for the Back button
     setPrevPages();

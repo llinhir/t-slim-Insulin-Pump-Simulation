@@ -8,6 +8,9 @@ machine::machine(Ui::MainWindow *ui)
     // PASSWORD:
     password = "999";
 
+    // Initialize the UI
+    this->ui = ui;
+
     // initliaze variables and classes
     currentBatteryLevel = 100;
     currentBolusPrecent = 100;
@@ -38,18 +41,12 @@ machine::~machine()
     // cout << "Destructor called" << endl;
 }
 
-void machine::getCurrentTime() // as a note, the current time should not be compute heavy, if it is just stick to updating the time
+tm *machine::getCurrentTime() // as a note, the current time should not be compute heavy, if it is just stick to updating the time
 {
     // Get current time
     time(&rawTime);
     currentTime = localtime(&rawTime);
-
-    // set current time
-    currentHour = currentTime->tm_hour;
-    currentMinute = currentTime->tm_min;
-    currentDay = currentTime->tm_mday;
-    currentMonth = currentTime->tm_mon + 1;
-    currentYear = currentTime->tm_year + 1900;
+    return currentTime;
 }
 
 void machine::addToHistory(string event)
@@ -59,8 +56,9 @@ void machine::addToHistory(string event)
     cout << "Event added to history: " << event << endl;
 }
 
-void machine::updateBatteryLevel() // this will be called every step
+void machine::updateBatteryLevel() // this will be called every step, update ui
 {
+    cout << "Updating battery level" << endl;
     if (isCharging)
     {
         currentBatteryLevel += 1;
@@ -79,8 +77,20 @@ void machine::updateBatteryLevel() // this will be called every step
     }
 }
 
-void machine::updateProfileInfo(){
-    ui->profile1Button->setText(QString::fromStdString(profiles.at(0)->getProfileName()));
+void machine::updateProfileInfo()
+{
+    cout << "Updating profile info" << endl;
+    stepMachine(); // REMOVE THIS WAS ONLY FOR TESTING
+
+    if (!profiles.empty())
+    {
+        ui->profile1Button->setText(QString::fromStdString(profiles.at(0)->getProfileName()));
+    }
+    else
+    {
+        cout << "No profiles available" << endl;
+        ui->profile1Button->setText("No Profile");
+    }
 }
 
 bool machine::loginAttempt(string passwordGuess)
@@ -99,8 +109,9 @@ bool machine::loginAttempt(string passwordGuess)
     }
 }
 
-void machine::stepTime()
+void machine::stepTime() // this is wrong
 {
+    cout << "Stepping time" << endl;
     // add 5 minutes to the current time
     currentMinute += 5;
     if (currentMinute >= 60)
@@ -113,6 +124,15 @@ void machine::stepTime()
         currentHour -= 24;
         currentDay += 1;
     }
+    currentTime->tm_hour = currentHour;
+    currentTime->tm_min = currentMinute;
+    currentTime->tm_mday = currentDay;
+    currentTime->tm_mon = currentMonth;
+    currentTime->tm_year = currentYear;
+
+    // Update the UI
+    tm *timeInfo = getCurrentTimeStruct();
+    ui->dateTimeEdit->setDateTime(QDateTime::fromSecsSinceEpoch(mktime(timeInfo)));
 }
 
 void machine::stepMachine()

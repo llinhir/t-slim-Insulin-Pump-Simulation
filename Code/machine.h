@@ -17,7 +17,7 @@ class machine : public QObject
 public:
     machine(Ui::MainWindow *ui);
     ~machine();
-    void getCurrentTime();           // Get current time
+    tm *getCurrentTime();            // Get current time
     void addToHistory(string event); // Add event to history
     void stepTime();                 // Update time every second
     void stepMachine();              // TODO: Implement machine step function
