@@ -1,7 +1,9 @@
 #ifndef BOLUS_H
 #define BOLUS_H
 
-//#include "user.h"
+#include <QMainWindow>
+#include "ui_mainwindow.h"
+#include "profile.h"
 
 class Bolus{
 
@@ -19,6 +21,7 @@ class Bolus{
         // administer bolus??
 
         // features
+        // manualBolus();
         // quickBolus();
         // extendedBolus();
         // cancelBolus();
