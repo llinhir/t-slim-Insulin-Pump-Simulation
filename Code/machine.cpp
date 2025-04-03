@@ -6,7 +6,7 @@ machine::machine(Ui::MainWindow *ui)
     currentPage = 0;
 
     // PASSWORD:
-    password = "666";
+    password = "999";
 
     // initliaze variables and classes
     currentBatteryLevel = 100;
@@ -23,7 +23,13 @@ machine::machine(Ui::MainWindow *ui)
     // print for testing
     cout << "Current time: " << currentHour << ":" << currentMinute << " " << currentDay << "/" << currentMonth << "/" << currentYear << endl;
     cout << "Current Date: " << currentDay << "/" << currentMonth << "/" << currentYear << endl;
-    options = new Options();
+    options = new Options(ui);
+
+    connect(ui->createProfileSaveButton, &QPushButton::clicked, this, [this]()
+            { profiles.push_back(options->createProfile()); });
+
+    connect(ui->editProfileButton, &QPushButton::clicked, this, [this]()
+            { updateProfileInfo(); });
 }
 
 machine::~machine()
@@ -71,6 +77,10 @@ void machine::updateBatteryLevel() // this will be called every step
             currentBatteryLevel = 0;
         }
     }
+}
+
+void machine::updateProfileInfo(){
+    ui->profile1Button->setText(QString::fromStdString(profiles.at(0)->getProfileName()));
 }
 
 bool machine::loginAttempt(string passwordGuess)

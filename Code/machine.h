@@ -12,7 +12,7 @@
 
 using namespace std;
 
-class machine
+class machine : public QObject
 {
 public:
     machine(Ui::MainWindow *ui);
@@ -22,6 +22,7 @@ public:
     void stepTime();                 // Update time every second
     void stepMachine();              // TODO: Implement machine step function
     void updateBatteryLevel();
+    void updateProfileInfo();
     bool loginAttempt(string passwordGuess);
 
     // Getters

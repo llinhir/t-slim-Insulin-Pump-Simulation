@@ -78,7 +78,7 @@
        </rect>
       </property>
       <property name="currentIndex">
-       <number>4</number>
+       <number>5</number>
       </property>
       <widget class="QWidget" name="loginPage">
        <widget class="QLabel" name="label_8">
@@ -546,19 +546,6 @@
          <string>Back</string>
         </property>
        </widget>
-       <widget class="QPushButton" name="createProfileButton">
-        <property name="geometry">
-         <rect>
-          <x>80</x>
-          <y>260</y>
-          <width>401</width>
-          <height>51</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>CREATE NEW PROFILE</string>
-        </property>
-       </widget>
        <widget class="QTextBrowser" name="textBrowser_5">
         <property name="geometry">
          <rect>
@@ -569,6 +556,19 @@
          </rect>
         </property>
        </widget>
+       <widget class="QPushButton" name="profilesButton">
+        <property name="geometry">
+         <rect>
+          <x>80</x>
+          <y>260</y>
+          <width>401</width>
+          <height>51</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Profiles</string>
+        </property>
+       </widget>
        <zorder>textBrowser_5</zorder>
        <zorder>label_2</zorder>
        <zorder>pushButton_5</zorder>
@@ -576,7 +576,7 @@
        <zorder>pushButton_7</zorder>
        <zorder>pushButton_8</zorder>
        <zorder>optionsBack</zorder>
-       <zorder>createProfileButton</zorder>
+       <zorder>profilesButton</zorder>
       </widget>
       <widget class="QWidget" name="bolusPage">
        <widget class="QLabel" name="label_11">
@@ -731,14 +731,101 @@
        <zorder>textBrowser</zorder>
        <zorder>label_11</zorder>
        <zorder>bolusBack</zorder>
-       <zorder>label_15</zorder>
-       <zorder>editManualBolus</zorder>
-       <zorder>startManualBolus</zorder>
-       <zorder>addCarbs</zorder>
-       <zorder>label_16</zorder>
-       <zorder>addGlucoseButton</zorder>
-       <zorder>label_17</zorder>
-       <zorder>viewCalculationButton</zorder>
+      </widget>
+      <widget class="QWidget" name="profilesPage">
+       <widget class="QPushButton" name="createProfileButton">
+        <property name="geometry">
+         <rect>
+          <x>70</x>
+          <y>50</y>
+          <width>401</width>
+          <height>51</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>CREATE NEW PROFILE</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="editProfileButton">
+        <property name="geometry">
+         <rect>
+          <x>70</x>
+          <y>100</y>
+          <width>401</width>
+          <height>51</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>EDIT PROFILE</string>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="editProfilesPage">
+       <widget class="QPushButton" name="profile1Button">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>50</y>
+          <width>91</width>
+          <height>71</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Profile 1</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="profile2Button">
+        <property name="geometry">
+         <rect>
+          <x>140</x>
+          <y>50</y>
+          <width>91</width>
+          <height>71</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Profile 2</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="profile3Button">
+        <property name="geometry">
+         <rect>
+          <x>250</x>
+          <y>50</y>
+          <width>91</width>
+          <height>71</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Profile 3</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="profile4Button">
+        <property name="geometry">
+         <rect>
+          <x>360</x>
+          <y>50</y>
+          <width>91</width>
+          <height>71</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Profile 4</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="profile5Button">
+        <property name="geometry">
+         <rect>
+          <x>470</x>
+          <y>50</y>
+          <width>91</width>
+          <height>71</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Profile 5</string>
+        </property>
+       </widget>
       </widget>
      </widget>
     </widget>

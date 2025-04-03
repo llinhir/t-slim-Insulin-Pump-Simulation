@@ -6,7 +6,7 @@
 class Options
 {
 public:
-    Options();
+    Options(Ui::MainWindow *ui);
     void stopInsulin();
     void shutDown();
     void sleep();
@@ -20,7 +20,7 @@ public:
 
 
 private:
-    //User* user;
+    Ui::MainWindow *_ui;
     CreateProfile* _createProfile;
 };
 
