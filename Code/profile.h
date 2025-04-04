@@ -11,11 +11,19 @@ class Profile
 public:
     Profile(int basalRate, int carbohydrateRatio, int correctionFactor, int targetGlucoseLevel, string profileName);
 
+    // Getters
     int getBasalRate() { return _basalRate; }
     int getCarbohydrateRatio() { return _carbohydrateRatio; }
     int getCorrectionFactor() { return _correctionFactor; }
     int getTargetGlucoseLevel() { return _targetGlucoseLevel; }
     string getProfileName() { return _profileName; }
+
+    // Setters
+    void setBasalRate(int basalRate) { _basalRate = basalRate; }
+    void setCarbohydrateRatio(int carbohydrateRatio) { _carbohydrateRatio = carbohydrateRatio; }
+    void setCorrectionFactor(int correctionFactor) { _correctionFactor = correctionFactor; }
+    void setTargetGlucoseLevel(int targetGlucoseLevel) { _targetGlucoseLevel = targetGlucoseLevel; }
+    void setProfileName(string profileName) { _profileName = profileName; }
 
 private:
     int _basalRate;

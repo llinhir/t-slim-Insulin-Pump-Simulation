@@ -1,3 +1,5 @@
+#pragma once
+
 enum PageIndex
 {
     OFF = 0,
@@ -9,4 +11,5 @@ enum PageIndex
     BOLUS_PAGE = 4,
     PROFILES_PAGE = 5,
     EDIT_PROFILE_PAGE = 6,
+    EDIT_SPECIFIC_PROFILE_PAGE = 7,
 };

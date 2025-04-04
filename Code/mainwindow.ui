@@ -24,7 +24,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="off">
      <widget class="QPushButton" name="chargeButton">
@@ -835,6 +835,181 @@
         </property>
        </widget>
       </widget>
+      <widget class="QWidget" name="editSpecificProfilePage">
+       <widget class="QLabel" name="label_23">
+        <property name="geometry">
+         <rect>
+          <x>60</x>
+          <y>180</y>
+          <width>171</width>
+          <height>17</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Correction Factor</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_20">
+        <property name="geometry">
+         <rect>
+          <x>60</x>
+          <y>210</y>
+          <width>171</width>
+          <height>17</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Target Glucose Level</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="newProfileName">
+        <property name="geometry">
+         <rect>
+          <x>310</x>
+          <y>80</y>
+          <width>221</width>
+          <height>25</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_21">
+        <property name="geometry">
+         <rect>
+          <x>60</x>
+          <y>90</y>
+          <width>171</width>
+          <height>17</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Profile Name</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_19">
+        <property name="geometry">
+         <rect>
+          <x>60</x>
+          <y>150</y>
+          <width>171</width>
+          <height>17</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Basal Rate:</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="newBasalRate">
+        <property name="geometry">
+         <rect>
+          <x>310</x>
+          <y>140</y>
+          <width>221</width>
+          <height>25</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="saveProfileButton">
+        <property name="geometry">
+         <rect>
+          <x>62</x>
+          <y>320</y>
+          <width>471</width>
+          <height>25</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Save</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="newCorrectionFactor">
+        <property name="geometry">
+         <rect>
+          <x>310</x>
+          <y>170</y>
+          <width>221</width>
+          <height>25</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_18">
+        <property name="geometry">
+         <rect>
+          <x>160</x>
+          <y>20</y>
+          <width>251</width>
+          <height>51</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>DejaVu Sans Mono</family>
+          <pointsize>16</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Edit Profile</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="newTargetGlucose">
+        <property name="geometry">
+         <rect>
+          <x>310</x>
+          <y>200</y>
+          <width>221</width>
+          <height>25</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="newCarbohydrateRatio">
+        <property name="geometry">
+         <rect>
+          <x>310</x>
+          <y>110</y>
+          <width>221</width>
+          <height>25</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_22">
+        <property name="geometry">
+         <rect>
+          <x>60</x>
+          <y>120</y>
+          <width>171</width>
+          <height>17</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Carbohydrate Ratio</string>
+        </property>
+       </widget>
+       <widget class="QTextBrowser" name="textBrowser_6">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>601</width>
+          <height>461</height>
+         </rect>
+        </property>
+       </widget>
+       <zorder>textBrowser_6</zorder>
+       <zorder>label_23</zorder>
+       <zorder>label_20</zorder>
+       <zorder>newProfileName</zorder>
+       <zorder>label_21</zorder>
+       <zorder>label_19</zorder>
+       <zorder>newBasalRate</zorder>
+       <zorder>saveProfileButton</zorder>
+       <zorder>newCorrectionFactor</zorder>
+       <zorder>label_18</zorder>
+       <zorder>newTargetGlucose</zorder>
+       <zorder>newCarbohydrateRatio</zorder>
+       <zorder>label_22</zorder>
+      </widget>
      </widget>
     </widget>
    </widget>
@@ -934,7 +1109,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>19</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menut_slim_Insulin_Pump_Simulation">

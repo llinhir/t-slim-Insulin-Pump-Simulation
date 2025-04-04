@@ -9,6 +9,7 @@
 #include "ui_mainwindow.h"
 #include "profile.h"
 #include "options.h"
+#include "defs.h"
 
 using namespace std;
 
@@ -41,6 +42,10 @@ public:
     void setIsLoggedIn(bool loggedIn) { isLoggedIn = loggedIn; }
     void setIsTurnedOn(bool turnedOn) { isTurnedOn = turnedOn; }
     void setIsCharging(bool charging) { isCharging = charging; }
+
+    // Machine Functinos
+    void editProfile(int index);
+    void saveProfile(); //Helper function for editProfile()
 
 private:
     Ui::MainWindow *ui;
