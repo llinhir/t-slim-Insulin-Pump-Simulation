@@ -94,8 +94,23 @@ void MainWindow::switchPage(PageIndex pageName)
 // this one currently
 void MainWindow::chargeBattery()
 {
-    ui->batteryLabel->setText("Battery ⚡");
-    ui->batteryBar->setStyleSheet("QProgressBar::chunk {background-color: green}");
+    bool isCharging = mach->getIsCharging();
+
+    if (isCharging)
+    {
+        ui->chargeButton->setText("Charge");
+        mach->setIsCharging(false);
+        ui->batteryLabel->setText("Battery ⚡: Not Charging");
+    }
+    else
+    {
+        ui->chargeButton->setText("Stop Charging");
+        mach->setIsCharging(true);
+        ui->batteryLabel->setText("Battery ⚡: Charging");
+    }
+
+    // ui->batteryLabel->setText("Battery ⚡");
+    // ui->batteryBar->setStyleSheet("QProgressBar::chunk {background-color: green}");
 }
 
 void MainWindow::setPrevPages()

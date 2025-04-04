@@ -24,8 +24,8 @@ machine::machine(Ui::MainWindow *ui)
     getCurrentTime(); // Get current and apply time and date
 
     // print for testing
-    cout << "Current time: " << currentHour << ":" << currentMinute << " " << currentDay << "/" << currentMonth << "/" << currentYear << endl;
-    cout << "Current Date: " << currentDay << "/" << currentMonth << "/" << currentYear << endl;
+    // cout << "Current time: " << currentHour << ":" << currentMinute << " " << currentDay << "/" << currentMonth << "/" << currentYear << endl;
+    // cout << "Current Date: " << currentDay << "/" << currentMonth << "/" << currentYear << endl;
     options = new Options(ui);
 
     connect(ui->createProfileSaveButton, &QPushButton::clicked, this, [this]()
@@ -46,6 +46,13 @@ tm *machine::getCurrentTime() // as a note, the current time should not be compu
     // Get current time
     time(&rawTime);
     currentTime = localtime(&rawTime);
+
+    currentHour = currentTime->tm_hour;
+    currentMinute = currentTime->tm_min;
+    currentDay = currentTime->tm_mday;
+    currentMonth = currentTime->tm_mon + 1;    // tm_mon is 0-11, so add 1
+    currentYear = currentTime->tm_year + 1900; // tm_year is years since 1900, so add 1900
+
     return currentTime;
 }
 
@@ -75,12 +82,14 @@ void machine::updateBatteryLevel() // this will be called every step, update ui
             currentBatteryLevel = 0;
         }
     }
+
+    // ui update
+    ui->batteryBar->setValue(currentBatteryLevel);
 }
 
 void machine::updateProfileInfo()
 {
     cout << "Updating profile info" << endl;
-    stepMachine(); // REMOVE THIS WAS ONLY FOR TESTING
 
     if (!profiles.empty())
     {
@@ -111,8 +120,9 @@ bool machine::loginAttempt(string passwordGuess)
 
 void machine::stepTime() // this is wrong
 {
-    cout << "Stepping time" << endl;
-    // add 5 minutes to the current time
+    // cout << "Stepping time" << endl;
+    // cout << "Time before: " << currentHour << ":" << currentMinute << " " << currentDay << "/" << currentMonth << "/" << currentYear << endl;
+    //  add 5 minutes to the current time
     currentMinute += 5;
     if (currentMinute >= 60)
     {
@@ -130,8 +140,11 @@ void machine::stepTime() // this is wrong
     currentTime->tm_mon = currentMonth;
     currentTime->tm_year = currentYear;
 
+    // cout << "Current time: " << currentHour << ":" << currentMinute << " " << currentDay << "/" << currentMonth << "/" << currentYear << endl;
+
     // Update the UI
     tm *timeInfo = getCurrentTimeStruct();
+
     ui->dateTimeEdit->setDateTime(QDateTime::fromSecsSinceEpoch(mktime(timeInfo)));
 }
 

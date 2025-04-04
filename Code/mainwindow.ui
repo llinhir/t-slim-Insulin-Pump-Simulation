@@ -24,7 +24,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="off">
      <widget class="QPushButton" name="chargeButton">
@@ -37,7 +37,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>charge</string>
+       <string>Charge</string>
       </property>
      </widget>
      <widget class="QPushButton" name="powerOnButton">
@@ -731,7 +731,7 @@
        <zorder>textBrowser</zorder>
        <zorder>label_11</zorder>
        <zorder>bolusBack</zorder>
-        <zorder>label_15</zorder>
+       <zorder>label_15</zorder>
        <zorder>editManualBolus</zorder>
        <zorder>startManualBolus</zorder>
        <zorder>addCarbs</zorder>
@@ -900,7 +900,7 @@
      <rect>
       <x>30</x>
       <y>10</y>
-      <width>91</width>
+      <width>191</width>
       <height>17</height>
      </rect>
     </property>
@@ -908,7 +908,7 @@
      <string notr="true"/>
     </property>
     <property name="text">
-     <string>Battery </string>
+     <string>Battery ⚡: Not Charging</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_13">
@@ -931,7 +931,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>22</height>
+     <height>19</height>
     </rect>
    </property>
    <widget class="QMenu" name="menut_slim_Insulin_Pump_Simulation">

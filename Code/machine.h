@@ -39,6 +39,8 @@ public:
     // Setters
     void setCurrentBatteryLevel(int level) { currentBatteryLevel = level; }
     void setIsLoggedIn(bool loggedIn) { isLoggedIn = loggedIn; }
+    void setIsTurnedOn(bool turnedOn) { isTurnedOn = turnedOn; }
+    void setIsCharging(bool charging) { isCharging = charging; }
 
 private:
     Ui::MainWindow *ui;
