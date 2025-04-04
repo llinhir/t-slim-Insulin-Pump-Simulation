@@ -22,11 +22,12 @@ machine::machine(Ui::MainWindow *ui)
     ui->batteryBar->setValue(currentBatteryLevel);
     ui->insulinBar->setValue(currentInsulinAmount);
 
-    getCurrentTime(); // Get current and apply time and date
+    tm* current = getCurrentTime(); // Get current and apply time and date
+
 
     // print for testing
-    // cout << "Current time: " << currentHour << ":" << currentMinute << " " << currentDay << "/" << currentMonth << "/" << currentYear << endl;
-    // cout << "Current Date: " << currentDay << "/" << currentMonth << "/" << currentYear << endl;
+    cout << "Current time: " << currentHour << ":" << currentMinute << " " << currentDay << "/" << currentMonth << "/" << currentYear << endl;
+    cout << "Current Date: " << currentDay << "/" << currentMonth << "/" << currentYear << endl;
     options = new Options(ui);
 
     connect(ui->createProfileSaveButton, &QPushButton::clicked, this, [this]()
@@ -53,6 +54,7 @@ tm *machine::getCurrentTime() // as a note, the current time should not be compu
     currentDay = currentTime->tm_mday;
     currentMonth = currentTime->tm_mon + 1;    // tm_mon is 0-11, so add 1
     currentYear = currentTime->tm_year + 1900; // tm_year is years since 1900, so add 1900
+
 
     return currentTime;
 }
@@ -141,12 +143,12 @@ void machine::stepTime() // this is wrong
     currentTime->tm_mon = currentMonth;
     currentTime->tm_year = currentYear;
 
-    // cout << "Current time: " << currentHour << ":" << currentMinute << " " << currentDay << "/" << currentMonth << "/" << currentYear << endl;
-
+    cout << "Current time: " << currentHour << ":" << currentMinute << " " << currentDay << "/" << currentMonth << "/" << currentYear << endl;
+    qInfo("in function");
     // Update the UI
     tm *timeInfo = getCurrentTimeStruct();
 
-    ui->dateTimeEdit->setDateTime(QDateTime::fromSecsSinceEpoch(mktime(timeInfo)));
+    //ui->dateTimeEdit->setDateTime(QDateTime::fromSecsSinceEpoch(mktime(timeInfo)));
 }
 
 void machine::stepMachine()

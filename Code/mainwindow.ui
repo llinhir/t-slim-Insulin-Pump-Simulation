@@ -18,9 +18,9 @@
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>70</y>
+      <y>0</y>
       <width>801</width>
-      <height>511</height>
+      <height>551</height>
      </rect>
     </property>
     <property name="currentIndex">
@@ -31,7 +31,7 @@
       <property name="geometry">
        <rect>
         <x>290</x>
-        <y>220</y>
+        <y>270</y>
         <width>211</width>
         <height>71</height>
        </rect>
@@ -44,7 +44,7 @@
       <property name="geometry">
        <rect>
         <x>290</x>
-        <y>120</y>
+        <y>180</y>
         <width>211</width>
         <height>71</height>
        </rect>
@@ -58,8 +58,8 @@
      <widget class="QPushButton" name="homeButton">
       <property name="geometry">
        <rect>
-        <x>650</x>
-        <y>150</y>
+        <x>660</x>
+        <y>250</y>
         <width>111</width>
         <height>91</height>
        </rect>
@@ -71,14 +71,14 @@
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="geometry">
        <rect>
-        <x>40</x>
-        <y>10</y>
+        <x>30</x>
+        <y>80</y>
         <width>571</width>
         <height>441</height>
        </rect>
       </property>
       <property name="currentIndex">
-       <number>4</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="loginPage">
        <widget class="QLabel" name="label_8">
@@ -850,96 +850,96 @@
        </widget>
       </widget>
      </widget>
+     <widget class="QProgressBar" name="insulinBar">
+      <property name="geometry">
+       <rect>
+        <x>650</x>
+        <y>40</y>
+        <width>118</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="toolTipDuration">
+       <number>-1</number>
+      </property>
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
+      <property name="maximum">
+       <number>300</number>
+      </property>
+      <property name="value">
+       <number>100</number>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+      <property name="textVisible">
+       <bool>true</bool>
+      </property>
+      <property name="invertedAppearance">
+       <bool>false</bool>
+      </property>
+      <property name="format">
+       <string>%v ml</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_13">
+      <property name="geometry">
+       <rect>
+        <x>650</x>
+        <y>20</y>
+        <width>151</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Remaining Insulin</string>
+      </property>
+     </widget>
+     <widget class="QProgressBar" name="batteryBar">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>40</y>
+        <width>118</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="value">
+       <number>24</number>
+      </property>
+      <property name="invertedAppearance">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="batteryLabel">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>20</y>
+        <width>191</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
+      <property name="text">
+       <string>Battery: Not Charging</string>
+      </property>
+     </widget>
+     <widget class="QLCDNumber" name="lcdTime">
+      <property name="geometry">
+       <rect>
+        <x>350</x>
+        <y>20</y>
+        <width>101</width>
+        <height>41</height>
+       </rect>
+      </property>
+     </widget>
     </widget>
-   </widget>
-   <widget class="QDateTimeEdit" name="dateTimeEdit">
-    <property name="geometry">
-     <rect>
-      <x>290</x>
-      <y>30</y>
-      <width>194</width>
-      <height>26</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QProgressBar" name="insulinBar">
-    <property name="geometry">
-     <rect>
-      <x>650</x>
-      <y>30</y>
-      <width>118</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="toolTipDuration">
-     <number>-1</number>
-    </property>
-    <property name="styleSheet">
-     <string notr="true"/>
-    </property>
-    <property name="maximum">
-     <number>300</number>
-    </property>
-    <property name="value">
-     <number>100</number>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-    </property>
-    <property name="textVisible">
-     <bool>true</bool>
-    </property>
-    <property name="invertedAppearance">
-     <bool>false</bool>
-    </property>
-    <property name="format">
-     <string>%v ml</string>
-    </property>
-   </widget>
-   <widget class="QProgressBar" name="batteryBar">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>30</y>
-      <width>118</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="value">
-     <number>24</number>
-    </property>
-    <property name="invertedAppearance">
-     <bool>false</bool>
-    </property>
-   </widget>
-   <widget class="QLabel" name="batteryLabel">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>10</y>
-      <width>191</width>
-      <height>17</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true"/>
-    </property>
-    <property name="text">
-     <string>Battery ⚡: Not Charging</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_13">
-    <property name="geometry">
-     <rect>
-      <x>650</x>
-      <y>10</y>
-      <width>151</width>
-      <height>17</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Remaining Insulin</string>
-    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
