@@ -13,13 +13,14 @@ machine::machine(Ui::MainWindow *ui)
 
     // initliaze variables and classes
     currentBatteryLevel = 100;
-    currentBolusPrecent = 100;
+    currentInsulinAmount = 300; // in mL, will be out of 300 ml
 
     isLoggedIn = false;
     isTurnedOn = true;
     isCharging = false;
 
     ui->batteryBar->setValue(currentBatteryLevel);
+    ui->insulinBar->setValue(currentInsulinAmount);
 
     getCurrentTime(); // Get current and apply time and date
 

@@ -29,7 +29,7 @@ public:
     struct tm *getCurrentTimeStruct() { return currentTime; }
     vector<string> getHistory() { return history; }
     int getCurrentPage() { return currentPage; }
-    int getCurrentBolusPrecent() { return currentBolusPrecent; }
+    int getCurrentInsulinAmount() { return currentInsulinAmount; }
     int getCurrentBatteryLevel() { return currentBatteryLevel; }
     bool getIsCharging() { return isCharging; }
     bool getIsTurnedOn() { return isTurnedOn; }
@@ -54,7 +54,7 @@ private:
 
     vector<string> history; // History of events
     int currentPage;
-    int currentBolusPrecent;
+    int currentInsulinAmount; // in mL, will be out of 300 ml
     int currentBatteryLevel;
 
     bool isCharging;
