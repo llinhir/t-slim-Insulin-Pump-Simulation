@@ -14,8 +14,14 @@ MainWindow::MainWindow(QWidget *parent)
     ui->stackedWidget->setCurrentIndex(LOGIN_PAGE); // This is cucrrently uncommented for testing (so you can test which qStackedWidget page youre working on)
     sim = new Simulation(ui);
     mach = sim->getMachine();
+
+    // set the time
     tm *timeInfo = mach->getCurrentTimeStruct();
-    ui->dateTimeEdit->setDateTime(QDateTime::fromSecsSinceEpoch(mktime(timeInfo)));
+    char buffer[9];
+    snprintf(buffer, sizeof(buffer), "%02d:%02d:%02d",
+             timeInfo->tm_hour, timeInfo->tm_min, timeInfo->tm_sec);
+    ui->lcdTime->display(buffer);
+
 
     // mapping previous pages for the Back button
     setPrevPages();
@@ -100,7 +106,7 @@ void MainWindow::chargeBattery()
     {
         ui->chargeButton->setText("Charge");
         mach->setIsCharging(false);
-        ui->batteryLabel->setText("Battery ⚡: Not Charging");
+        ui->batteryLabel->setText("Battery: Not Charging");
     }
     else
     {
