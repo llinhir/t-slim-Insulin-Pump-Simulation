@@ -10,6 +10,7 @@
 
 #include "machine.h"
 #include "profile.h"
+#include "bolus.h"
 
 using namespace std;
 
@@ -24,6 +25,7 @@ public:
 
 private:
     machine *m;
+    Bolus *bolus;
     Ui::MainWindow *ui;
 };
 

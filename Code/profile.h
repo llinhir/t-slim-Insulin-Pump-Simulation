@@ -12,7 +12,7 @@ public:
     Profile(int basalRate, int carbohydrateRatio, int correctionFactor, int targetGlucoseLevel, string profileName);
 
     int getBasalRate() { return _basalRate; }
-    int getCarbohydrateRatio() { return _carbohydrateRatio; }
+    int getCarbohydrateRatio() { return _carbohydrateRatio; } // insulin to carb ratio
     int getCorrectionFactor() { return _correctionFactor; }
     int getTargetGlucoseLevel() { return _targetGlucoseLevel; }
     string getProfileName() { return _profileName; }

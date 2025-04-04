@@ -24,7 +24,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="off">
      <widget class="QPushButton" name="chargeButton">
@@ -78,7 +78,7 @@
        </rect>
       </property>
       <property name="currentIndex">
-       <number>6</number>
+       <number>4</number>
       </property>
       <widget class="QWidget" name="loginPage">
        <widget class="QLabel" name="label_8">
@@ -663,7 +663,7 @@
          <string>START</string>
         </property>
        </widget>
-       <widget class="QLineEdit" name="addCarbs">
+       <widget class="QLineEdit" name="addCarbsButton">
         <property name="geometry">
          <rect>
           <x>150</x>
@@ -673,7 +673,7 @@
          </rect>
         </property>
         <property name="text">
-         <string>0 grams</string>
+         <string>0</string>
         </property>
        </widget>
        <widget class="QLabel" name="label_16">
@@ -681,12 +681,12 @@
          <rect>
           <x>150</x>
           <y>170</y>
-          <width>62</width>
+          <width>111</width>
           <height>17</height>
          </rect>
         </property>
         <property name="text">
-         <string>CARBS</string>
+         <string>CARBS (grams)</string>
         </property>
        </widget>
        <widget class="QLineEdit" name="addGlucoseButton">
@@ -699,7 +699,7 @@
          </rect>
         </property>
         <property name="text">
-         <string>ADD BG</string>
+         <string>0</string>
         </property>
        </widget>
        <widget class="QLabel" name="label_17">
@@ -707,19 +707,19 @@
          <rect>
           <x>310</x>
           <y>170</y>
-          <width>71</width>
+          <width>131</width>
           <height>17</height>
          </rect>
         </property>
         <property name="text">
-         <string>GLUCOSE</string>
+         <string>GLUCOSE (mmol/L)</string>
         </property>
        </widget>
        <widget class="QPushButton" name="viewCalculationButton">
         <property name="geometry">
          <rect>
           <x>170</x>
-          <y>350</y>
+          <y>310</y>
           <width>231</width>
           <height>31</height>
          </rect>
@@ -728,17 +728,31 @@
          <string>View Calculation</string>
         </property>
        </widget>
+       <widget class="QPushButton" name="viewCalculationButton_2">
+        <property name="geometry">
+         <rect>
+          <x>170</x>
+          <y>370</y>
+          <width>231</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Calculate from System Values</string>
+        </property>
+       </widget>
        <zorder>textBrowser</zorder>
        <zorder>label_11</zorder>
        <zorder>bolusBack</zorder>
        <zorder>label_15</zorder>
        <zorder>editManualBolus</zorder>
        <zorder>startManualBolus</zorder>
-       <zorder>addCarbs</zorder>
+       <zorder>addCarbsButton</zorder>
        <zorder>label_16</zorder>
        <zorder>addGlucoseButton</zorder>
        <zorder>label_17</zorder>
        <zorder>viewCalculationButton</zorder>
+       <zorder>viewCalculationButton_2</zorder>
       </widget>
       <widget class="QWidget" name="profilesPage">
        <widget class="QPushButton" name="createProfileButton">
@@ -934,7 +948,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>19</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menut_slim_Insulin_Pump_Simulation">
