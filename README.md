@@ -1,4 +1,5 @@
 # t-slim-Insulin-Pump-Simulation
+
 Qt C++ simulation
 
 Collaborators: Arjun Bedi, Eli Roberts, Katherine Ma, Jessica Hill
@@ -25,3 +26,6 @@ Code.pro
 Code.pro.user
 .gitignore
 ...
+
+Note: Qt chart was used so to install it, run the following command in terminal:
+sudo apt install libqt5charts5-dev

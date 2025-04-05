@@ -2,6 +2,9 @@
 #include "ui_mainwindow.h"
 
 #include <iostream>
+#include <QtCharts>
+
+QT_CHARTS_USE_NAMESPACE
 
 using namespace std;
 
@@ -21,7 +24,6 @@ MainWindow::MainWindow(QWidget *parent)
     snprintf(buffer, sizeof(buffer), "%02d:%02d:%02d",
              timeInfo->tm_hour, timeInfo->tm_min, timeInfo->tm_sec);
     ui->lcdTime->display(buffer);
-
 
     // mapping previous pages for the Back button
     setPrevPages();
@@ -56,6 +58,21 @@ MainWindow::MainWindow(QWidget *parent)
             { switchPage(prevPageMap[CREATE_PROFILE_PAGE]); });
     connect(ui->bolusBack, &QPushButton::clicked, this, [this]()
             { switchPage(prevPageMap[BOLUS_PAGE]); });
+
+    // THIS IS ONLY FOR TESTING AND CONCEPT, please dont remove until done -_-
+    QLineSeries *batterySeries = new QLineSeries();
+    *batterySeries << QPointF(0, 100) << QPointF(1, 90) << QPointF(2, 80) << QPointF(3, 70); // Example data
+
+    QChart *batteryChart = new QChart();
+    batteryChart->addSeries(batterySeries);
+    batteryChart->createDefaultAxes();
+    batteryChart->setTitle("Battery Charge Over Time");
+
+    QChartView *chartView = new QChartView(batteryChart);
+    chartView->setRenderHint(QPainter::Antialiasing);
+
+    // Set the chart view in the UI (for example, add to the layout)
+    ui->chartLayout->addWidget(chartView);
 }
 
 MainWindow::~MainWindow()

@@ -13,6 +13,10 @@ ui_*
 qrc_*
 Makefile
 
+
+#i dont know what this is but it has 874 files so im gonna ignore it
+.qtc_clangd
+
 # Build directories
 build-*/
 debug/
