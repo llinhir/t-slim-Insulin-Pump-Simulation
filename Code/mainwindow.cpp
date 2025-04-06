@@ -20,10 +20,21 @@ MainWindow::MainWindow(QWidget *parent)
 
     // set the time
     tm *timeInfo = mach->getCurrentTimeStruct();
-    char buffer[9];
-    snprintf(buffer, sizeof(buffer), "%02d:%02d:%02d",
-             timeInfo->tm_hour, timeInfo->tm_min, timeInfo->tm_sec);
-    ui->lcdTime->display(buffer);
+    QString timeString = QString::asprintf("%02d:%02d", timeInfo->tm_hour, timeInfo->tm_min);
+    if (timeInfo->tm_hour > 12)
+    {
+        timeString += " PM";
+        timeString.replace(0, 2, QString::number(timeInfo->tm_hour - 12));
+    }
+    else
+    {
+        timeString += " AM";
+        if (timeInfo->tm_hour == 0)
+        {
+            timeString.replace(0, 2, "12");
+        }
+    }
+    ui->timeLabel->setText(timeString);
 
     // mapping previous pages for the Back button
     setPrevPages();
