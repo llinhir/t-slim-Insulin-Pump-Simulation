@@ -12,4 +12,5 @@ enum PageIndex
     PROFILES_PAGE = 5,
     EDIT_PROFILE_PAGE = 6,
     EDIT_SPECIFIC_PROFILE_PAGE = 7,
+    GRAPH_PAGE = 8
 };

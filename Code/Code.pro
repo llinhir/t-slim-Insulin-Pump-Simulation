@@ -27,7 +27,8 @@ HEADERS += \
     mainwindow.h \
     options.h \
     profile.h \
-    simulation.h
+    simulation.h \
+    defs.h
 
 FORMS += \
     mainwindow.ui
