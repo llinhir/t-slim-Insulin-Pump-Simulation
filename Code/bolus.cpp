@@ -13,11 +13,10 @@ Bolus::Bolus(Ui::MainWindow *ui, machine *machine)
             { viewCalculation(); });
     connect(ui->viewCalculationButton_2, &QPushButton::clicked, this, [this]()
             { cgmCalculation(); });
-
 }
 
-Bolus::~Bolus(){
-
+Bolus::~Bolus()
+{
 }
 
 void Bolus::viewCalculation()
@@ -25,12 +24,12 @@ void Bolus::viewCalculation()
     cout << "Calculating bolus" << endl;
     carbohydrates = _ui->addCarbsButton->text().toFloat();
     currGlucose = _ui->addGlucoseButton->text().toFloat();
-    cout << "Carbs: " << carbohydrates << "\nGLucose: " << currGlucose << endl;
+    cout << "Carbs: " << carbohydrates << "\nGlucose: " << currGlucose << endl;
     int units = 0; // CHANGE WHEN INSULIN ON BOARD IS IMPLEMENTED!!!!!!!!!!!!!
     bolusCalculation(carbohydrates, currGlucose, units);
 }
 
- // INSULIN ON BOARD FROM THE MACHINE, not yet implemented
+// INSULIN ON BOARD FROM THE MACHINE, not yet implemented
 void Bolus::bolusCalculation(int carbs, float glucose, int insulinOnBoard)
 { // get these from ui vs CGM
     cout << "Starting calculation..." << endl;
@@ -49,6 +48,10 @@ void Bolus::bolusCalculation(int carbs, float glucose, int insulinOnBoard)
 void Bolus::cgmCalculation()
 {
     // pls make the cgm stuff so I can take it :)
+}
+
+void Bolus::stepBolus()
+{
 }
 
 // make sure it can only be numbers

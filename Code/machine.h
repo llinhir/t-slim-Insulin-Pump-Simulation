@@ -25,6 +25,7 @@ public:
     void updateBatteryLevel();
     void updateProfileInfo();
     bool loginAttempt(string passwordGuess);
+    bool hasBattery() { return currentBatteryLevel > 0; };
 
     // Getters
     struct tm *getCurrentTimeStruct() { return currentTime; }
@@ -45,7 +46,7 @@ public:
 
     // Machine Functinos
     void editProfile(int index);
-    void saveProfile(); //Helper function for editProfile()
+    void saveProfile(); // Helper function for editProfile()
 
 private:
     Ui::MainWindow *ui;

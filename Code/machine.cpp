@@ -22,8 +22,7 @@ machine::machine(Ui::MainWindow *ui)
     ui->batteryBar->setValue(currentBatteryLevel);
     ui->insulinBar->setValue(currentInsulinAmount);
 
-    tm* current = getCurrentTime(); // Get current and apply time and date
-
+    getCurrentTime(); // Get current and apply time and date
 
     // print for testing
     cout << "Current time: " << currentHour << ":" << currentMinute << " " << currentDay << "/" << currentMonth << "/" << currentYear << endl;
@@ -54,7 +53,6 @@ tm *machine::getCurrentTime() // as a note, the current time should not be compu
     currentDay = currentTime->tm_mday;
     currentMonth = currentTime->tm_mon + 1;    // tm_mon is 0-11, so add 1
     currentYear = currentTime->tm_year + 1900; // tm_year is years since 1900, so add 1900
-
 
     return currentTime;
 }
@@ -148,7 +146,21 @@ void machine::stepTime() // this is wrong
     // Update the UI
     tm *timeInfo = getCurrentTimeStruct();
 
-    //ui->dateTimeEdit->setDateTime(QDateTime::fromSecsSinceEpoch(mktime(timeInfo)));
+    QString timeString = QString::asprintf("%02d:%02d", timeInfo->tm_hour, timeInfo->tm_min);
+    if (timeInfo->tm_hour > 12)
+    {
+        timeString += " PM";
+        timeString.replace(0, 2, QString::number(timeInfo->tm_hour - 12));
+    }
+    else
+    {
+        timeString += " AM";
+        if (timeInfo->tm_hour == 0)
+        {
+            timeString.replace(0, 2, "12");
+        }
+    }
+    ui->timeLabel->setText(timeString);
 }
 
 void machine::stepMachine()

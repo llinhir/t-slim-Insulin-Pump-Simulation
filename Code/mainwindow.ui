@@ -53,17 +53,6 @@
        <string>Power On</string>
       </property>
      </widget>
-     <widget class="QWidget" name="horizontalLayoutWidget">
-      <property name="geometry">
-       <rect>
-        <x>190</x>
-        <y>350</y>
-        <width>451</width>
-        <height>201</height>
-       </rect>
-      </property>
-      <layout class="QHBoxLayout" name="chartLayout"/>
-     </widget>
     </widget>
     <widget class="QWidget" name="on">
      <widget class="QPushButton" name="homeButton">
@@ -89,7 +78,7 @@
        </rect>
       </property>
       <property name="currentIndex">
-       <number>7</number>
+       <number>4</number>
       </property>
       <widget class="QWidget" name="loginPage">
        <widget class="QLabel" name="label_8">
@@ -860,7 +849,19 @@
         </property>
        </widget>
       </widget>
-      <widget class="QWidget" name="graphPage"/>
+      <widget class="QWidget" name="graphPage">
+       <widget class="QWidget" name="horizontalLayoutWidget">
+        <property name="geometry">
+         <rect>
+          <x>50</x>
+          <y>200</y>
+          <width>451</width>
+          <height>201</height>
+         </rect>
+        </property>
+        <layout class="QHBoxLayout" name="chartLayout"/>
+       </widget>
+      </widget>
      </widget>
      <widget class="QProgressBar" name="insulinBar">
       <property name="geometry">
@@ -968,7 +969,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>22</height>
+     <height>19</height>
     </rect>
    </property>
    <widget class="QMenu" name="menut_slim_Insulin_Pump_Simulation">
