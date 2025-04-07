@@ -49,6 +49,7 @@ public:
     void editProfile(int index);
     void saveProfile(); // Helper function for editProfile()
     void deleteProfile();
+    void setActiveProfile(int index);
 
 private:
     Ui::MainWindow *ui;

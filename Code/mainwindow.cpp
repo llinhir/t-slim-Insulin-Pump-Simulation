@@ -69,6 +69,12 @@ MainWindow::MainWindow(QWidget *parent)
             { switchPage(prevPageMap[CREATE_PROFILE_PAGE]); });
     connect(ui->bolusBack, &QPushButton::clicked, this, [this]()
             { switchPage(prevPageMap[BOLUS_PAGE]); });
+    connect(ui->selectProfileBack, &QPushButton::clicked, this, [this]()
+            { switchPage(prevPageMap[SELECT_ACTIVE_PROFILE_PAGE]); });
+    connect(ui->editProfileBack, &QPushButton::clicked, this, [this]()
+            { switchPage(prevPageMap[EDIT_PROFILE_PAGE]); });
+    connect(ui->saveProfileBack, &QPushButton::clicked, this, [this]()
+            { switchPage(prevPageMap[EDIT_SPECIFIC_PROFILE_PAGE]); });
 
     // THIS IS ONLY FOR TESTING AND CONCEPT, please dont remove until done -_-
     QLineSeries *batterySeries = new QLineSeries();
@@ -153,7 +159,10 @@ void MainWindow::setPrevPages()
     prevPageMap[HOME_PAGE] = LOGIN_PAGE;
     prevPageMap[OPTIONS_PAGE] = HOME_PAGE;
     prevPageMap[BOLUS_PAGE] = HOME_PAGE;
-    prevPageMap[CREATE_PROFILE_PAGE] = OPTIONS_PAGE;
+    prevPageMap[CREATE_PROFILE_PAGE] = PROFILES_PAGE;
+    prevPageMap[EDIT_PROFILE_PAGE] = PROFILES_PAGE;
+    prevPageMap[EDIT_SPECIFIC_PROFILE_PAGE] = EDIT_PROFILE_PAGE;
+    prevPageMap[SELECT_ACTIVE_PROFILE_PAGE] = BOLUS_PAGE;
 }
 
 // void MainWindow::charge what is this for???

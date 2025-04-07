@@ -78,7 +78,7 @@
        </rect>
       </property>
       <property name="currentIndex">
-       <number>6</number>
+       <number>9</number>
       </property>
       <widget class="QWidget" name="loginPage">
        <widget class="QLabel" name="label_8">
@@ -732,13 +732,26 @@
         <property name="geometry">
          <rect>
           <x>170</x>
-          <y>370</y>
+          <y>360</y>
           <width>231</width>
           <height>31</height>
          </rect>
         </property>
         <property name="text">
          <string>Calculate from System Values</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="selectProfileButton">
+        <property name="geometry">
+         <rect>
+          <x>430</x>
+          <y>20</y>
+          <width>121</width>
+          <height>51</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Select Profile</string>
         </property>
        </widget>
        <zorder>textBrowser</zorder>
@@ -753,6 +766,7 @@
        <zorder>label_17</zorder>
        <zorder>viewCalculationButton</zorder>
        <zorder>viewCalculationButton_2</zorder>
+       <zorder>selectProfileButton</zorder>
       </widget>
       <widget class="QWidget" name="profilesPage">
        <widget class="QPushButton" name="createProfileButton">
@@ -846,6 +860,19 @@
         </property>
         <property name="text">
          <string>No Profile</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="editProfileBack">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>10</y>
+          <width>51</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Back</string>
         </property>
        </widget>
       </widget>
@@ -1063,6 +1090,107 @@
          </rect>
         </property>
         <layout class="QHBoxLayout" name="chartLayout"/>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="selectActiveProfilePage">
+       <widget class="QPushButton" name="selectProfile1">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>60</y>
+          <width>91</width>
+          <height>71</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>No Profile</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="selectProfile4">
+        <property name="geometry">
+         <rect>
+          <x>340</x>
+          <y>60</y>
+          <width>91</width>
+          <height>71</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>No Profile</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="selectProfile5">
+        <property name="geometry">
+         <rect>
+          <x>450</x>
+          <y>60</y>
+          <width>91</width>
+          <height>71</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>No Profile</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="selectProfile3">
+        <property name="geometry">
+         <rect>
+          <x>230</x>
+          <y>60</y>
+          <width>91</width>
+          <height>71</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>No Profile</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="selectProfile2">
+        <property name="geometry">
+         <rect>
+          <x>120</x>
+          <y>60</y>
+          <width>91</width>
+          <height>71</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>No Profile</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="activeProfileLabel">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>160</y>
+          <width>521</width>
+          <height>71</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>Monospace</family>
+          <pointsize>16</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>Active Profile : </string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="selectProfileBack">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>10</y>
+          <width>51</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Back</string>
+        </property>
        </widget>
       </widget>
      </widget>

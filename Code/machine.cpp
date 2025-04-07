@@ -49,6 +49,18 @@ machine::machine(Ui::MainWindow *ui)
     connect(ui->profile5Button, &QPushButton::clicked, this, [this]()
             { editProfile(4); });
 
+    connect(ui->selectProfile1, &QPushButton::clicked, this, [this]()
+            { setActiveProfile(0); });
+    connect(ui->selectProfile2, &QPushButton::clicked, this, [this]()
+            { setActiveProfile(1); });
+    connect(ui->selectProfile3, &QPushButton::clicked, this, [this]()
+            { setActiveProfile(2); });
+    connect(ui->selectProfile4, &QPushButton::clicked, this, [this]()
+            { setActiveProfile(3); });
+    connect(ui->selectProfile5, &QPushButton::clicked, this, [this]()
+            { setActiveProfile(4); });
+
+
     connect(ui->saveProfileButton, &QPushButton::clicked, this, [this]()
             { saveProfile(); });
     connect(ui->deleteProfileButton, &QPushButton::clicked, this, [this]()
@@ -114,31 +126,41 @@ void machine::updateProfileInfo()
     if (!profiles.empty())
     {
         ui->profile1Button->setText(QString::fromStdString(profiles.at(0)->getProfileName()));
+        ui->selectProfile1->setText(QString::fromStdString(profiles.at(0)->getProfileName()));
         if (profiles.size() > 1){
             ui->profile2Button->setText(QString::fromStdString(profiles.at(1)->getProfileName()));
+            ui->selectProfile2->setText(QString::fromStdString(profiles.at(1)->getProfileName()));
         }else{
             ui->profile2Button->setText("No Profile");
+            ui->selectProfile2->setText("No Profile");
         }
         if (profiles.size() > 2){
             ui->profile3Button->setText(QString::fromStdString(profiles.at(2)->getProfileName()));
+            ui->selectProfile3->setText(QString::fromStdString(profiles.at(2)->getProfileName()));
         }else{
             ui->profile3Button->setText("No Profile");
+            ui->selectProfile3->setText("No Profile");
         }
         if (profiles.size() > 3){
             ui->profile4Button->setText(QString::fromStdString(profiles.at(3)->getProfileName()));
+            ui->selectProfile4->setText(QString::fromStdString(profiles.at(3)->getProfileName()));
         }else{
             ui->profile4Button->setText("No Profile");
+            ui->selectProfile4->setText("No Profile");
         }
         if (profiles.size() > 4){
             ui->profile5Button->setText(QString::fromStdString(profiles.at(4)->getProfileName()));
+            ui->selectProfile5->setText(QString::fromStdString(profiles.at(4)->getProfileName()));
         }else{
             ui->profile5Button->setText("No Profile");
+            ui->selectProfile5->setText("No Profile");
         }
     }
     else
     {
         cout << "No profiles available" << endl;
         ui->profile1Button->setText("No Profile");
+        ui->selectProfile1->setText("No Profile");
     }
 }
 
@@ -254,3 +276,8 @@ void machine::deleteProfile() {
     ui->stackedWidget->setCurrentIndex(EDIT_PROFILE_PAGE);
 }
 
+void machine::setActiveProfile(int index){
+    currentProfile = profiles.at(index);
+    QString profileMessage = "Active Profile: " + QString::fromStdString(currentProfile->getProfileName());
+    ui->activeProfileLabel->setText(profileMessage);
+}

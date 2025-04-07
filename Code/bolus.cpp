@@ -13,6 +13,8 @@ Bolus::Bolus(Ui::MainWindow *ui, machine *machine)
             { viewCalculation(); });
     connect(ui->viewCalculationButton_2, &QPushButton::clicked, this, [this]()
             { cgmCalculation(); });
+    connect(ui->selectProfileButton, &QPushButton::clicked, this, [this]()
+            { _ui->stackedWidget->setCurrentIndex(SELECT_ACTIVE_PROFILE_PAGE); });
 }
 
 Bolus::~Bolus()
