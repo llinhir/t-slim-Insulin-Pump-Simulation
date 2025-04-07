@@ -45,8 +45,10 @@ public:
     void setIsCharging(bool charging) { isCharging = charging; }
 
     // Machine Functinos
+    void createProfile();
     void editProfile(int index);
     void saveProfile(); // Helper function for editProfile()
+    void deleteProfile();
 
 private:
     Ui::MainWindow *ui;

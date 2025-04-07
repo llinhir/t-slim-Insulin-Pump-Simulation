@@ -11,7 +11,6 @@ public:
     void shutDown();
     void sleep();
     void setBasalRate(int basal);
-    void deleteProfile();
     Profile* createProfile();
 
     //getters
