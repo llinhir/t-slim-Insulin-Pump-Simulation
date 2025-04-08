@@ -61,6 +61,8 @@ MainWindow::MainWindow(QWidget *parent)
             { switchPage(PROFILES_PAGE); });
     connect(ui->editProfileButton, &QPushButton::clicked, this, [this]()
             { switchPage(EDIT_PROFILE_PAGE); });
+    connect(ui->viewGraphButton, &QPushButton::clicked, this, [this]()
+                { switchPage(GRAPH_PAGE); });
 
     // connecting slots for the back buttons
     connect(ui->optionsBack, &QPushButton::clicked, this, [this]()
@@ -78,12 +80,12 @@ MainWindow::MainWindow(QWidget *parent)
 
     // THIS IS ONLY FOR TESTING AND CONCEPT, please dont remove until done -_-
     QLineSeries *batterySeries = new QLineSeries();
-    *batterySeries << QPointF(0, 100) << QPointF(1, 90) << QPointF(2, 80) << QPointF(3, 70); // Example data
+    *batterySeries << QPointF(0, 100) << QPointF(1, 40) << QPointF(2, 80) << QPointF(3, 50); // Example data
 
     QChart *batteryChart = new QChart();
     batteryChart->addSeries(batterySeries);
     batteryChart->createDefaultAxes();
-    batteryChart->setTitle("Battery Charge Over Time");
+    batteryChart->setTitle("Fake data for graph testing");
 
     QChartView *chartView = new QChartView(batteryChart);
     chartView->setRenderHint(QPainter::Antialiasing);

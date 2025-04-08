@@ -65,7 +65,7 @@
        </rect>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>8</number>
       </property>
       <widget class="QWidget" name="loginPage">
        <widget class="QLabel" name="label_8">
@@ -741,6 +741,19 @@
          <string>Select Profile</string>
         </property>
        </widget>
+       <widget class="QPushButton" name="viewGraphButton">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>240</y>
+          <width>83</width>
+          <height>25</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>View Graph</string>
+        </property>
+       </widget>
        <zorder>textBrowser</zorder>
        <zorder>label_11</zorder>
        <zorder>bolusBack</zorder>
@@ -754,6 +767,7 @@
        <zorder>viewCalculationButton</zorder>
        <zorder>viewCalculationButton_2</zorder>
        <zorder>selectProfileButton</zorder>
+       <zorder>viewGraphButton</zorder>
       </widget>
       <widget class="QWidget" name="profilesPage">
        <widget class="QPushButton" name="createProfileButton">
@@ -1070,10 +1084,10 @@
        <widget class="QWidget" name="horizontalLayoutWidget">
         <property name="geometry">
          <rect>
-          <x>50</x>
-          <y>200</y>
-          <width>451</width>
-          <height>201</height>
+          <x>20</x>
+          <y>20</y>
+          <width>521</width>
+          <height>311</height>
          </rect>
         </property>
         <layout class="QHBoxLayout" name="chartLayout"/>
@@ -1158,6 +1172,7 @@
          <font>
           <family>Monospace</family>
           <pointsize>16</pointsize>
+          <weight>75</weight>
           <bold>true</bold>
          </font>
         </property>
@@ -1299,7 +1314,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>19</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menut_slim_Insulin_Pump_Simulation">
