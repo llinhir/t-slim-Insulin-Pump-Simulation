@@ -1,6 +1,6 @@
 #include "machine.h"
-#include <algorithm>  // for std::find_if
-#include <vector>     // for std::vector
+#include <algorithm> // for std::find_if
+#include <vector>    // for std::vector
 #include <string>
 
 machine::machine(Ui::MainWindow *ui)
@@ -60,7 +60,6 @@ machine::machine(Ui::MainWindow *ui)
     connect(ui->selectProfile5, &QPushButton::clicked, this, [this]()
             { setActiveProfile(4); });
 
-
     connect(ui->saveProfileButton, &QPushButton::clicked, this, [this]()
             { saveProfile(); });
     connect(ui->deleteProfileButton, &QPushButton::clicked, this, [this]()
@@ -113,6 +112,11 @@ void machine::updateBatteryLevel() // this will be called every step, update ui
         {
             currentBatteryLevel = 0;
         }
+        // check if battery is low
+        if (currentBatteryLevel == 20)
+        {
+            cout << "Battery low" << endl; // add this to history and ui
+        }
     }
 
     // ui update
@@ -127,31 +131,43 @@ void machine::updateProfileInfo()
     {
         ui->profile1Button->setText(QString::fromStdString(profiles.at(0)->getProfileName()));
         ui->selectProfile1->setText(QString::fromStdString(profiles.at(0)->getProfileName()));
-        if (profiles.size() > 1){
+        if (profiles.size() > 1)
+        {
             ui->profile2Button->setText(QString::fromStdString(profiles.at(1)->getProfileName()));
             ui->selectProfile2->setText(QString::fromStdString(profiles.at(1)->getProfileName()));
-        }else{
+        }
+        else
+        {
             ui->profile2Button->setText("No Profile");
             ui->selectProfile2->setText("No Profile");
         }
-        if (profiles.size() > 2){
+        if (profiles.size() > 2)
+        {
             ui->profile3Button->setText(QString::fromStdString(profiles.at(2)->getProfileName()));
             ui->selectProfile3->setText(QString::fromStdString(profiles.at(2)->getProfileName()));
-        }else{
+        }
+        else
+        {
             ui->profile3Button->setText("No Profile");
             ui->selectProfile3->setText("No Profile");
         }
-        if (profiles.size() > 3){
+        if (profiles.size() > 3)
+        {
             ui->profile4Button->setText(QString::fromStdString(profiles.at(3)->getProfileName()));
             ui->selectProfile4->setText(QString::fromStdString(profiles.at(3)->getProfileName()));
-        }else{
+        }
+        else
+        {
             ui->profile4Button->setText("No Profile");
             ui->selectProfile4->setText("No Profile");
         }
-        if (profiles.size() > 4){
+        if (profiles.size() > 4)
+        {
             ui->profile5Button->setText(QString::fromStdString(profiles.at(4)->getProfileName()));
             ui->selectProfile5->setText(QString::fromStdString(profiles.at(4)->getProfileName()));
-        }else{
+        }
+        else
+        {
             ui->profile5Button->setText("No Profile");
             ui->selectProfile5->setText("No Profile");
         }
@@ -230,7 +246,8 @@ void machine::stepMachine()
     updateBatteryLevel();
 }
 
-void machine::createProfile(){
+void machine::createProfile()
+{
     profiles.push_back(options->createProfile());
 
     // Switch to the edit profile page
@@ -238,7 +255,8 @@ void machine::createProfile(){
     ui->stackedWidget->setCurrentIndex(PROFILES_PAGE);
 }
 
-void machine::editProfile(int index){
+void machine::editProfile(int index)
+{
     currentProfile = profiles.at(index);
     ui->stackedWidget->setCurrentIndex(EDIT_SPECIFIC_PROFILE_PAGE);
     ui->newBasalRate->setText(QString::number(currentProfile->getBasalRate()));
@@ -248,7 +266,8 @@ void machine::editProfile(int index){
     ui->newProfileName->setText(QString::fromStdString(currentProfile->getProfileName()));
 }
 
-void machine::saveProfile(){
+void machine::saveProfile()
+{
     currentProfile->setBasalRate(ui->newBasalRate->text().toInt());
     currentProfile->setCarbohydrateRatio(ui->newCarbohydrateRatio->text().toInt());
     currentProfile->setCorrectionFactor(ui->newCorrectionFactor->text().toInt());
@@ -257,17 +276,21 @@ void machine::saveProfile(){
     ui->stackedWidget->setCurrentIndex(EDIT_PROFILE_PAGE);
 }
 
-void machine::deleteProfile() {
+void machine::deleteProfile()
+{
     // Ensure currentProfile is not null
-    if (currentProfile == nullptr) return;
+    if (currentProfile == nullptr)
+        return;
 
     // Find the profile by name
-    auto it = std::find_if(profiles.begin(), profiles.end(), [&](Profile* p) {
-        return p->getProfileName() == currentProfile->getProfileName();  // Dereference p to access Profile
-    });
+    auto it = std::find_if(profiles.begin(), profiles.end(), [&](Profile *p)
+                           {
+                               return p->getProfileName() == currentProfile->getProfileName(); // Dereference p to access Profile
+                           });
 
     // If found, erase it
-    if (it != profiles.end()) {
+    if (it != profiles.end())
+    {
         profiles.erase(it);
     }
 
@@ -276,7 +299,8 @@ void machine::deleteProfile() {
     ui->stackedWidget->setCurrentIndex(EDIT_PROFILE_PAGE);
 }
 
-void machine::setActiveProfile(int index){
+void machine::setActiveProfile(int index)
+{
     currentProfile = profiles.at(index);
     QString profileMessage = "Active Profile: " + QString::fromStdString(currentProfile->getProfileName());
     ui->activeProfileLabel->setText(profileMessage);

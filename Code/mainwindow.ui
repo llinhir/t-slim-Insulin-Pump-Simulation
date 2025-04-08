@@ -18,7 +18,7 @@
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>0</y>
+      <y>100</y>
       <width>801</width>
       <height>551</height>
      </rect>
@@ -27,19 +27,6 @@
      <number>1</number>
     </property>
     <widget class="QWidget" name="off">
-     <widget class="QPushButton" name="chargeButton">
-      <property name="geometry">
-       <rect>
-        <x>290</x>
-        <y>270</y>
-        <width>211</width>
-        <height>71</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Charge</string>
-      </property>
-     </widget>
      <widget class="QPushButton" name="powerOnButton">
       <property name="geometry">
        <rect>
@@ -78,7 +65,7 @@
        </rect>
       </property>
       <property name="currentIndex">
-       <number>9</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="loginPage">
        <widget class="QLabel" name="label_8">
@@ -1171,7 +1158,6 @@
          <font>
           <family>Monospace</family>
           <pointsize>16</pointsize>
-          <weight>75</weight>
           <bold>true</bold>
          </font>
         </property>
@@ -1293,6 +1279,19 @@
      </widget>
     </widget>
    </widget>
+   <widget class="QPushButton" name="chargeButton">
+    <property name="geometry">
+     <rect>
+      <x>570</x>
+      <y>10</y>
+      <width>201</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Charge</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -1300,7 +1299,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>22</height>
+     <height>19</height>
     </rect>
    </property>
    <widget class="QMenu" name="menut_slim_Insulin_Pump_Simulation">
