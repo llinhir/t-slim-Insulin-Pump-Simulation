@@ -1,8 +1,15 @@
 # t-slim-Insulin-Pump-Simulation
 
 Qt C++ simulation
-
+Team 22
 Collaborators: Arjun Bedi, Eli Roberts, Katherine Ma, Jessica Hill
+
+What each member did:
+Katherine - Made the simulation UI, coded the login and options page
+Jessica - Coded the bolus.cpp page + calculations
+Eli - coded the profile.cpp and create profile.cpp pages
+Arjun - coded machine.cpp + bolus graph
+(we had a lot of overlap on what we worked on since we worked in-person a lot)
 
 Header Files:
 defs.h
