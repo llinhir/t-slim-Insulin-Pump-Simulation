@@ -1292,6 +1292,16 @@
        <string>Time</string>
       </property>
      </widget>
+     <widget class="QTextBrowser" name="logger">
+      <property name="geometry">
+       <rect>
+        <x>610</x>
+        <y>370</y>
+        <width>171</width>
+        <height>140</height>
+       </rect>
+      </property>
+     </widget>
     </widget>
    </widget>
    <widget class="QPushButton" name="chargeButton">

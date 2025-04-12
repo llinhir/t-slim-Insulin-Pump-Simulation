@@ -115,6 +115,7 @@ void machine::updateBatteryLevel() // this will be called every step, update ui
         // check if battery is low
         if (currentBatteryLevel == 20)
         {
+            ui->logger->append("Battery Low: Please Charge");
             cout << "Battery low" << endl; // add this to history and ui
         }
     }
@@ -185,13 +186,13 @@ bool machine::loginAttempt(string passwordGuess)
     // Check if the password is correct
     if (passwordGuess == password)
     {
-        cout << "Correct Password" << endl;
+        ui->logger->append("Login Successful");
         isLoggedIn = true;
         return true;
     }
     else
     {
-        cout << "Incorrect Password" << endl;
+        ui->logger->append("Incorrect Password");
         return false;
     }
 }
