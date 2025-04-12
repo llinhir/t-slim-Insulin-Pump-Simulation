@@ -100,6 +100,11 @@ void machine::addToHistory(string event)
 
 void machine::updateBatteryLevel() // this will be called every step, update ui
 {
+    if (!isTurnedOn) // leave early if the machine is off
+    {
+        return;
+    }
+
     cout << "Updating battery level" << endl;
     if (isCharging)
     {
@@ -262,10 +267,12 @@ void machine::createProfile()
 
 void machine::editProfile(int index)
 {
-    try{
+    try
+    {
         profiles.at(index);
     }
-    catch(const std::out_of_range& e) {
+    catch (const std::out_of_range &e)
+    {
         return;
     }
     currentProfile = profiles.at(index);
@@ -312,10 +319,12 @@ void machine::deleteProfile()
 
 void machine::setActiveProfile(int index)
 {
-    try{
+    try
+    {
         profiles.at(index);
     }
-    catch(const std::out_of_range& e) {
+    catch (const std::out_of_range &e)
+    {
         return;
     }
     currentProfile = profiles.at(index);

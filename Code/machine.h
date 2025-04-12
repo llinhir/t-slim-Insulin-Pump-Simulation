@@ -21,10 +21,12 @@ public:
     ~machine();
     tm *getCurrentTime();            // Get current time
     void addToHistory(string event); // Add event to history
-    void stepTime();                // Update time every second
+    void stepTime();                 // Update time every second
     void updateBatteryLevel();
     void updateProfileInfo();
     bool loginAttempt(string passwordGuess);
+    void powerOff() { isTurnedOn = false; };
+    void powerOn() { isTurnedOn = true; };
 
     // Getters
     struct tm *getCurrentTimeStruct() { return currentTime; }
@@ -76,6 +78,6 @@ private:
     Options *options;           // System Options
 
 private slots:
-    void stepMachine();         // TODO: Implement machine step function
+    void stepMachine(); // TODO: Implement machine step function
 };
 #endif // MACHINE_H

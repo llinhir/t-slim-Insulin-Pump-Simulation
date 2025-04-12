@@ -42,6 +42,9 @@ MainWindow::MainWindow(QWidget *parent)
     // connecting slots for when OFF
     connect(ui->powerOnButton, &QPushButton::clicked, this, [this]()
             { turnOnOff(ON); });
+    connect(ui->powerOffButton, &QPushButton::clicked, this, [this]()
+            { turnOnOff(OFF); });
+
     connect(ui->chargeButton, &QPushButton::clicked, this, [this]()
             { chargeBattery(); });
 
@@ -62,7 +65,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->editProfileButton, &QPushButton::clicked, this, [this]()
             { switchPage(EDIT_PROFILE_PAGE); });
     connect(ui->viewGraphButton, &QPushButton::clicked, this, [this]()
-                { switchPage(GRAPH_PAGE); });
+            { switchPage(GRAPH_PAGE); });
 
     // connecting slots for the back buttons
     connect(ui->optionsBack, &QPushButton::clicked, this, [this]()
@@ -119,6 +122,14 @@ bool MainWindow::submitPassword()
 
 void MainWindow::turnOnOff(PageIndex pageName)
 {
+    if (pageName == OFF)
+    {
+        mach->powerOff();
+    }
+    else
+    {
+        mach->powerOn();
+    }
     if (mach->getCurrentBatteryLevel() > 0)
     {
         ui->simulation->setCurrentIndex(pageName);

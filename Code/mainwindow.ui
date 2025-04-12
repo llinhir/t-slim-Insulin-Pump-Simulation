@@ -556,6 +556,19 @@
          <string>Profiles</string>
         </property>
        </widget>
+       <widget class="QPushButton" name="powerOffButton">
+        <property name="geometry">
+         <rect>
+          <x>80</x>
+          <y>310</y>
+          <width>401</width>
+          <height>51</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>POWER OFF</string>
+        </property>
+       </widget>
        <zorder>textBrowser_5</zorder>
        <zorder>label_2</zorder>
        <zorder>pushButton_5</zorder>
@@ -564,6 +577,7 @@
        <zorder>pushButton_8</zorder>
        <zorder>optionsBack</zorder>
        <zorder>profilesButton</zorder>
+       <zorder>powerOffButton</zorder>
       </widget>
       <widget class="QWidget" name="bolusPage">
        <widget class="QLabel" name="label_11">
@@ -1172,7 +1186,6 @@
          <font>
           <family>Monospace</family>
           <pointsize>16</pointsize>
-          <weight>75</weight>
           <bold>true</bold>
          </font>
         </property>
@@ -1327,7 +1340,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>22</height>
+     <height>19</height>
     </rect>
    </property>
    <widget class="QMenu" name="menut_slim_Insulin_Pump_Simulation">
