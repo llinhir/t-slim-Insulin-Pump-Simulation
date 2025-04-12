@@ -124,7 +124,7 @@ void machine::updateBatteryLevel() // this will be called every step, update ui
         // check if battery is low
         if (currentBatteryLevel == 20)
         {
-            ui->logger->append("Battery Low: Please Charge");
+            ui->logger->append("Warning: Battery Low");
             cout << "Battery low" << endl; // add this to history and ui
         }
     }
@@ -330,6 +330,12 @@ void machine::setActiveProfile(int index)
     currentProfile = profiles.at(index);
     QString profileMessage = "Active Profile: " + QString::fromStdString(currentProfile->getProfileName());
     ui->activeProfileLabel->setText(profileMessage);
+}
+
+void machine::stepInsulin(){
+    if (currentInsulinAmount < 70){
+        ui->logger->append("Warning: Low Insulin");
+    }
 }
 
 void machine::refillInsulin()

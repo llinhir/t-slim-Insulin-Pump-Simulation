@@ -53,6 +53,7 @@ public:
     void deleteProfile();
     void setActiveProfile(int index);
     void refillInsulin();
+    void stepInsulin();
 
 private:
     Ui::MainWindow *ui;
