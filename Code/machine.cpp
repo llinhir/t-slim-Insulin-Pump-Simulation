@@ -257,6 +257,12 @@ void machine::createProfile()
 
 void machine::editProfile(int index)
 {
+    try{
+        profiles.at(index);
+    }
+    catch(const std::out_of_range& e) {
+        return;
+    }
     currentProfile = profiles.at(index);
     ui->stackedWidget->setCurrentIndex(EDIT_SPECIFIC_PROFILE_PAGE);
     ui->newBasalRate->setText(QString::number(currentProfile->getBasalRate()));
@@ -301,6 +307,12 @@ void machine::deleteProfile()
 
 void machine::setActiveProfile(int index)
 {
+    try{
+        profiles.at(index);
+    }
+    catch(const std::out_of_range& e) {
+        return;
+    }
     currentProfile = profiles.at(index);
     QString profileMessage = "Active Profile: " + QString::fromStdString(currentProfile->getProfileName());
     ui->activeProfileLabel->setText(profileMessage);
