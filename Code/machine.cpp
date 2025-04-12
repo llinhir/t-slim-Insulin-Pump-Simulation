@@ -119,6 +119,7 @@ void machine::updateBatteryLevel() // this will be called every step, update ui
         // check if battery is low
         if (currentBatteryLevel == 20)
         {
+            ui->logger->append("Battery Low: Please Charge");
             cout << "Battery low" << endl; // add this to history and ui
         }
     }
@@ -189,13 +190,13 @@ bool machine::loginAttempt(string passwordGuess)
     // Check if the password is correct
     if (passwordGuess == password)
     {
-        cout << "Correct Password" << endl;
+        ui->logger->append("Login Successful");
         isLoggedIn = true;
         return true;
     }
     else
     {
-        cout << "Incorrect Password" << endl;
+        ui->logger->append("Incorrect Password");
         return false;
     }
 }
@@ -261,6 +262,12 @@ void machine::createProfile()
 
 void machine::editProfile(int index)
 {
+    try{
+        profiles.at(index);
+    }
+    catch(const std::out_of_range& e) {
+        return;
+    }
     currentProfile = profiles.at(index);
     ui->stackedWidget->setCurrentIndex(EDIT_SPECIFIC_PROFILE_PAGE);
     ui->newBasalRate->setText(QString::number(currentProfile->getBasalRate()));
@@ -305,6 +312,12 @@ void machine::deleteProfile()
 
 void machine::setActiveProfile(int index)
 {
+    try{
+        profiles.at(index);
+    }
+    catch(const std::out_of_range& e) {
+        return;
+    }
     currentProfile = profiles.at(index);
     QString profileMessage = "Active Profile: " + QString::fromStdString(currentProfile->getProfileName());
     ui->activeProfileLabel->setText(profileMessage);
