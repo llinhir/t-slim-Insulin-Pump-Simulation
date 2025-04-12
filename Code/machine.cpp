@@ -16,7 +16,7 @@ machine::machine(Ui::MainWindow *ui)
 
     // initliaze variables and classes
     currentBatteryLevel = 100;
-    currentInsulinAmount = 300; // in mL, will be out of 300 ml
+    currentInsulinAmount = 100; // in mL, will be out of 300 ml
 
     isLoggedIn = false;
     isTurnedOn = true;
@@ -330,4 +330,11 @@ void machine::setActiveProfile(int index)
     currentProfile = profiles.at(index);
     QString profileMessage = "Active Profile: " + QString::fromStdString(currentProfile->getProfileName());
     ui->activeProfileLabel->setText(profileMessage);
+}
+
+void machine::refillInsulin()
+{
+    currentInsulinAmount = 300; // in mL, will be out of 300 ml
+    ui->insulinBar->setValue(currentInsulinAmount);
+    ui->logger->append("Insulin Refilled");
 }

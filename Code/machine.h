@@ -52,6 +52,7 @@ public:
     void saveProfile(); // Helper function for editProfile()
     void deleteProfile();
     void setActiveProfile(int index);
+    void refillInsulin();
 
 private:
     Ui::MainWindow *ui;

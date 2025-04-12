@@ -4,6 +4,7 @@ Simulation::Simulation(Ui::MainWindow *ui)
 {
 
     m = new machine(ui);
+    IOB = 0;
     this->ui = ui;
     bolus = new Bolus(ui, m);
 }

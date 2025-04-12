@@ -26,6 +26,7 @@ public:
 private:
     machine *m;
     Bolus *bolus;
+    int IOB; // Insulin on board
     Ui::MainWindow *ui;
 };
 

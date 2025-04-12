@@ -47,6 +47,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(ui->chargeButton, &QPushButton::clicked, this, [this]()
             { chargeBattery(); });
+    connect(ui->refillInsulinButton, &QPushButton::clicked, this, [this]()
+            { mach->refillInsulin(); });
 
     // connecting slots for when ON
     connect(ui->submitPassword, &QPushButton::clicked, this, &MainWindow::submitPassword);

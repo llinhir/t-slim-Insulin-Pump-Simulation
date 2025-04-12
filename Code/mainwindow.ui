@@ -1333,6 +1333,19 @@
      <string>Charge</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="refillInsulinButton">
+    <property name="geometry">
+     <rect>
+      <x>170</x>
+      <y>20</y>
+      <width>121</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Refill Insulin</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
