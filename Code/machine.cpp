@@ -25,7 +25,11 @@ machine::machine(Ui::MainWindow *ui)
     ui->batteryBar->setValue(currentBatteryLevel);
     ui->insulinBar->setValue(currentInsulinAmount);
 
+    // creates a timer that updates the time by 5 minutes (in simulation) every 5 seconds (irl)
     getCurrentTime(); // Get current and apply time and date
+    QTimer *timer = new QTimer(this);
+    connect(timer, &QTimer::timeout, this, &machine::stepMachine);
+    timer->start(5000);
 
     // print for testing
     cout << "Current time: " << currentHour << ":" << currentMinute << " " << currentDay << "/" << currentMonth << "/" << currentYear << endl;
@@ -196,7 +200,7 @@ bool machine::loginAttempt(string passwordGuess)
     }
 }
 
-void machine::stepTime() // this is wrong
+void machine::stepTime()
 {
     // cout << "Stepping time" << endl;
     // cout << "Time before: " << currentHour << ":" << currentMinute << " " << currentDay << "/" << currentMonth << "/" << currentYear << endl;

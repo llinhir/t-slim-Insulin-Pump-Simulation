@@ -4,6 +4,7 @@
 #include <ctime>
 #include <iostream>
 #include <vector>
+#include <QTimer>
 
 #include <string>
 #include "ui_mainwindow.h"
@@ -20,12 +21,10 @@ public:
     ~machine();
     tm *getCurrentTime();            // Get current time
     void addToHistory(string event); // Add event to history
-    void stepTime();                 // Update time every second
-    void stepMachine();              // TODO: Implement machine step function
+    void stepTime();                // Update time every second
     void updateBatteryLevel();
     void updateProfileInfo();
     bool loginAttempt(string passwordGuess);
-    bool hasBattery() { return currentBatteryLevel > 0; };
 
     // Getters
     struct tm *getCurrentTimeStruct() { return currentTime; }
@@ -37,6 +36,7 @@ public:
     bool getIsTurnedOn() { return isTurnedOn; }
     bool getIsLoggedIn() { return isLoggedIn; }
     Profile *getCurrentProfile() { return currentProfile; }
+    bool hasBattery() { return currentBatteryLevel > 0; };
 
     // Setters
     void setCurrentBatteryLevel(int level) { currentBatteryLevel = level; }
@@ -74,5 +74,8 @@ private:
     vector<Profile *> profiles; // List of profiles
     Profile *currentProfile;    // Current profile
     Options *options;           // System Options
+
+private slots:
+    void stepMachine();         // TODO: Implement machine step function
 };
 #endif // MACHINE_H
