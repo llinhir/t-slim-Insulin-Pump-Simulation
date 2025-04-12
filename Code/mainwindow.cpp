@@ -86,8 +86,13 @@ MainWindow::MainWindow(QWidget *parent)
             { switchPage(prevPageMap[EDIT_SPECIFIC_PROFILE_PAGE]); });
 
     // THIS IS ONLY FOR TESTING AND CONCEPT, please dont remove until done -_-
-    QLineSeries *batterySeries = new QLineSeries();
-    *batterySeries << QPointF(0, 100) << QPointF(1, 40) << QPointF(2, 80) << QPointF(3, 50); // Example data
+    QSplineSeries *batterySeries = new QSplineSeries(); // Curved line
+    *batterySeries << QPointF(0, 100) << QPointF(1, 40) << QPointF(2, 80) << QPointF(3, 50);
+
+    QPen pen(Qt::blue);
+    pen.setStyle(Qt::DotLine);
+    pen.setWidth(2);
+    batterySeries->setPen(pen);
 
     QChart *batteryChart = new QChart();
     batteryChart->addSeries(batterySeries);
@@ -97,7 +102,7 @@ MainWindow::MainWindow(QWidget *parent)
     QChartView *chartView = new QChartView(batteryChart);
     chartView->setRenderHint(QPainter::Antialiasing);
 
-    // Set the chart view in the UI (for example, add to the layout)
+    // Set the chart view in the UI
     ui->chartLayout->addWidget(chartView);
 }
 
