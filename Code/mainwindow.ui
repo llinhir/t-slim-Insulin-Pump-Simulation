@@ -58,14 +58,14 @@
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="geometry">
        <rect>
-        <x>30</x>
+        <x>20</x>
         <y>80</y>
         <width>571</width>
         <height>441</height>
        </rect>
       </property>
       <property name="currentIndex">
-       <number>3</number>
+       <number>10</number>
       </property>
       <widget class="QWidget" name="loginPage">
        <widget class="QLabel" name="label_8">
@@ -468,7 +468,7 @@
          <set>Qt::AlignCenter</set>
         </property>
        </widget>
-       <widget class="QPushButton" name="pushButton_5">
+       <widget class="QPushButton" name="insulinButton">
         <property name="geometry">
          <rect>
           <x>80</x>
@@ -478,7 +478,7 @@
          </rect>
         </property>
         <property name="text">
-         <string>STOP INSULIN</string>
+         <string>INSULIN</string>
         </property>
        </widget>
        <widget class="QPushButton" name="pushButton_6">
@@ -553,7 +553,7 @@
          </rect>
         </property>
         <property name="text">
-         <string>Profiles</string>
+         <string>PROFILES</string>
         </property>
        </widget>
        <widget class="QPushButton" name="powerOffButton">
@@ -571,7 +571,7 @@
        </widget>
        <zorder>textBrowser_5</zorder>
        <zorder>label_2</zorder>
-       <zorder>pushButton_5</zorder>
+       <zorder>insulinButton</zorder>
        <zorder>pushButton_6</zorder>
        <zorder>pushButton_7</zorder>
        <zorder>pushButton_8</zorder>
@@ -1186,6 +1186,7 @@
          <font>
           <family>Monospace</family>
           <pointsize>16</pointsize>
+          <weight>75</weight>
           <bold>true</bold>
          </font>
         </property>
@@ -1204,6 +1205,70 @@
         </property>
         <property name="text">
          <string>Back</string>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="insulinPage">
+       <widget class="QTextBrowser" name="textBrowser_7">
+        <property name="geometry">
+         <rect>
+          <x>-10</x>
+          <y>-10</y>
+          <width>601</width>
+          <height>461</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton">
+        <property name="geometry">
+         <rect>
+          <x>50</x>
+          <y>60</y>
+          <width>81</width>
+          <height>51</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_2">
+        <property name="geometry">
+         <rect>
+          <x>50</x>
+          <y>130</y>
+          <width>471</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Switch active profile</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_3">
+        <property name="geometry">
+         <rect>
+          <x>50</x>
+          <y>290</y>
+          <width>461</width>
+          <height>51</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Start Insulin Delivery</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_24">
+        <property name="geometry">
+         <rect>
+          <x>50</x>
+          <y>30</y>
+          <width>131</width>
+          <height>17</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Basal Rate</string>
         </property>
        </widget>
       </widget>
@@ -1340,7 +1405,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>19</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menut_slim_Insulin_Pump_Simulation">

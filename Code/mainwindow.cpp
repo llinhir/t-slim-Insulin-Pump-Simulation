@@ -66,6 +66,8 @@ MainWindow::MainWindow(QWidget *parent)
             { switchPage(EDIT_PROFILE_PAGE); });
     connect(ui->viewGraphButton, &QPushButton::clicked, this, [this]()
             { switchPage(GRAPH_PAGE); });
+    connect(ui->insulinButton, &QPushButton::clicked, this, [this]()
+            { switchPage(INSULIN_PAGE); });
 
     // connecting slots for the back buttons
     connect(ui->optionsBack, &QPushButton::clicked, this, [this]()

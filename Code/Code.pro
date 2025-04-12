@@ -13,6 +13,7 @@ CONFIG += c++11
 SOURCES += \
     bolus.cpp \
     createprofile.cpp \
+    insulin.cpp \
     machine.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -23,6 +24,7 @@ SOURCES += \
 HEADERS += \
     bolus.h \
     createprofile.h \
+    insulin.h \
     machine.h \
     mainwindow.h \
     options.h \
