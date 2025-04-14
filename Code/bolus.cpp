@@ -27,7 +27,7 @@ void Bolus::viewCalculation()
     carbohydrates = _ui->addCarbsButton->text().toFloat();
     currGlucose = _ui->addGlucoseButton->text().toFloat();
     cout << "Carbs: " << carbohydrates << "\nGlucose: " << currGlucose << endl;
-    int units = 0; // CHANGE WHEN INSULIN ON BOARD IS IMPLEMENTED!!!!!!!!!!!!!
+    int units = 5; // CHANGE WHEN INSULIN ON BOARD IS IMPLEMENTED!!!!!!!!!!!!!
     bolusCalculation(carbohydrates, currGlucose, units);
 }
 
@@ -42,8 +42,8 @@ void Bolus::bolusCalculation(int carbs, float glucose, int insulinOnBoard)
     float totalBolus = foodBolus + correctionBolus;
     float finalBolus = totalBolus - insulinOnBoard;
 
-    cout << "View Calculation: " << fixed << setprecision(5) << finalBolus << endl;
-    QString floatString = QString::number(finalBolus, 'f', 5);
+    cout << "View Calculation: " << fixed << setprecision(3) << finalBolus << endl;
+    QString floatString = QString::number(finalBolus, 'f', 3);
     _ui->editManualBolus->setText(floatString); // it is not changing :(
 }
 

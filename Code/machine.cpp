@@ -14,7 +14,7 @@ machine::machine(Ui::MainWindow *ui)
     // Initialize the UI
     this->ui = ui;
 
-    // initliaze variables and classes
+    // Initialize variables and classes
     currentBatteryLevel = 100;
     currentInsulinAmount = 100; // in units, will be out of 300 u
 
@@ -38,8 +38,8 @@ machine::machine(Ui::MainWindow *ui)
     // initalize the other classes
     options = new Options(ui);
 
-    // hard coding a test profile as the initial active profile
-    currentProfile = new Profile(0.8, 2, 3, 4, "test profile");
+    // hard coding a test profile as the initial active profile, uses values from the List of Features
+    currentProfile = new Profile(6, 1, 1, 5, "test profile");  // was 0.8, 2, 3, 4
     profiles.push_back(currentProfile);
     setActiveProfile(0);
 
@@ -53,6 +53,7 @@ machine::~machine()
     // cout << "Destructor called" << endl;
 }
 
+// Break  down time into usable data for the ui and program
 tm *machine::getCurrentTime() // as a note, the current time should not be compute heavy, if it is just stick to updating the time
 {
     // Get current time
@@ -68,14 +69,15 @@ tm *machine::getCurrentTime() // as a note, the current time should not be compu
     return currentTime;
 }
 
+// Add event to history
 void machine::addToHistory(string event)
 {
-    // Add event to history
     history.push_back(event);
     cout << "Event added to history: " << event << endl;
 }
 
-void machine::updateBatteryLevel() // this will be called every step, update ui
+// Updates UI based on device status (on/off charging/not charging)
+void machine::updateBatteryLevel() // will be called every step
 {
     if (!isTurnedOn) // leave early if the machine is off
     {
@@ -110,6 +112,7 @@ void machine::updateBatteryLevel() // this will be called every step, update ui
     ui->batteryBar->setValue(currentBatteryLevel);
 }
 
+// User can select a profile; if the selected profile is empty, it does not update current profile
 void machine::updateProfileInfo()
 {
     cout << "Updating profile info" << endl;
@@ -310,6 +313,7 @@ void machine::setActiveProfile(int index)
     ui->activeProfileLabel->setText(profileMessage);
 }
 
+// Updates UI based on how much insulin is stored in the device
 void machine::stepInsulin(){
     cout << "Updating insulin level" << endl;
 
