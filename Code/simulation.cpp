@@ -7,18 +7,9 @@ Simulation::Simulation(Ui::MainWindow *ui)
     IOB = 0;
     this->ui = ui;
     bolus = new Bolus(ui, m);
+    insulin = new Insulin(ui, m);
 }
 
-////void Simulation::startSimulation(){
-//////    bool correctPass = false;
-//////    string
-//////    if(isCharging){
-//////        while(!correctPass){
-
-//////            correctPass = enterPassword(profile, input);
-//////        }
-//////    }
-////}
 
 bool Simulation::enterPassword(string input)
 {
@@ -33,12 +24,3 @@ bool Simulation::enterPassword(string input)
     }
 }
 
-////    QString password = ui->passwordInput->text(); // Assuming "passwordInput" is your QLineEdit
-////    if(password.toStdString() == profile->getPassword()){
-////        qInfo("Correct Password");
-////        return true;
-////    }else{
-////        qInfo("Incorrect Password");
-////        return false;
-////    }
-//}

@@ -8,5 +8,6 @@ Options::Options(Ui::MainWindow *ui) : _ui(ui)
 Profile *Options::createProfile()
 {
     qInfo("Creating profile");
+    //_ui->stackedWidget->setCurrentIndex(EDIT_SPECIFIC_PROFILE_PAGE); // brings the user to see all the profiles
     return _createProfile->completeProfile();
 }

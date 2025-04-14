@@ -9,7 +9,7 @@ CreateProfile::CreateProfile(Ui::MainWindow *ui) :
 
 
 Profile* CreateProfile::completeProfile(){
-    _inputBasalRate = _ui->editBasalRate->text().toInt();//Name of UI Element for this field
+    _inputBasalRate = _ui->editBasalRate->text().toDouble(); //Name of UI Element for this field
     _inputCarbohydrateRatio = _ui->editCarbohydrateRatio->text().toInt();//Name of UI Element for this field
     _inputCorrectionFactor = _ui->editCorrectionFactor->text().toInt();//Name of UI Element for this field
     _inputTargetGlucoseLevel = _ui->editTargetGlucose->text().toInt();//Name of UI Element for this field

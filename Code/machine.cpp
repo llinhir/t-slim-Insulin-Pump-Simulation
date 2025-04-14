@@ -16,7 +16,7 @@ machine::machine(Ui::MainWindow *ui)
 
     // initliaze variables and classes
     currentBatteryLevel = 100;
-    currentInsulinAmount = 100; // in mL, will be out of 300 ml
+    currentInsulinAmount = 100; // in units, will be out of 300 u
 
     isLoggedIn = false;
     isTurnedOn = true;
@@ -34,40 +34,17 @@ machine::machine(Ui::MainWindow *ui)
     // print for testing
     cout << "Current time: " << currentHour << ":" << currentMinute << " " << currentDay << "/" << currentMonth << "/" << currentYear << endl;
     cout << "Current Date: " << currentDay << "/" << currentMonth << "/" << currentYear << endl;
+
+    // initalize the other classes
     options = new Options(ui);
 
-    connect(ui->createProfileSaveButton, &QPushButton::clicked, this, [this]()
-            { createProfile(); });
+    // hard coding a test profile as the initial active profile
+    currentProfile = new Profile(0.8, 2, 3, 4, "test profile");
+    profiles.push_back(currentProfile);
+    setActiveProfile(0);
 
-    connect(ui->editProfileButton, &QPushButton::clicked, this, [this]()
-            { updateProfileInfo(); });
-
-    connect(ui->profile1Button, &QPushButton::clicked, this, [this]()
-            { editProfile(0); });
-    connect(ui->profile2Button, &QPushButton::clicked, this, [this]()
-            { editProfile(1); });
-    connect(ui->profile3Button, &QPushButton::clicked, this, [this]()
-            { editProfile(2); });
-    connect(ui->profile4Button, &QPushButton::clicked, this, [this]()
-            { editProfile(3); });
-    connect(ui->profile5Button, &QPushButton::clicked, this, [this]()
-            { editProfile(4); });
-
-    connect(ui->selectProfile1, &QPushButton::clicked, this, [this]()
-            { setActiveProfile(0); });
-    connect(ui->selectProfile2, &QPushButton::clicked, this, [this]()
-            { setActiveProfile(1); });
-    connect(ui->selectProfile3, &QPushButton::clicked, this, [this]()
-            { setActiveProfile(2); });
-    connect(ui->selectProfile4, &QPushButton::clicked, this, [this]()
-            { setActiveProfile(3); });
-    connect(ui->selectProfile5, &QPushButton::clicked, this, [this]()
-            { setActiveProfile(4); });
-
-    connect(ui->saveProfileButton, &QPushButton::clicked, this, [this]()
-            { saveProfile(); });
-    connect(ui->deleteProfileButton, &QPushButton::clicked, this, [this]()
-            { deleteProfile(); });
+    // function holds all the slot connections, if you create more connects, pls add them to the function
+    connectSlots();
 }
 
 machine::~machine()
@@ -254,6 +231,7 @@ void machine::stepMachine()
 {
     stepTime();
     updateBatteryLevel();
+    stepInsulin();
 }
 
 void machine::createProfile()
@@ -286,7 +264,7 @@ void machine::editProfile(int index)
 
 void machine::saveProfile()
 {
-    currentProfile->setBasalRate(ui->newBasalRate->text().toInt());
+    currentProfile->setBasalRate(ui->newBasalRate->text().toDouble());
     currentProfile->setCarbohydrateRatio(ui->newCarbohydrateRatio->text().toInt());
     currentProfile->setCorrectionFactor(ui->newCorrectionFactor->text().toInt());
     currentProfile->setTargetGlucoseLevel(ui->newTargetGlucose->text().toInt());
@@ -333,9 +311,17 @@ void machine::setActiveProfile(int index)
 }
 
 void machine::stepInsulin(){
-    if (currentInsulinAmount < 70){
+    cout << "Updating insulin level" << endl;
+
+    
+    if (currentInsulinAmount <= 0){
+        currentInsulinAmount = 0;
+    }
+    if(currentInsulinAmount < 70){
         ui->logger->append("Warning: Low Insulin");
     }
+
+    ui->insulinBar->setValue(currentInsulinAmount);
 }
 
 void machine::refillInsulin()
@@ -343,4 +329,39 @@ void machine::refillInsulin()
     currentInsulinAmount = 300; // in mL, will be out of 300 ml
     ui->insulinBar->setValue(currentInsulinAmount);
     ui->logger->append("Insulin Refilled");
+}
+
+void machine::connectSlots(){
+    connect(ui->createProfileSaveButton, &QPushButton::clicked, this, [this]()
+            { createProfile(); });
+
+    connect(ui->editProfileButton, &QPushButton::clicked, this, [this]()
+            { updateProfileInfo(); });
+
+    connect(ui->profile1Button, &QPushButton::clicked, this, [this]()
+            { editProfile(0); });
+    connect(ui->profile2Button, &QPushButton::clicked, this, [this]()
+            { editProfile(1); });
+    connect(ui->profile3Button, &QPushButton::clicked, this, [this]()
+            { editProfile(2); });
+    connect(ui->profile4Button, &QPushButton::clicked, this, [this]()
+            { editProfile(3); });
+    connect(ui->profile5Button, &QPushButton::clicked, this, [this]()
+            { editProfile(4); });
+
+    connect(ui->selectProfile1, &QPushButton::clicked, this, [this]()
+            { setActiveProfile(0); });
+    connect(ui->selectProfile2, &QPushButton::clicked, this, [this]()
+            { setActiveProfile(1); });
+    connect(ui->selectProfile3, &QPushButton::clicked, this, [this]()
+            { setActiveProfile(2); });
+    connect(ui->selectProfile4, &QPushButton::clicked, this, [this]()
+            { setActiveProfile(3); });
+    connect(ui->selectProfile5, &QPushButton::clicked, this, [this]()
+            { setActiveProfile(4); });
+
+    connect(ui->saveProfileButton, &QPushButton::clicked, this, [this]()
+            { saveProfile(); });
+    connect(ui->deleteProfileButton, &QPushButton::clicked, this, [this]()
+            { deleteProfile(); });
 }

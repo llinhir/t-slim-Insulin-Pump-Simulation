@@ -2,6 +2,7 @@
 #define OPTIONS_H
 
 #include "createprofile.h"
+#include "defs.h"
 
 class Options
 {
@@ -10,7 +11,7 @@ public:
     void stopInsulin();
     void shutDown();
     void sleep();
-    void setBasalRate(int basal);
+    void setBasalRate(double basal);
     Profile* createProfile();
 
     //getters

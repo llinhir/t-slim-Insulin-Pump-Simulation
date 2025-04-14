@@ -14,7 +14,7 @@ public:
 
 private:
     Ui::MainWindow *_ui;
-    int _inputBasalRate;
+    double _inputBasalRate;
     int _inputCarbohydrateRatio;
     int _inputCorrectionFactor;
     int _inputTargetGlucoseLevel;

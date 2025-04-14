@@ -69,7 +69,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->viewGraphButton, &QPushButton::clicked, this, [this]()
             { switchPage(GRAPH_PAGE); });
     connect(ui->insulinButton, &QPushButton::clicked, this, [this]()
-            { switchPage(INSULIN_PAGE); });
+            { switchPage(INSULIN_PAGE); // TODO: also call the set basal rate function
+                });
 
     // connecting slots for the back buttons
     connect(ui->optionsBack, &QPushButton::clicked, this, [this]()

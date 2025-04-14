@@ -7,10 +7,11 @@
 #include <QTimer>
 
 #include <string>
+#include "defs.h"
 #include "ui_mainwindow.h"
 #include "profile.h"
 #include "options.h"
-#include "defs.h"
+
 
 using namespace std;
 
@@ -19,6 +20,7 @@ class machine : public QObject
 public:
     machine(Ui::MainWindow *ui);
     ~machine();
+    void connectSlots();             // Function holding all the slot connects to declutter the machine constructor
     tm *getCurrentTime();            // Get current time
     void addToHistory(string event); // Add event to history
     void stepTime();                 // Update time every second
@@ -67,8 +69,10 @@ private:
 
     vector<string> history; // History of events
     int currentPage;
-    int currentInsulinAmount; // in mL, will be out of 300 ml
+    int currentInsulinAmount; // This is the amount of insulin in the machine in u, will be out of 300 u
     int currentBatteryLevel;
+    int userGlucoseLevel;       // Current Blood Glucose of User, in mmol/L
+    int userInsulinOnBoard;     // The amount of insulin still inside the body after a bolus injection
 
     bool isCharging;
     bool isTurnedOn;
@@ -78,6 +82,7 @@ private:
     vector<Profile *> profiles; // List of profiles
     Profile *currentProfile;    // Current profile
     Options *options;           // System Options
+
 
 private slots:
     void stepMachine(); // TODO: Implement machine step function
