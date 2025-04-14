@@ -5,6 +5,8 @@
 #include <iostream>
 #include <vector>
 #include <QTimer>
+#include <sstream>
+#include <iomanip>
 
 #include <string>
 #include "defs.h"
@@ -56,6 +58,9 @@ public:
     void setActiveProfile(int index);
     void refillInsulin();
     void stepInsulin();
+
+    // QoL functions to save space
+    QString returnString(Profile* profile);
 
 private:
     Ui::MainWindow *ui;

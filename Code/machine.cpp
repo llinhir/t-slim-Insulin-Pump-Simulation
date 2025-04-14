@@ -42,6 +42,7 @@ machine::machine(Ui::MainWindow *ui)
     currentProfile = new Profile(0.8, 2, 3, 4, "test profile");
     profiles.push_back(currentProfile);
     setActiveProfile(0);
+    updateProfileInfo();
 
     // function holds all the slot connections, if you create more connects, pls add them to the function
     connectSlots();
@@ -118,52 +119,62 @@ void machine::updateProfileInfo()
     {
         ui->profile1Button->setText(QString::fromStdString(profiles.at(0)->getProfileName()));
         ui->selectProfile1->setText(QString::fromStdString(profiles.at(0)->getProfileName()));
+        ui->basalRate1->setText(returnString(profiles.at(0)));
         if (profiles.size() > 1)
         {
             ui->profile2Button->setText(QString::fromStdString(profiles.at(1)->getProfileName()));
             ui->selectProfile2->setText(QString::fromStdString(profiles.at(1)->getProfileName()));
+            ui->basalRate2->setText(returnString(profiles.at(1)));
         }
         else
         {
             ui->profile2Button->setText("No Profile");
             ui->selectProfile2->setText("No Profile");
+            ui->basalRate2->setText("No Profile");
         }
         if (profiles.size() > 2)
         {
             ui->profile3Button->setText(QString::fromStdString(profiles.at(2)->getProfileName()));
             ui->selectProfile3->setText(QString::fromStdString(profiles.at(2)->getProfileName()));
+            ui->basalRate3->setText(returnString(profiles.at(2)));
         }
         else
         {
             ui->profile3Button->setText("No Profile");
             ui->selectProfile3->setText("No Profile");
+            ui->basalRate3->setText("No Profile");
         }
         if (profiles.size() > 3)
         {
             ui->profile4Button->setText(QString::fromStdString(profiles.at(3)->getProfileName()));
             ui->selectProfile4->setText(QString::fromStdString(profiles.at(3)->getProfileName()));
+            ui->basalRate4->setText(returnString(profiles.at(3)));
         }
         else
         {
             ui->profile4Button->setText("No Profile");
             ui->selectProfile4->setText("No Profile");
+            ui->basalRate4->setText("No Profile");
         }
         if (profiles.size() > 4)
         {
             ui->profile5Button->setText(QString::fromStdString(profiles.at(4)->getProfileName()));
             ui->selectProfile5->setText(QString::fromStdString(profiles.at(4)->getProfileName()));
+            ui->basalRate5->setText(returnString(profiles.at(4)));
         }
         else
         {
             ui->profile5Button->setText("No Profile");
             ui->selectProfile5->setText("No Profile");
+            ui->basalRate5->setText("No Profile");
         }
     }
     else
     {
         cout << "No profiles available" << endl;
         ui->profile1Button->setText("No Profile");
-        ui->selectProfile1->setText("No Profile");
+        ui->selectProfile1->setText("No Profile");\
+        ui->basalRate1->setText("No Profile");
     }
 }
 
@@ -364,4 +375,14 @@ void machine::connectSlots(){
             { saveProfile(); });
     connect(ui->deleteProfileButton, &QPushButton::clicked, this, [this]()
             { deleteProfile(); });
+}
+
+QString machine::returnString(Profile* profile) {
+    std::string name = profile->getProfileName();
+    double rate = profile->getBasalRate();
+
+    std::ostringstream stream;
+    stream << name << "\n" << std::fixed << std::setprecision(2) << rate;
+
+    return QString::fromStdString(stream.str());
 }
