@@ -13,7 +13,7 @@ public:
 
     void setBasalRates(); // grabs the basal rates from profiles -> sets them as options
 
-    void startInsulinDelivery();
+    void startInsulinDelivery(float insulinAmt);
     void pauseInsulin();
 
     // stoping insulin

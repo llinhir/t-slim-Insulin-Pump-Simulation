@@ -14,8 +14,9 @@ void Insulin::setBasalRates(){
     qInfo("setting basal rates");
 } // grabs the basal rates from profiles -> sets them as options
 
-void Insulin::startInsulinDelivery(){
-
+void Insulin::startInsulinDelivery(float insulinAmt){
+    cout << "Delivering insulin: " << insulinAmt << " units" << endl;
+    // edit device and user values
 }
 void Insulin::pauseInsulin(){
 

@@ -8,7 +8,7 @@ class Options
 {
 public:
     Options(Ui::MainWindow *ui);
-    void stopInsulin();
+    void stopInsulin(); // can call Insulin::manualStopInsulin, but rn including "insulin.h" here makes a cycle :(
     void shutDown();
     void sleep();
     void setBasalRate(double basal);

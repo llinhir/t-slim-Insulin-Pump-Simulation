@@ -5,13 +5,14 @@
 #include "ui_mainwindow.h"
 #include "profile.h"
 #include "machine.h"
+#include "insulin.h"
 
 class Bolus : public QObject
 {
 
 public:
     // constructor
-    Bolus(Ui::MainWindow *ui, machine *machine);
+    Bolus(Ui::MainWindow *ui, machine *machine, Insulin *insulin);
 
     // destructor
     ~Bolus();
@@ -19,16 +20,14 @@ public:
     // calculator
     void viewCalculation();                                              // calls regular bolus calculation
     void cgmCalculation();                                               // calls CGM bolus calculation IN PROGRESS
-    void bolusCalculation(int carbs, float glucose, int insulinOnBoard); // or should these just be part of the constructor????????
-    // view calculation
-    // administer bolus??
+    void bolusCalculation(int carbs, float glucose, int insulinOnBoard);
 
-    // features
-    // manualBolus();
-    // quickBolus();
-    // extendedBolus();
-    // cancelBolus();
-    // stopOngoingBolus();
+    // features- press button to administer/activate
+    void manualBolus();
+    void immediateBolus();
+    void extendedBolus();
+    void stopOngoingBolus();
+    void cancelBolus();
 
     // getters
     float getGlucose() { return currGlucose; }; // IDK IF IT IS GOOD TO HAVE THESE HERE
@@ -46,7 +45,9 @@ private:
     float currGlucose; // mmol/L
     int carbohydrates; // grams
     machine *thisMachine;
+    Insulin *_insulin;
     Profile *currProfile;
+    float currBolus;
 
 }; // Bolus class
 
