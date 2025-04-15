@@ -102,6 +102,8 @@ void machine::updateBatteryLevel() // will be called every step
         if (currentBatteryLevel < 0)
         {
             currentBatteryLevel = 0;
+            powerOff();
+            ui->simulation->setCurrentIndex(OFF);
         }
         // check if battery is low
         if (currentBatteryLevel == 20)
