@@ -36,19 +36,21 @@ public:
     struct tm *getCurrentTimeStruct() { return currentTime; }
     vector<string> getHistory() { return history; }
     int getCurrentPage() { return currentPage; }
-    int getCurrentInsulinAmount() { return currentInsulinAmount; }
+    double getCurrentInsulinAmount() { return currentInsulinAmount; }
     int getCurrentBatteryLevel() { return currentBatteryLevel; }
     bool getIsCharging() { return isCharging; }
     bool getIsTurnedOn() { return isTurnedOn; }
     bool getIsLoggedIn() { return isLoggedIn; }
-    Profile *getCurrentProfile() { return currentProfile; }
     bool hasBattery() { return currentBatteryLevel > 0; };
+    Profile *getCurrentProfile() { return currentProfile; }
+    Profile *getProfile(size_t index); // implemented in .cpp to include out of bound checking
 
     // Setters
     void setCurrentBatteryLevel(int level) { currentBatteryLevel = level; }
     void setIsLoggedIn(bool loggedIn) { isLoggedIn = loggedIn; }
     void setIsTurnedOn(bool turnedOn) { isTurnedOn = turnedOn; }
     void setIsCharging(bool charging) { isCharging = charging; }
+    void setBasalRate(double rate) { currentBasalRate = rate; }
 
     // Machine Functinos
     void createProfile();
@@ -74,7 +76,7 @@ private:
 
     vector<string> history; // History of events
     int currentPage;
-    int currentInsulinAmount; // This is the amount of insulin in the machine in u, will be out of 300 u
+    double currentInsulinAmount; // This is the amount of insulin in the machine in u, will be out of 300 u
     int currentBatteryLevel;
     int userGlucoseLevel;       // Current Blood Glucose of User, in mmol/L
     int userInsulinOnBoard;     // The amount of insulin still inside the body after a bolus injection
@@ -82,11 +84,13 @@ private:
     bool isCharging;
     bool isTurnedOn;
     bool isLoggedIn;
+    int insulinStepCounter;     // used to make sure insulin is delivered every 60 minutes (in simulation)
 
     string password;            // Password for login
     vector<Profile *> profiles; // List of profiles
     Profile *currentProfile;    // Current profile
     Options *options;           // System Options
+    double currentBasalRate;       // The basal rate that the system drains from the Insulin gauge
 
 
 private slots:

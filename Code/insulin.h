@@ -10,23 +10,36 @@ class Insulin : public QObject
 {
 public:
     Insulin(Ui::MainWindow *ui, machine *machine);
+    void connectSlots(); // connects the buttons to functions
 
-    void setBasalRates(); // grabs the basal rates from profiles -> sets them as options
+    // basal functions
+    void setCurrBasalRate(size_t rate); // sets currBasalRate + updates the text in ui
+    void startBasalDelivery();
+    void pauseBasal();
+    void stopBasal();
+    void autoStopBasal();
 
-    void startInsulinDelivery(float insulinAmt);
-    void pauseInsulin();
+    // bolus functions
+    void startBolusDelivery(float bolus);
+    void pauseBolus();
+    void stopBolus();
 
-    // stoping insulin
-    void autoStopInsulin();
-    void manualStopInsulin();
+    // i kept these 2 functions for now cause i think jessica re
+//    void autoStopInsulin();
+//    void manualStopInsulin();
+
+
 
 
 private:
     Ui::MainWindow *_ui;
     machine* _machine;
+
     int currGlucose; // i think i grab this from machine
     double currBasalRate;
     bool isDeliveringInsulin;
+    bool isPausedBasal;
+    bool isPausedBolus;
 };
 
 #endif // INSULIN_H

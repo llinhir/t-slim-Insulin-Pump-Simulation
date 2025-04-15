@@ -17,10 +17,11 @@ machine::machine(Ui::MainWindow *ui)
     // Initialize variables and classes
     currentBatteryLevel = 100;
     currentInsulinAmount = 100; // in units, will be out of 300 u
-
+    currentBasalRate = 0;
     isLoggedIn = false;
     isTurnedOn = true;
     isCharging = false;
+    insulinStepCounter = 0;
 
     ui->batteryBar->setValue(currentBatteryLevel);
     ui->insulinBar->setValue(currentInsulinAmount);
@@ -245,6 +246,13 @@ void machine::stepMachine()
 {
     stepTime();
     updateBatteryLevel();
+
+    // Only step insulin once every 12 calls (i.e., 60 seconds)
+//    insulinStepCounter++;
+//    if (insulinStepCounter >= 12) {
+//        stepInsulin();
+//        insulinStepCounter = 0;
+//    }
     stepInsulin();
 }
 
@@ -326,9 +334,9 @@ void machine::setActiveProfile(int index)
 
 // Updates UI based on how much insulin is stored in the device
 void machine::stepInsulin(){
-    cout << "Updating insulin level" << endl;
 
-    
+
+    currentInsulinAmount = currentInsulinAmount - currentBasalRate;
     if (currentInsulinAmount <= 0){
         currentInsulinAmount = 0;
     }
@@ -336,6 +344,7 @@ void machine::stepInsulin(){
         ui->logger->append("Warning: Low Insulin");
     }
 
+    cout << "Updating insulin level: " << currentInsulinAmount << endl;
     ui->insulinBar->setValue(currentInsulinAmount);
 }
 
@@ -389,4 +398,9 @@ QString machine::returnString(Profile* profile) {
     stream << name << "\n" << std::fixed << std::setprecision(2) << rate;
 
     return QString::fromStdString(stream.str());
+}
+
+Profile* machine::getProfile(size_t index) {
+    if (index >= profiles.size()) return nullptr;
+    return profiles[index];
 }

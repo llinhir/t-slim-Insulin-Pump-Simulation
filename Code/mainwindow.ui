@@ -45,7 +45,7 @@
      <widget class="QPushButton" name="homeButton">
       <property name="geometry">
        <rect>
-        <x>660</x>
+        <x>640</x>
         <y>250</y>
         <width>111</width>
         <height>91</height>
@@ -65,7 +65,7 @@
        </rect>
       </property>
       <property name="currentIndex">
-       <number>4</number>
+       <number>3</number>
       </property>
       <widget class="QWidget" name="loginPage">
        <widget class="QLabel" name="label_8">
@@ -478,7 +478,7 @@
          </rect>
         </property>
         <property name="text">
-         <string>STOP INSULIN</string>
+         <string>SET BASAL INSULIN</string>
         </property>
        </widget>
        <widget class="QPushButton" name="pushButton_7">
@@ -547,26 +547,13 @@
         <property name="geometry">
          <rect>
           <x>80</x>
-          <y>310</y>
-          <width>401</width>
-          <height>51</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>POWER OFF</string>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="refillInsulinButton">
-        <property name="geometry">
-         <rect>
-          <x>80</x>
           <y>260</y>
           <width>401</width>
           <height>51</height>
          </rect>
         </property>
         <property name="text">
-         <string>Refill Insulin</string>
+         <string>POWER OFF</string>
         </property>
        </widget>
        <zorder>textBrowser_5</zorder>
@@ -577,7 +564,6 @@
        <zorder>optionsBack</zorder>
        <zorder>profilesButton</zorder>
        <zorder>powerOffButton</zorder>
-       <zorder>refillInsulinButton</zorder>
       </widget>
       <widget class="QWidget" name="bolusPage">
        <widget class="QLabel" name="label_11">
@@ -1323,7 +1309,7 @@
         <property name="geometry">
          <rect>
           <x>50</x>
-          <y>350</y>
+          <y>320</y>
           <width>461</width>
           <height>41</height>
          </rect>
@@ -1436,7 +1422,7 @@
         <property name="geometry">
          <rect>
           <x>100</x>
-          <y>310</y>
+          <y>280</y>
           <width>181</width>
           <height>20</height>
          </rect>
@@ -1452,16 +1438,42 @@
         <property name="geometry">
          <rect>
           <x>290</x>
-          <y>310</y>
+          <y>280</y>
           <width>181</width>
           <height>20</height>
          </rect>
         </property>
         <property name="text">
-         <string>0.8 units/hour</string>
+         <string>0.0 units/hour</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pauseBasalButton">
+        <property name="geometry">
+         <rect>
+          <x>50</x>
+          <y>380</y>
+          <width>221</width>
+          <height>25</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Pause</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="stopBasalButton">
+        <property name="geometry">
+         <rect>
+          <x>300</x>
+          <y>380</y>
+          <width>211</width>
+          <height>25</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Stop</string>
         </property>
        </widget>
       </widget>
@@ -1503,14 +1515,17 @@
      <widget class="QLabel" name="label_13">
       <property name="geometry">
        <rect>
-        <x>650</x>
+        <x>590</x>
         <y>20</y>
-        <width>151</width>
-        <height>17</height>
+        <width>181</width>
+        <height>20</height>
        </rect>
       </property>
       <property name="text">
-       <string>Remaining Insulin</string>
+       <string>Insulin</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
       </property>
      </widget>
      <widget class="QProgressBar" name="batteryBar">
@@ -1570,10 +1585,172 @@
       <property name="geometry">
        <rect>
         <x>610</x>
-        <y>370</y>
+        <y>359</y>
         <width>171</width>
-        <height>140</height>
+        <height>151</height>
        </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_56">
+      <property name="geometry">
+       <rect>
+        <x>610</x>
+        <y>90</y>
+        <width>62</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Basal:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_57">
+      <property name="geometry">
+       <rect>
+        <x>610</x>
+        <y>140</y>
+        <width>62</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Bolus:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_58">
+      <property name="geometry">
+       <rect>
+        <x>610</x>
+        <y>190</y>
+        <width>111</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Blood Glucose:</string>
+      </property>
+     </widget>
+     <widget class="QLCDNumber" name="basalStatNumber">
+      <property name="geometry">
+       <rect>
+        <x>610</x>
+        <y>110</y>
+        <width>81</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Sunken</enum>
+      </property>
+      <property name="smallDecimalPoint">
+       <bool>true</bool>
+      </property>
+      <property name="segmentStyle">
+       <enum>QLCDNumber::Flat</enum>
+      </property>
+      <property name="value" stdset="0">
+       <double>0.000000000000000</double>
+      </property>
+      <property name="intValue" stdset="0">
+       <number>0</number>
+      </property>
+     </widget>
+     <widget class="QLCDNumber" name="bolusStatNumber">
+      <property name="geometry">
+       <rect>
+        <x>610</x>
+        <y>160</y>
+        <width>81</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Sunken</enum>
+      </property>
+      <property name="smallDecimalPoint">
+       <bool>true</bool>
+      </property>
+      <property name="segmentStyle">
+       <enum>QLCDNumber::Flat</enum>
+      </property>
+      <property name="value" stdset="0">
+       <double>0.000000000000000</double>
+      </property>
+      <property name="intValue" stdset="0">
+       <number>0</number>
+      </property>
+     </widget>
+     <widget class="QLCDNumber" name="bloodGlucoseStatNumber">
+      <property name="geometry">
+       <rect>
+        <x>610</x>
+        <y>210</y>
+        <width>81</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Sunken</enum>
+      </property>
+      <property name="smallDecimalPoint">
+       <bool>true</bool>
+      </property>
+      <property name="segmentStyle">
+       <enum>QLCDNumber::Flat</enum>
+      </property>
+      <property name="value" stdset="0">
+       <double>0.000000000000000</double>
+      </property>
+      <property name="intValue" stdset="0">
+       <number>0</number>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_55">
+      <property name="geometry">
+       <rect>
+        <x>700</x>
+        <y>110</y>
+        <width>101</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>units/hour</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_59">
+      <property name="geometry">
+       <rect>
+        <x>700</x>
+        <y>160</y>
+        <width>101</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>units/hour</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_60">
+      <property name="geometry">
+       <rect>
+        <x>700</x>
+        <y>210</y>
+        <width>101</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>mmol/L</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
       </property>
      </widget>
     </widget>
@@ -1589,6 +1766,19 @@
     </property>
     <property name="text">
      <string>Charge</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="refillInsulinButton">
+    <property name="geometry">
+     <rect>
+      <x>650</x>
+      <y>20</y>
+      <width>121</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Refill Insulin</string>
     </property>
    </widget>
   </widget>

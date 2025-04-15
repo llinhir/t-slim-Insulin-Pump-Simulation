@@ -77,7 +77,7 @@ void Bolus::stepBolus()
 void Bolus::manualBolus()
 {
     float finalBolus = _ui->editManualBolus->text().toFloat();
-    _insulin->startInsulinDelivery(finalBolus); // give float to function as param
+    _insulin->startBolusDelivery(finalBolus); // give float to function as param
     // take parameter(finalBolus, how many hours) and take the insulin out of device and deliver to user
     // change values accordingly
 }
@@ -99,12 +99,12 @@ void Bolus::extendedBolus()
 
 void Bolus::stopOngoingBolus()
 {
-    _insulin->pauseInsulin();
+    _insulin->pauseBolus();
     cout << "Pausing bolus delivery..." << endl;
 }
 
 void Bolus::cancelBolus() // instead of just pause, get rid of the ongoing bolus
 {
-    _insulin->manualStopInsulin();
+    _insulin->stopBolus();
     cout << "Bolus delivery cancelled." << endl;
 }
