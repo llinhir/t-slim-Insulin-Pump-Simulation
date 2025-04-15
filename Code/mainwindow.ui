@@ -1680,7 +1680,7 @@
        <number>0</number>
       </property>
      </widget>
-     <widget class="QLCDNumber" name="bloodGlucoseStatNumber">
+     <widget class="QLCDNumber" name="glucoseStatNumber">
       <property name="geometry">
        <rect>
         <x>610</x>

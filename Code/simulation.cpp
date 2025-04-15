@@ -12,7 +12,7 @@ Simulation::Simulation(Ui::MainWindow *ui)
 
     // Simulated daily glucose trend: [mmol/L]
     // Wake up: low, breakfast spike, stabilize, lunch, dinner, night dip
-    GlucoseVector = {
+    GlucoseVector = { //41
         4.2, 3.7, 3.5,                    // Early hypoglycemia
         4.0, 4.3, 5.1,                    // Early morning rising
         6.2, 7.4, 8.5, 9.8, 10.6, 11.2,   // Breakfast spike (over 10 mmol/L)
@@ -22,6 +22,7 @@ Simulation::Simulation(Ui::MainWindow *ui)
         4.0, 5.3, 7.0, 8.6, 10.5, 11.3,   // Dinner spike (larger one)
         9.7, 7.2, 6.0, 5.0, 4.3, 3.8, 3.6 // Evening / overnight dip
     };
+    m->setGlucoseVector(&GlucoseVector);  // Initialized the glucose
 }
 
 // Checks if user entered the correct password
