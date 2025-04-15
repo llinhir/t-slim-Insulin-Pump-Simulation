@@ -41,6 +41,7 @@ public:
     bool hasBattery() { return currentBatteryLevel > 0; }
     Profile *getCurrentProfile() { return currentProfile; }
     Profile *getProfile(size_t index); // implemented in .cpp to include out of bound checking
+    double getCurrentGlucose() { return currentGlucose; }
 
     // Setters
     void setCurrentBatteryLevel(int level) { currentBatteryLevel = level; }
@@ -105,7 +106,6 @@ private:
     vector<float> *glucoseVector;// Gets the from simulation
     double currentGlucose;    // Current Blood Glucose of User, in mmol/L
     int userInsulinOnBoard;     // The amount of insulin still inside the body after a bolus injection
-
 
 
 private slots:
