@@ -88,8 +88,7 @@ private:
     int currentPage;
     double currentInsulinAmount; // This is the amount of insulin in the machine in u, will be out of 300 u
     int currentBatteryLevel;
-    int userGlucoseLevel;      // Current Blood Glucose of User, in mmol/L
-    double userInsulinOnBoard; // The amount of insulin still inside the body after a bolus injection
+    int userGlucoseLevel; // Current Blood Glucose of User, in mmol/L
 
     bool isCharging;
     bool isTurnedOn;
@@ -105,7 +104,7 @@ private:
     double currentBasalRate;      // The basal rate that the system drains from the Insulin gauge
     vector<float> *glucoseVector; // Gets the from simulation
     double currentGlucose;        // Current Blood Glucose of User, in mmol/L
-    int userInsulinOnBoard;       // The amount of insulin still inside the body after a bolus injection
+    double userInsulinOnBoard;    // The amount of insulin still inside the body after a bolus injection
 
 private slots:
     void stepMachine(); // TODO: Implement machine step function
