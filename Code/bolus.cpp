@@ -83,11 +83,11 @@ void Bolus::manualBolus()
 }
 
 void Bolus::immediateBolus()
-{ // FIGURE OUT order of stuff!! and give IOB to someone
+{                                                              // FIGURE OUT order of stuff!! and give IOB to someone
     float finalBolus = _ui->editManualBolus->text().toFloat(); // or have an in-house var to take from
-    float immediateBolus = finalBolus * 0.6;
+    double immediateBolus = finalBolus * 0.6;
     cout << "Immediate Bolus (60%): " << immediateBolus << endl;
-    manualBolus();
+    _insulin->startBolusDelivery(immediateBolus);
 }
 
 void Bolus::extendedBolus()

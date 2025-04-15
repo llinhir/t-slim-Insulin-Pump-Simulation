@@ -14,7 +14,6 @@
 #include "profile.h"
 #include "options.h"
 
-
 using namespace std;
 
 class machine : public QObject
@@ -60,9 +59,10 @@ public:
     void setActiveProfile(int index);
     void refillInsulin();
     void stepInsulin();
+    void consumeInsulin(double amount);
 
     // QoL functions to save space
-    QString returnString(Profile* profile);
+    QString returnString(Profile *profile);
 
 private:
     Ui::MainWindow *ui;
@@ -78,20 +78,19 @@ private:
     int currentPage;
     double currentInsulinAmount; // This is the amount of insulin in the machine in u, will be out of 300 u
     int currentBatteryLevel;
-    int userGlucoseLevel;       // Current Blood Glucose of User, in mmol/L
-    int userInsulinOnBoard;     // The amount of insulin still inside the body after a bolus injection
+    int userGlucoseLevel;   // Current Blood Glucose of User, in mmol/L
+    int userInsulinOnBoard; // The amount of insulin still inside the body after a bolus injection
 
     bool isCharging;
     bool isTurnedOn;
     bool isLoggedIn;
-    int insulinStepCounter;     // used to make sure insulin is delivered every 60 minutes (in simulation)
+    int insulinStepCounter; // used to make sure insulin is delivered every 60 minutes (in simulation)
 
     string password;            // Password for login
     vector<Profile *> profiles; // List of profiles
     Profile *currentProfile;    // Current profile
     Options *options;           // System Options
-    double currentBasalRate;       // The basal rate that the system drains from the Insulin gauge
-
+    double currentBasalRate;    // The basal rate that the system drains from the Insulin gauge
 
 private slots:
     void stepMachine(); // TODO: Implement machine step function
