@@ -71,8 +71,8 @@ public:
 
 private:
     Ui::MainWindow *ui;
-    time_t rawTime;         // Raw time data
-    struct tm *currentTime; // Current time structure
+    time_t rawTime;                 // Raw time data
+    struct tm *currentTime;         // Current time structure
     int currentHour;
     int currentMinute;
     int currentDay;
@@ -80,31 +80,30 @@ private:
     int currentYear;
 
     // Step variables
-    int hourStepCounter;    // used to make sure certain variables (ex. insulin & glucose) is updated every 60 minutes (in simulation)
+    int hourStepCounter;            // used to make sure certain variables (ex. insulin & glucose) is updated every 60 minutes (in simulation)
     int glucoseStepCounter; //
 
     // variables for the machine
-    vector<string> history; // History of events
+    vector<string> history;         // History of events
     int currentPage;
-    double currentInsulinAmount; // This is the amount of insulin in the machine in u, will be out of 300 u
+    double currentInsulinAmount;    // This is the amount of insulin in the machine in u, will be out of 300 u
     int currentBatteryLevel;
-    int userGlucoseLevel; // Current Blood Glucose of User, in mmol/L
-
     bool isCharging;
     bool isTurnedOn;
     bool isLoggedIn;
-    int insulinStepCounter; // used to make sure insulin is delivered every 60 minutes (in simulation)
+    int insulinStepCounter;         // used to make sure insulin is delivered every 60 minutes (in simulation)
+    double previousBasalRate;       // saves the previous basal rate for when glucose levels go below zero
 
     string password;  // Password for login
     Options *options; // System Options
 
     // User info
-    vector<Profile *> profiles;   // The user can have multiple profiles
-    Profile *currentProfile;      // Current profile
-    double currentBasalRate;      // The basal rate that the system drains from the Insulin gauge
-    vector<float> *glucoseVector; // Gets the from simulation
-    double currentGlucose;        // Current Blood Glucose of User, in mmol/L
-    double userInsulinOnBoard;    // The amount of insulin still inside the body after a bolus injection
+    vector<Profile *> profiles;     // The user can have multiple profiles
+    Profile *currentProfile;        // Current profile
+    double currentBasalRate;        // The basal rate that the system drains from the Insulin gauge
+    vector<float> *glucoseVector;   // Gets the from simulation
+    double currentGlucose;          // Current Blood Glucose of User, in mmol/L
+    double userInsulinOnBoard;      // The amount of insulin still inside the body after a bolus injection
 
 private slots:
     void stepMachine(); // TODO: Implement machine step function

@@ -18,6 +18,7 @@ machine::machine(Ui::MainWindow *ui)
     currentBatteryLevel = 100;
     currentInsulinAmount = 100; // in units, will be out of 300 u
     currentBasalRate = 0;
+    previousBasalRate = 0;
     isLoggedIn = false;
     isTurnedOn = true;
     isCharging = false;
@@ -245,23 +246,6 @@ void machine::stepTime()
     ui->timeLabel->setText(timeString);
 }
 
-void machine::stepMachine()
-{
-    stepTime();
-    updateBatteryLevel();
-
-    // these are here for testing, remove them and uncomment the below area once fully implementing
-    stepInsulin();
-    stepBloodGlucose();
-
-    //    // Only step insulin once every 12 calls (i.e., 60 seconds)
-    //    hourStepCounter++;
-    //    if (hourStepCounter >= 12) {
-    //        stepInsulin();
-    //        stepBloodGlucose();
-    //        hourStepCounter = 0;
-    //    }
-}
 
 void machine::createProfile()
 {
@@ -339,23 +323,7 @@ void machine::setActiveProfile(int index)
     ui->activeProfileLabel->setText(profileMessage);
 }
 
-// Updates UI based on how much insulin is stored in the device
-void machine::stepInsulin()
-{
 
-    currentInsulinAmount = currentInsulinAmount - currentBasalRate;
-    if (currentInsulinAmount <= 0)
-    {
-        currentInsulinAmount = 0;
-    }
-    if (currentInsulinAmount < 70)
-    {
-        ui->logger->append("Warning: Low Insulin");
-    }
-
-    cout << "Updating insulin level: " << currentInsulinAmount << endl;
-    ui->insulinBar->setValue(currentInsulinAmount);
-}
 
 void machine::refillInsulin()
 {
@@ -436,6 +404,50 @@ void machine::consumeInsulin(double amount)
     ui->insulinBar->setValue(currentInsulinAmount); // Update the UI
 }
 
+
+////////////////////////////////////////////////////
+//          step functions start here            //
+////////////////////////////////////////////////////
+
+void machine::stepMachine()
+{
+    stepTime();
+    updateBatteryLevel();
+
+    // these are here for testing, remove them and uncomment the below area once fully implementing
+
+    stepBloodGlucose();
+    stepInsulin();
+
+
+    //    // Only step insulin once every 12 calls (i.e., 60 seconds)
+    //    hourStepCounter++;
+    //    if (hourStepCounter >= 12) {
+    //
+    //        stepInsulin();
+    //        stepBloodGlucose();
+    //        hourStepCounter = 0;
+    //    }
+}
+
+// Updates UI based on how much insulin is stored in the device
+void machine::stepInsulin()
+{
+    cout << "curr basal rate-------->: " << currentBasalRate << endl;
+    currentInsulinAmount = currentInsulinAmount - currentBasalRate;
+    if (currentInsulinAmount <= 0)
+    {
+        currentInsulinAmount = 0;
+    }
+    if (currentInsulinAmount < 70)
+    {
+        ui->logger->append("Warning: Low Insulin");
+    }
+
+
+    ui->insulinBar->setValue(currentInsulinAmount);
+}
+
 void machine::stepBloodGlucose(){
     glucoseStepCounter++;
     if (glucoseStepCounter >= static_cast<int>(glucoseVector->size())) {
@@ -452,13 +464,15 @@ void machine::stepBloodGlucose(){
     if(currentGlucose <= 3.9 && currentBasalRate != 0){
         // this event needs to be logged for future reference
         std::cout << "[Low Glucose Levels]: basal rate stopped" << std::endl;
-        ui->logger->append("Low Glucose Levels: basal rate stopped");
+        ui->logger->append("[Low Glucose Levels]: basal rate stopped");
+        previousBasalRate = currentBasalRate;
         this->setBasalRate(0);
         ui->basalStatNumber->display(0);
-    }else if(currentGlucose > 3.9){
-        std::cout << "[[Medium Glucose Levels]: basal rate resumed" << std::endl;
-        ui->logger->append("Medium Glucose Levels: basal rate resumed");
-        this->setBasalRate(currentBasalRate);
+    }else if(currentGlucose > 3.9 && previousBasalRate != 0 && currentBasalRate == 0){
+        std::cout << "prev: " << previousBasalRate << std::endl;
+        ui->logger->append("[Medium Glucose Levels]: basal rate resumed");
+        this->setBasalRate(previousBasalRate);
+        previousBasalRate = 0;
         ui->basalStatNumber->display(currentBasalRate);
     }
 }

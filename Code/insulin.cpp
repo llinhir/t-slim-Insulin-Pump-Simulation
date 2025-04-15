@@ -33,6 +33,11 @@ void Insulin::startBasalDelivery()
     {
         return;
     }
+    if (!_machine) {
+        std::cout << "[ERROR] _machine is null!" << std::endl;
+        return;
+    }
+
     _machine->setBasalRate(currBasalRate);
     _ui->logger->append("Set basal rate: " + QString::number(currBasalRate, 'f', 2) + "u/h");
     _ui->basalStatNumber->display(currBasalRate);
