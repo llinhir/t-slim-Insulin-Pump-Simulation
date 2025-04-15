@@ -89,7 +89,6 @@ private:
     double currentInsulinAmount; // This is the amount of insulin in the machine in u, will be out of 300 u
     int currentBatteryLevel;
     int userGlucoseLevel;   // Current Blood Glucose of User, in mmol/L
-    int userInsulinOnBoard; // The amount of insulin still inside the body after a bolus injection
 
     bool isCharging;
     bool isTurnedOn;
