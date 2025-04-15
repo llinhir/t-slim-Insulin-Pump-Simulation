@@ -87,7 +87,7 @@ void Bolus::immediateBolus()
     float finalBolus = _ui->editManualBolus->text().toFloat(); // or have an in-house var to take from
     double immediateBolus = finalBolus * 0.6;
     cout << "Immediate Bolus (60%): " << immediateBolus << endl;
-    _insulin->startBolusDelivery(immediateBolus);
+    thisMachine->consumeInsulin(immediateBolus); // replaced the insulin function call cause it's just 1 more unecessary level
 }
 
 void Bolus::extendedBolus()

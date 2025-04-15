@@ -80,43 +80,6 @@ void machine::addToHistory(string event)
     cout << "Event added to history: " << event << endl;
 }
 
-// Updates UI based on device status (on/off charging/not charging)
-void machine::updateBatteryLevel() // will be called every step
-{
-    if (!isTurnedOn) // leave early if the machine is off
-    {
-        return;
-    }
-
-    cout << "Updating battery level" << endl;
-    if (isCharging)
-    {
-        currentBatteryLevel += 1;
-        if (currentBatteryLevel > 100)
-        {
-            currentBatteryLevel = 100;
-        }
-    }
-    else
-    {
-        currentBatteryLevel -= 1;
-        if (currentBatteryLevel < 0)
-        {
-            currentBatteryLevel = 0;
-            powerOff();
-            ui->simulation->setCurrentIndex(OFF);
-        }
-        // check if battery is low
-        if (currentBatteryLevel == 20)
-        {
-            ui->logger->append("Warning: Battery Low");
-            cout << "Battery low" << endl; // add this to history and ui
-        }
-    }
-
-    // ui update
-    ui->batteryBar->setValue(currentBatteryLevel);
-}
 
 // User can select a profile; if the selected profile is empty, it does not update current profile
 void machine::updateProfileInfo()
@@ -202,49 +165,7 @@ bool machine::loginAttempt(string passwordGuess)
     }
 }
 
-void machine::stepTime()
-{
-    // cout << "Stepping time" << endl;
-    // cout << "Time before: " << currentHour << ":" << currentMinute << " " << currentDay << "/" << currentMonth << "/" << currentYear << endl;
-    //  add 5 minutes to the current time
-    currentMinute += 5;
-    if (currentMinute >= 60)
-    {
-        currentMinute -= 60;
-        currentHour += 1;
-    }
-    if (currentHour >= 24)
-    {
-        currentHour -= 24;
-        currentDay += 1;
-    }
-    currentTime->tm_hour = currentHour;
-    currentTime->tm_min = currentMinute;
-    currentTime->tm_mday = currentDay;
-    currentTime->tm_mon = currentMonth;
-    currentTime->tm_year = currentYear;
 
-    cout << "Current time: " << currentHour << ":" << currentMinute << " " << currentDay << "/" << currentMonth << "/" << currentYear << endl;
-    qInfo("in function");
-    // Update the UI
-    tm *timeInfo = getCurrentTimeStruct();
-
-    QString timeString = QString::asprintf("%02d:%02d", timeInfo->tm_hour, timeInfo->tm_min);
-    if (timeInfo->tm_hour > 12)
-    {
-        timeString += " PM";
-        timeString.replace(0, 2, QString::number(timeInfo->tm_hour - 12));
-    }
-    else
-    {
-        timeString += " AM";
-        if (timeInfo->tm_hour == 0)
-        {
-            timeString.replace(0, 2, "12");
-        }
-    }
-    ui->timeLabel->setText(timeString);
-}
 
 
 void machine::createProfile()
@@ -430,10 +351,93 @@ void machine::stepMachine()
     //    }
 }
 
+void machine::stepTime()
+{
+    // cout << "Stepping time" << endl;
+    // cout << "Time before: " << currentHour << ":" << currentMinute << " " << currentDay << "/" << currentMonth << "/" << currentYear << endl;
+    //  add 5 minutes to the current time
+    currentMinute += 5;
+    if (currentMinute >= 60)
+    {
+        currentMinute -= 60;
+        currentHour += 1;
+    }
+    if (currentHour >= 24)
+    {
+        currentHour -= 24;
+        currentDay += 1;
+    }
+    currentTime->tm_hour = currentHour;
+    currentTime->tm_min = currentMinute;
+    currentTime->tm_mday = currentDay;
+    currentTime->tm_mon = currentMonth;
+    currentTime->tm_year = currentYear;
+
+    cout << "Current time: " << currentHour << ":" << currentMinute << " " << currentDay << "/" << currentMonth << "/" << currentYear << endl;
+    qInfo("in function");
+    // Update the UI
+    tm *timeInfo = getCurrentTimeStruct();
+
+    QString timeString = QString::asprintf("%02d:%02d", timeInfo->tm_hour, timeInfo->tm_min);
+    if (timeInfo->tm_hour > 12)
+    {
+        timeString += " PM";
+        timeString.replace(0, 2, QString::number(timeInfo->tm_hour - 12));
+    }
+    else
+    {
+        timeString += " AM";
+        if (timeInfo->tm_hour == 0)
+        {
+            timeString.replace(0, 2, "12");
+        }
+    }
+    ui->timeLabel->setText(timeString);
+}
+
+
+// Updates UI based on device status (on/off charging/not charging)
+void machine::updateBatteryLevel() // will be called every step
+{
+    if (!isTurnedOn) // leave early if the machine is off
+    {
+        return;
+    }
+
+    cout << "Updating battery level" << endl;
+    if (isCharging)
+    {
+        currentBatteryLevel += 1;
+        if (currentBatteryLevel > 100)
+        {
+            currentBatteryLevel = 100;
+        }
+    }
+    else
+    {
+        currentBatteryLevel -= 1;
+        if (currentBatteryLevel < 0)
+        {
+            currentBatteryLevel = 0;
+            powerOff();
+            ui->simulation->setCurrentIndex(OFF);
+        }
+        // check if battery is low
+        if (currentBatteryLevel == 20)
+        {
+            ui->logger->append("Warning: Battery Low");
+            cout << "Battery low" << endl; // add this to history and ui
+        }
+    }
+
+    // ui update
+    ui->batteryBar->setValue(currentBatteryLevel);
+}
+
 // Updates UI based on how much insulin is stored in the device
 void machine::stepInsulin()
 {
-    cout << "curr basal rate-------->: " << currentBasalRate << endl;
+    //cout << "curr basal rate-------->: " << currentBasalRate << endl;
     currentInsulinAmount = currentInsulinAmount - currentBasalRate;
     if (currentInsulinAmount <= 0)
     {

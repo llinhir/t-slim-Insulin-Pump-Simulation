@@ -77,7 +77,7 @@ void Insulin::stopBasal()
 }
 
 ////////////////////////////////////////////////////
-//          Basal functions start here            //
+//          Bolus functions start here            //
 ////////////////////////////////////////////////////
 
 void Insulin::startBolusDelivery(double rate)
