@@ -41,7 +41,7 @@ machine::machine(Ui::MainWindow *ui)
     options = new Options(ui);
 
     // hard coding a test profile as the initial active profile, uses values from the List of Features
-    currentProfile = new Profile(6, 1, 1, 5, "test profile"); // was 0.8, 2, 3, 4
+    currentProfile = new Profile(0.8, 1, 1, 5, "Dim Javies"); // was 0.8, 2, 3, 4
     profiles.push_back(currentProfile);
     setActiveProfile(0);
     updateProfileInfo();
@@ -441,9 +441,23 @@ void machine::stepBloodGlucose(){
         glucoseStepCounter = 0;
     }
 
-    currentGlucose = glucoseVector->at(glucoseStepCounter);
+    // Current glucose amount - (the basal rate + extended bolus rate)
+    currentGlucose = glucoseVector->at(glucoseStepCounter) - currentBasalRate;
 
     std::cout << "Blood Glucose: " << currentGlucose << " mmol/L" << std::endl;
     ui->logger->append(QString::number(currentGlucose, 'f', 1) + " mmol/L");
     ui->glucoseStatNumber->display(currentGlucose);
+
+    if(currentGlucose <= 3.9 && currentBasalRate != 0){
+        // this event needs to be logged for future reference
+        std::cout << "[Low Glucose Levels]: basal rate stopped" << std::endl;
+        ui->logger->append("Low Glucose Levels: basal rate stopped");
+        this->setBasalRate(0);
+        ui->basalStatNumber->display(0);
+    }else if(currentGlucose > 3.9){
+        std::cout << "[[Medium Glucose Levels]: basal rate resumed" << std::endl;
+        ui->logger->append("Medium Glucose Levels: basal rate resumed");
+        this->setBasalRate(currentBasalRate);
+        ui->basalStatNumber->display(currentBasalRate);
+    }
 }
