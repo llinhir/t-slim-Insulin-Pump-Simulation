@@ -75,9 +75,10 @@ void Insulin::stopBasal()
 //          Basal functions start here            //
 ////////////////////////////////////////////////////
 
-void Insulin::startBolusDelivery(float rate)
+void Insulin::startBolusDelivery(double rate)
 {
     cout << "Delivering Bolus: " << rate << " units" << endl;
+    _machine->consumeInsulin(rate);
 }
 
 void Insulin::pauseBolus()

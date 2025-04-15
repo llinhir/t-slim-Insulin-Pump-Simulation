@@ -7,8 +7,8 @@ Simulation::Simulation(Ui::MainWindow *ui)
     m = new machine(ui);
     IOB = 0;
     this->ui = ui;
-    bolus = new Bolus(ui, m, insulin);
     insulin = new Insulin(ui, m);
+    bolus = new Bolus(ui, m, insulin);
 
     // Simulated daily glucose trend: [mmol/L]
     // Wake up: low, breakfast spike, stabilize, lunch, dinner, night dip

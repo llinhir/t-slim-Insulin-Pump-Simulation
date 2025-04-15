@@ -41,7 +41,7 @@ machine::machine(Ui::MainWindow *ui)
     options = new Options(ui);
 
     // hard coding a test profile as the initial active profile, uses values from the List of Features
-    currentProfile = new Profile(6, 1, 1, 5, "test profile");  // was 0.8, 2, 3, 4
+    currentProfile = new Profile(6, 1, 1, 5, "test profile"); // was 0.8, 2, 3, 4
     profiles.push_back(currentProfile);
     setActiveProfile(0);
     updateProfileInfo();
@@ -178,7 +178,7 @@ void machine::updateProfileInfo()
     {
         cout << "No profiles available" << endl;
         ui->profile1Button->setText("No Profile");
-        ui->selectProfile1->setText("No Profile");\
+        ui->selectProfile1->setText("No Profile");
         ui->basalRate1->setText("No Profile");
     }
 }
@@ -338,14 +338,16 @@ void machine::setActiveProfile(int index)
 }
 
 // Updates UI based on how much insulin is stored in the device
-void machine::stepInsulin(){
-
+void machine::stepInsulin()
+{
 
     currentInsulinAmount = currentInsulinAmount - currentBasalRate;
-    if (currentInsulinAmount <= 0){
+    if (currentInsulinAmount <= 0)
+    {
         currentInsulinAmount = 0;
     }
-    if(currentInsulinAmount < 70){
+    if (currentInsulinAmount < 70)
+    {
         ui->logger->append("Warning: Low Insulin");
     }
 
@@ -360,7 +362,8 @@ void machine::refillInsulin()
     ui->logger->append("Insulin Refilled");
 }
 
-void machine::connectSlots(){
+void machine::connectSlots()
+{
     connect(ui->createProfileSaveButton, &QPushButton::clicked, this, [this]()
             { createProfile(); });
 
@@ -395,19 +398,39 @@ void machine::connectSlots(){
             { deleteProfile(); });
 }
 
-QString machine::returnString(Profile* profile) {
+QString machine::returnString(Profile *profile)
+{
     std::string name = profile->getProfileName();
     double rate = profile->getBasalRate();
 
     std::ostringstream stream;
-    stream << name << "\n" << std::fixed << std::setprecision(2) << rate;
+    stream << name << "\n"
+           << std::fixed << std::setprecision(2) << rate;
 
     return QString::fromStdString(stream.str());
 }
 
-Profile* machine::getProfile(size_t index) {
-    if (index >= profiles.size()) return nullptr;
+Profile *machine::getProfile(size_t index)
+{
+    if (index >= profiles.size())
+        return nullptr;
     return profiles[index];
+}
+
+void machine::consumeInsulin(double amount)
+{
+
+    if (currentInsulinAmount >= amount)
+    {
+        currentInsulinAmount -= amount;
+    }
+    else
+    {
+        cout << "Not enough insulin available!!!" << endl;
+        ui->logger->append("Not enough insulin available!!!");
+        currentInsulinAmount = 0;
+    }
+    ui->insulinBar->setValue(currentInsulinAmount); // Update the UI
 }
 
 void machine::stepBloodGlucose(){

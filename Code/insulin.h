@@ -20,20 +20,17 @@ public:
     void autoStopBasal();
 
     // bolus functions
-    void startBolusDelivery(float bolus);
+    void startBolusDelivery(double bolus);
     void pauseBolus();
     void stopBolus();
 
     // i kept these 2 functions for now cause i think jessica re
-//    void autoStopInsulin();
-//    void manualStopInsulin();
-
-
-
+    //    void autoStopInsulin();
+    //    void manualStopInsulin();
 
 private:
     Ui::MainWindow *_ui;
-    machine* _machine;
+    machine *_machine;
 
     int currGlucose; // i think i grab this from machine
     double currBasalRate;
