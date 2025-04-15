@@ -24,8 +24,6 @@ public:
     void connectSlots();             // Function holding all the slot connects to declutter the machine constructor
     tm *getCurrentTime();            // Get current time
     void addToHistory(string event); // Add event to history
-    void stepTime();                 // Update time every second
-    void updateBatteryLevel();
     void updateProfileInfo();
     bool loginAttempt(string passwordGuess);
     void powerOff() { isTurnedOn = false; };
@@ -40,9 +38,10 @@ public:
     bool getIsCharging() { return isCharging; }
     bool getIsTurnedOn() { return isTurnedOn; }
     bool getIsLoggedIn() { return isLoggedIn; }
-    bool hasBattery() { return currentBatteryLevel > 0; };
+    bool hasBattery() { return currentBatteryLevel > 0; }
     Profile *getCurrentProfile() { return currentProfile; }
     Profile *getProfile(size_t index); // implemented in .cpp to include out of bound checking
+    double getCurrentGlucose() { return currentGlucose; }
 
     // Setters
     void setCurrentBatteryLevel(int level) { currentBatteryLevel = level; }
@@ -50,6 +49,7 @@ public:
     void setIsTurnedOn(bool turnedOn) { isTurnedOn = turnedOn; }
     void setIsCharging(bool charging) { isCharging = charging; }
     void setBasalRate(double rate) { currentBasalRate = rate; }
+    void setGlucoseVector(vector<float> *vector) { glucoseVector = vector; }
 
     // Machine Functinos
     void createProfile();
@@ -58,8 +58,13 @@ public:
     void deleteProfile();
     void setActiveProfile(int index);
     void refillInsulin();
-    void stepInsulin();
     void consumeInsulin(double amount);
+
+    // Step functions
+    void stepTime(); // Update the simulation every 5 seconds irl
+    void updateBatteryLevel();
+    void stepInsulin();
+    void stepBloodGlucose();
 
     // QoL functions to save space
     QString returnString(Profile *profile);
@@ -74,6 +79,11 @@ private:
     int currentMonth;
     int currentYear;
 
+    // Step variables
+    int hourStepCounter;    // used to make sure certain variables (ex. insulin & glucose) is updated every 60 minutes (in simulation)
+    int glucoseStepCounter; //
+
+    // variables for the machine
     vector<string> history; // History of events
     int currentPage;
     double currentInsulinAmount; // This is the amount of insulin in the machine in u, will be out of 300 u
@@ -86,11 +96,16 @@ private:
     bool isLoggedIn;
     int insulinStepCounter; // used to make sure insulin is delivered every 60 minutes (in simulation)
 
-    string password;            // Password for login
-    vector<Profile *> profiles; // List of profiles
-    Profile *currentProfile;    // Current profile
-    Options *options;           // System Options
-    double currentBasalRate;    // The basal rate that the system drains from the Insulin gauge
+    string password;  // Password for login
+    Options *options; // System Options
+
+    // User info
+    vector<Profile *> profiles;   // The user can have multiple profiles
+    Profile *currentProfile;      // Current profile
+    double currentBasalRate;      // The basal rate that the system drains from the Insulin gauge
+    vector<float> *glucoseVector; // Gets the from simulation
+    double currentGlucose;        // Current Blood Glucose of User, in mmol/L
+    int userInsulinOnBoard;       // The amount of insulin still inside the body after a bolus injection
 
 private slots:
     void stepMachine(); // TODO: Implement machine step function

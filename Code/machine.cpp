@@ -21,7 +21,8 @@ machine::machine(Ui::MainWindow *ui)
     isLoggedIn = false;
     isTurnedOn = true;
     isCharging = false;
-    insulinStepCounter = 0;
+    hourStepCounter = 0;
+    glucoseStepCounter = 0;
 
     ui->batteryBar->setValue(currentBatteryLevel);
     ui->insulinBar->setValue(currentInsulinAmount);
@@ -101,6 +102,8 @@ void machine::updateBatteryLevel() // will be called every step
         if (currentBatteryLevel < 0)
         {
             currentBatteryLevel = 0;
+            powerOff();
+            ui->simulation->setCurrentIndex(OFF);
         }
         // check if battery is low
         if (currentBatteryLevel == 20)
@@ -247,13 +250,17 @@ void machine::stepMachine()
     stepTime();
     updateBatteryLevel();
 
-    // Only step insulin once every 12 calls (i.e., 60 seconds)
-    //    insulinStepCounter++;
-    //    if (insulinStepCounter >= 12) {
-    //        stepInsulin();
-    //        insulinStepCounter = 0;
-    //    }
+    // these are here for testing, remove them and uncomment the below area once fully implementing
     stepInsulin();
+    stepBloodGlucose();
+
+    //    // Only step insulin once every 12 calls (i.e., 60 seconds)
+    //    hourStepCounter++;
+    //    if (hourStepCounter >= 12) {
+    //        stepInsulin();
+    //        stepBloodGlucose();
+    //        hourStepCounter = 0;
+    //    }
 }
 
 void machine::createProfile()
@@ -427,4 +434,17 @@ void machine::consumeInsulin(double amount)
     }
     userInsulinOnBoard += amount;                   // Add to the insulin on board
     ui->insulinBar->setValue(currentInsulinAmount); // Update the UI
+}
+
+void machine::stepBloodGlucose(){
+    glucoseStepCounter++;
+    if (glucoseStepCounter >= static_cast<int>(glucoseVector->size())) {
+        glucoseStepCounter = 0;
+    }
+
+    currentGlucose = glucoseVector->at(glucoseStepCounter);
+
+    std::cout << "Blood Glucose: " << currentGlucose << " mmol/L" << std::endl;
+    ui->logger->append(QString::number(currentGlucose, 'f', 1) + " mmol/L");
+    ui->glucoseStatNumber->display(currentGlucose);
 }
