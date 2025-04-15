@@ -425,5 +425,6 @@ void machine::consumeInsulin(double amount)
         ui->logger->append("Not enough insulin available!!!");
         currentInsulinAmount = 0;
     }
+    userInsulinOnBoard += amount;                   // Add to the insulin on board
     ui->insulinBar->setValue(currentInsulinAmount); // Update the UI
 }
