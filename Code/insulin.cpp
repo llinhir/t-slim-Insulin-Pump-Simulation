@@ -1,10 +1,9 @@
 #include "insulin.h"
 
-Insulin::Insulin(Ui::MainWindow *ui, machine* machine)
+Insulin::Insulin(Ui::MainWindow *ui, machine *machine)
 {
     _machine = machine;
     _ui = ui;
-    qInfo(" inin sulin");
     isPausedBasal = false;
     currBasalRate = 0;
 
@@ -15,8 +14,10 @@ Insulin::Insulin(Ui::MainWindow *ui, machine* machine)
 ////////////////////////////////////////////////////
 
 // sets the currBasalRate of the machine
-void Insulin::setCurrBasalRate(size_t index) {
-    if(!_machine->getProfile(index)){
+void Insulin::setCurrBasalRate(size_t index)
+{
+    if (!_machine->getProfile(index))
+    {
         return;
     }
 
@@ -25,9 +26,11 @@ void Insulin::setCurrBasalRate(size_t index) {
 }
 
 // begins delivering insulin at a rate of currBasalRate units/hour
-void Insulin::startBasalDelivery(){
+void Insulin::startBasalDelivery()
+{
     cout << "Delivering Basal: " << currBasalRate << " units" << endl;
-    if(!currBasalRate){
+    if (!currBasalRate)
+    {
         return;
     }
     _machine->setBasalRate(currBasalRate);
@@ -36,13 +39,17 @@ void Insulin::startBasalDelivery(){
 }
 
 // pauses basal insulin delivery
-void Insulin::pauseBasal(){
-    if(!isPausedBasal && currBasalRate != 0){
+void Insulin::pauseBasal()
+{
+    if (!isPausedBasal && currBasalRate != 0)
+    {
         isPausedBasal = true;
         _machine->setBasalRate(0);
         _ui->logger->append("Basal paused");
         _ui->basalStatNumber->display(0);
-    }else if(isPausedBasal && currBasalRate != 0){
+    }
+    else if (isPausedBasal && currBasalRate != 0)
+    {
         isPausedBasal = false;
         _machine->setBasalRate(currBasalRate);
         _ui->logger->append("Basal resumed");
@@ -51,8 +58,10 @@ void Insulin::pauseBasal(){
 }
 
 // stops basal insulin delivery
-void Insulin::stopBasal(){
-    if(currBasalRate == 0){
+void Insulin::stopBasal()
+{
+    if (currBasalRate == 0)
+    {
         return; // basal is currently not running, so return
     }
     currBasalRate = 0;
@@ -62,45 +71,45 @@ void Insulin::stopBasal(){
     _ui->basalStatNumber->display(currBasalRate);
 }
 
-
 ////////////////////////////////////////////////////
 //          Basal functions start here            //
 ////////////////////////////////////////////////////
 
-void Insulin::startBolusDelivery(float rate){
+void Insulin::startBolusDelivery(float rate)
+{
     cout << "Delivering Bolus: " << rate << " units" << endl;
-
 }
 
-void Insulin::pauseBolus(){
-
+void Insulin::pauseBolus()
+{
 }
 
-void Insulin::stopBolus(){
-
+void Insulin::stopBolus()
+{
 }
 
 ////////////////////////////////////////////////////
 //          extra functions start here            //
 ////////////////////////////////////////////////////
-void Insulin::connectSlots(){
+void Insulin::connectSlots()
+{
     // selects the basal rate to the profile the user clicks
     connect(_ui->basalRate1, &QPushButton::clicked, this, [this]()
-                { setCurrBasalRate(0); });
+            { setCurrBasalRate(0); });
     connect(_ui->basalRate2, &QPushButton::clicked, this, [this]()
-                { setCurrBasalRate(1); });
+            { setCurrBasalRate(1); });
     connect(_ui->basalRate3, &QPushButton::clicked, this, [this]()
-                { setCurrBasalRate(2); });
+            { setCurrBasalRate(2); });
     connect(_ui->basalRate4, &QPushButton::clicked, this, [this]()
-                { setCurrBasalRate(3); });
+            { setCurrBasalRate(3); });
     connect(_ui->basalRate5, &QPushButton::clicked, this, [this]()
-                { setCurrBasalRate(4); });
+            { setCurrBasalRate(4); });
 
-    //Basal button
+    // Basal button
     connect(_ui->startInsulin, &QPushButton::clicked, this, [this]()
-                { startBasalDelivery(); });
+            { startBasalDelivery(); });
     connect(_ui->pauseBasalButton, &QPushButton::clicked, this, [this]()
-                { pauseBasal(); });
+            { pauseBasal(); });
     connect(_ui->stopBasalButton, &QPushButton::clicked, this, [this]()
-                { stopBasal(); });
+            { stopBasal(); });
 }

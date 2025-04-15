@@ -7,12 +7,12 @@
 #include "ui_mainwindow.h"
 
 #include <string>
+#include <vector>
 
 #include "machine.h"
 #include "profile.h"
 #include "bolus.h"
 #include "insulin.h"
-
 
 using namespace std;
 
@@ -30,7 +30,8 @@ private:
     Bolus *bolus;
     int IOB; // Insulin on board
     Ui::MainWindow *ui;
-    Insulin* insulin;
+    Insulin *insulin;
+    vector<float> GlucoseVector; // This is for the glucose value at each time step, almost like the readings that a machine would get
 };
 
 #endif // SIMULATION_H
