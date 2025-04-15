@@ -13,14 +13,14 @@ Simulation::Simulation(Ui::MainWindow *ui)
     // Simulated daily glucose trend: [mmol/L]
     // Wake up: low, breakfast spike, stabilize, lunch, dinner, night dip
     GlucoseVector = {
-        4.2,                      // early morning
-        5.1,                      // just after waking up
-        6.8, 7.5, 8.3, 9.7, 10.4, // post-breakfast
-        6.9, 5.5,                 // late morning
-        7.1, 8.2, 9.1,            // lunch spike
-        6.3, 5.2,                 // afternoon
-        7.6, 8.8, 10.1,           // dinner spike
-        6.4, 5.1, 4.3, 3.8,       // late evening to night dip
+        4.2, 3.7, 3.5,                    // Early hypoglycemia
+        4.0, 4.3, 5.1,                    // Early morning rising
+        6.2, 7.4, 8.5, 9.8, 10.6, 11.2,   // Breakfast spike (over 10 mmol/L)
+        9.3, 7.8, 6.5, 5.2,               // Late morning settling
+        5.9, 6.8, 7.9, 9.2, 10.1, 10.7,   // Lunch spike
+        8.3, 6.1, 4.8, 3.9, 3.6, 3.4,     // Afternoon crash/hypo
+        4.0, 5.3, 7.0, 8.6, 10.5, 11.3,   // Dinner spike (larger one)
+        9.7, 7.2, 6.0, 5.0, 4.3, 3.8, 3.6 // Evening / overnight dip
     };
 }
 
