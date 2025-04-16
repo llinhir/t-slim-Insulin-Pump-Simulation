@@ -65,7 +65,7 @@
        </rect>
       </property>
       <property name="currentIndex">
-       <number>4</number>
+       <number>6</number>
       </property>
       <widget class="QWidget" name="loginPage">
        <widget class="QLabel" name="label_8">
@@ -218,26 +218,6 @@
          <string>INSULIN ON BOARD (IOB)</string>
         </property>
        </widget>
-       <widget class="QTextEdit" name="textEdit">
-        <property name="geometry">
-         <rect>
-          <x>40</x>
-          <y>300</y>
-          <width>191</width>
-          <height>41</height>
-         </rect>
-        </property>
-       </widget>
-       <widget class="QTextEdit" name="textEdit_2">
-        <property name="geometry">
-         <rect>
-          <x>240</x>
-          <y>300</y>
-          <width>291</width>
-          <height>41</height>
-         </rect>
-        </property>
-       </widget>
        <widget class="QTextBrowser" name="textBrowser_3">
         <property name="geometry">
          <rect>
@@ -248,13 +228,120 @@
          </rect>
         </property>
        </widget>
+       <widget class="QFrame" name="frame">
+        <property name="geometry">
+         <rect>
+          <x>40</x>
+          <y>300</y>
+          <width>191</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <widget class="QLabel" name="label_28">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>10</y>
+           <width>62</width>
+           <height>17</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Units</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+         </property>
+        </widget>
+        <widget class="QLabel" name="IOBunitsText">
+         <property name="geometry">
+          <rect>
+           <x>71</x>
+           <y>10</y>
+           <width>111</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>0.0 u</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QFrame" name="frame_2">
+        <property name="geometry">
+         <rect>
+          <x>240</x>
+          <y>300</y>
+          <width>291</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <widget class="QLabel" name="label_29">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>10</y>
+           <width>121</width>
+           <height>17</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Time Remaining</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="IOBtimeText">
+         <property name="geometry">
+          <rect>
+           <x>141</x>
+           <y>10</y>
+           <width>141</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>0.00 hrs</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QPushButton" name="viewGraphButton">
+        <property name="geometry">
+         <rect>
+          <x>40</x>
+          <y>350</y>
+          <width>83</width>
+          <height>25</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>View Graph</string>
+        </property>
+       </widget>
        <zorder>textBrowser_3</zorder>
        <zorder>label</zorder>
        <zorder>bolusButton</zorder>
        <zorder>optionsButton</zorder>
        <zorder>label_3</zorder>
-       <zorder>textEdit</zorder>
-       <zorder>textEdit_2</zorder>
+       <zorder>frame</zorder>
+       <zorder>frame_2</zorder>
+       <zorder>viewGraphButton</zorder>
       </widget>
       <widget class="QWidget" name="createProfilePage">
        <widget class="QLabel" name="label_4">
@@ -614,24 +701,32 @@
        <widget class="QLabel" name="label_15">
         <property name="geometry">
          <rect>
-          <x>240</x>
-          <y>80</y>
+          <x>330</x>
+          <y>270</y>
           <width>101</width>
           <height>17</height>
          </rect>
         </property>
         <property name="text">
-         <string>Manual Bolus</string>
+         <string>units</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
         </property>
        </widget>
        <widget class="QLineEdit" name="editManualBolus">
         <property name="geometry">
          <rect>
-          <x>240</x>
-          <y>100</y>
-          <width>91</width>
-          <height>25</height>
+          <x>330</x>
+          <y>240</y>
+          <width>101</width>
+          <height>31</height>
          </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>14</pointsize>
+         </font>
         </property>
         <property name="text">
          <string>0</string>
@@ -640,9 +735,9 @@
        <widget class="QPushButton" name="startManualBolus">
         <property name="geometry">
          <rect>
-          <x>250</x>
-          <y>130</y>
-          <width>71</width>
+          <x>38</x>
+          <y>350</y>
+          <width>491</width>
           <height>25</height>
          </rect>
         </property>
@@ -653,11 +748,16 @@
        <widget class="QLineEdit" name="addCarbsButton">
         <property name="geometry">
          <rect>
-          <x>150</x>
-          <y>230</y>
-          <width>111</width>
-          <height>61</height>
+          <x>130</x>
+          <y>110</y>
+          <width>141</width>
+          <height>111</height>
          </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>20</pointsize>
+         </font>
         </property>
         <property name="text">
          <string>0</string>
@@ -666,8 +766,8 @@
        <widget class="QLabel" name="label_16">
         <property name="geometry">
          <rect>
-          <x>150</x>
-          <y>210</y>
+          <x>130</x>
+          <y>90</y>
           <width>111</width>
           <height>17</height>
          </rect>
@@ -679,11 +779,16 @@
        <widget class="QLineEdit" name="addGlucoseButton">
         <property name="geometry">
          <rect>
-          <x>310</x>
-          <y>230</y>
-          <width>111</width>
-          <height>61</height>
+          <x>290</x>
+          <y>110</y>
+          <width>141</width>
+          <height>111</height>
          </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>20</pointsize>
+         </font>
         </property>
         <property name="text">
          <string>0</string>
@@ -692,8 +797,8 @@
        <widget class="QLabel" name="label_17">
         <property name="geometry">
          <rect>
-          <x>310</x>
-          <y>210</y>
+          <x>290</x>
+          <y>90</y>
           <width>131</width>
           <height>17</height>
          </rect>
@@ -705,9 +810,9 @@
        <widget class="QPushButton" name="viewCalculationButton">
         <property name="geometry">
          <rect>
-          <x>170</x>
-          <y>310</y>
-          <width>231</width>
+          <x>130</x>
+          <y>240</y>
+          <width>191</width>
           <height>31</height>
          </rect>
         </property>
@@ -718,8 +823,8 @@
        <widget class="QPushButton" name="viewCalculationButton_2">
         <property name="geometry">
          <rect>
-          <x>170</x>
-          <y>360</y>
+          <x>160</x>
+          <y>50</y>
           <width>231</width>
           <height>31</height>
          </rect>
@@ -741,25 +846,12 @@
          <string>Select Profile</string>
         </property>
        </widget>
-       <widget class="QPushButton" name="viewGraphButton">
-        <property name="geometry">
-         <rect>
-          <x>20</x>
-          <y>240</y>
-          <width>83</width>
-          <height>25</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>View Graph</string>
-        </property>
-       </widget>
        <widget class="QPushButton" name="cancelBolusButton">
         <property name="geometry">
          <rect>
-          <x>410</x>
-          <y>130</y>
-          <width>83</width>
+          <x>290</x>
+          <y>380</y>
+          <width>241</width>
           <height>25</height>
          </rect>
         </property>
@@ -770,9 +862,9 @@
        <widget class="QPushButton" name="pauseBolusButton">
         <property name="geometry">
          <rect>
-          <x>410</x>
-          <y>100</y>
-          <width>83</width>
+          <x>38</x>
+          <y>380</y>
+          <width>241</width>
           <height>25</height>
          </rect>
         </property>
@@ -783,8 +875,8 @@
        <widget class="QPushButton" name="immediateButton">
         <property name="geometry">
          <rect>
-          <x>60</x>
-          <y>100</y>
+          <x>490</x>
+          <y>190</y>
           <width>131</width>
           <height>21</height>
          </rect>
@@ -796,14 +888,40 @@
        <widget class="QPushButton" name="extendedButton">
         <property name="geometry">
          <rect>
-          <x>60</x>
-          <y>140</y>
+          <x>490</x>
+          <y>170</y>
           <width>131</width>
           <height>21</height>
          </rect>
         </property>
         <property name="text">
          <string>EXTENDED BOLUS</string>
+        </property>
+       </widget>
+       <widget class="QTimeEdit" name="timeEdit">
+        <property name="geometry">
+         <rect>
+          <x>330</x>
+          <y>310</y>
+          <width>101</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="displayFormat">
+         <string>h:mm</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_32">
+        <property name="geometry">
+         <rect>
+          <x>133</x>
+          <y>320</y>
+          <width>181</width>
+          <height>17</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>EXTENDED BOLUS (hours)</string>
         </property>
        </widget>
        <zorder>textBrowser</zorder>
@@ -819,18 +937,19 @@
        <zorder>viewCalculationButton</zorder>
        <zorder>viewCalculationButton_2</zorder>
        <zorder>selectProfileButton</zorder>
-       <zorder>viewGraphButton</zorder>
        <zorder>cancelBolusButton</zorder>
        <zorder>pauseBolusButton</zorder>
        <zorder>immediateButton</zorder>
        <zorder>extendedButton</zorder>
+       <zorder>timeEdit</zorder>
+       <zorder>label_32</zorder>
       </widget>
       <widget class="QWidget" name="profilesPage">
        <widget class="QPushButton" name="createProfileButton">
         <property name="geometry">
          <rect>
-          <x>70</x>
-          <y>50</y>
+          <x>90</x>
+          <y>70</y>
           <width>401</width>
           <height>51</height>
          </rect>
@@ -842,8 +961,8 @@
        <widget class="QPushButton" name="editProfileButton">
         <property name="geometry">
          <rect>
-          <x>70</x>
-          <y>100</y>
+          <x>90</x>
+          <y>120</y>
           <width>401</width>
           <height>51</height>
          </rect>
@@ -852,13 +971,48 @@
          <string>EDIT PROFILE</string>
         </property>
        </widget>
+       <widget class="QPushButton" name="createProfileBack_2">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>20</y>
+          <width>51</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Back</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_30">
+        <property name="geometry">
+         <rect>
+          <x>160</x>
+          <y>10</y>
+          <width>251</width>
+          <height>51</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>DejaVu Sans Mono</family>
+          <pointsize>16</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Manage Profiles</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
       </widget>
       <widget class="QWidget" name="editProfilesPage">
        <widget class="QPushButton" name="profile1Button">
         <property name="geometry">
          <rect>
-          <x>30</x>
-          <y>50</y>
+          <x>20</x>
+          <y>80</y>
           <width>91</width>
           <height>71</height>
          </rect>
@@ -870,8 +1024,8 @@
        <widget class="QPushButton" name="profile2Button">
         <property name="geometry">
          <rect>
-          <x>140</x>
-          <y>50</y>
+          <x>130</x>
+          <y>80</y>
           <width>91</width>
           <height>71</height>
          </rect>
@@ -883,8 +1037,8 @@
        <widget class="QPushButton" name="profile3Button">
         <property name="geometry">
          <rect>
-          <x>250</x>
-          <y>50</y>
+          <x>240</x>
+          <y>80</y>
           <width>91</width>
           <height>71</height>
          </rect>
@@ -896,8 +1050,8 @@
        <widget class="QPushButton" name="profile4Button">
         <property name="geometry">
          <rect>
-          <x>360</x>
-          <y>50</y>
+          <x>350</x>
+          <y>80</y>
           <width>91</width>
           <height>71</height>
          </rect>
@@ -909,8 +1063,8 @@
        <widget class="QPushButton" name="profile5Button">
         <property name="geometry">
          <rect>
-          <x>470</x>
-          <y>50</y>
+          <x>460</x>
+          <y>80</y>
           <width>91</width>
           <height>71</height>
          </rect>
@@ -922,14 +1076,36 @@
        <widget class="QPushButton" name="editProfileBack">
         <property name="geometry">
          <rect>
-          <x>0</x>
-          <y>10</y>
+          <x>20</x>
+          <y>20</y>
           <width>51</width>
           <height>31</height>
          </rect>
         </property>
         <property name="text">
          <string>Back</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_31">
+        <property name="geometry">
+         <rect>
+          <x>160</x>
+          <y>10</y>
+          <width>251</width>
+          <height>51</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>DejaVu Sans Mono</family>
+          <pointsize>16</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Manage Profiles</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
         </property>
        </widget>
       </widget>
@@ -1040,7 +1216,7 @@
         <property name="geometry">
          <rect>
           <x>160</x>
-          <y>20</y>
+          <y>10</y>
           <width>251</width>
           <height>51</height>
          </rect>
@@ -1061,8 +1237,8 @@
        <widget class="QPushButton" name="saveProfileBack">
         <property name="geometry">
          <rect>
-          <x>30</x>
-          <y>30</y>
+          <x>20</x>
+          <y>20</y>
           <width>51</width>
           <height>31</height>
          </rect>
@@ -1140,8 +1316,8 @@
        <widget class="QWidget" name="horizontalLayoutWidget">
         <property name="geometry">
          <rect>
-          <x>20</x>
-          <y>100</y>
+          <x>30</x>
+          <y>60</y>
           <width>521</width>
           <height>311</height>
          </rect>
@@ -1152,7 +1328,7 @@
         <property name="geometry">
          <rect>
           <x>150</x>
-          <y>20</y>
+          <y>10</y>
           <width>251</width>
           <height>51</height>
          </rect>
@@ -1170,13 +1346,26 @@
          <set>Qt::AlignCenter</set>
         </property>
        </widget>
+       <widget class="QPushButton" name="graphBack">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>20</y>
+          <width>51</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Back</string>
+        </property>
+       </widget>
       </widget>
       <widget class="QWidget" name="selectActiveProfilePage">
        <widget class="QPushButton" name="selectProfile1">
         <property name="geometry">
          <rect>
-          <x>10</x>
-          <y>100</y>
+          <x>20</x>
+          <y>70</y>
           <width>91</width>
           <height>71</height>
          </rect>
@@ -1188,8 +1377,8 @@
        <widget class="QPushButton" name="selectProfile4">
         <property name="geometry">
          <rect>
-          <x>340</x>
-          <y>100</y>
+          <x>350</x>
+          <y>70</y>
           <width>91</width>
           <height>71</height>
          </rect>
@@ -1201,8 +1390,8 @@
        <widget class="QPushButton" name="selectProfile5">
         <property name="geometry">
          <rect>
-          <x>450</x>
-          <y>100</y>
+          <x>460</x>
+          <y>70</y>
           <width>91</width>
           <height>71</height>
          </rect>
@@ -1214,8 +1403,8 @@
        <widget class="QPushButton" name="selectProfile3">
         <property name="geometry">
          <rect>
-          <x>230</x>
-          <y>100</y>
+          <x>240</x>
+          <y>70</y>
           <width>91</width>
           <height>71</height>
          </rect>
@@ -1227,8 +1416,8 @@
        <widget class="QPushButton" name="selectProfile2">
         <property name="geometry">
          <rect>
-          <x>120</x>
-          <y>100</y>
+          <x>130</x>
+          <y>70</y>
           <width>91</width>
           <height>71</height>
          </rect>
@@ -1261,8 +1450,8 @@
        <widget class="QPushButton" name="selectProfileBack">
         <property name="geometry">
          <rect>
-          <x>0</x>
-          <y>10</y>
+          <x>20</x>
+          <y>20</y>
           <width>51</width>
           <height>31</height>
          </rect>
@@ -1275,7 +1464,7 @@
         <property name="geometry">
          <rect>
           <x>170</x>
-          <y>20</y>
+          <y>10</y>
           <width>251</width>
           <height>51</height>
          </rect>
@@ -1335,7 +1524,7 @@
         <property name="geometry">
          <rect>
           <x>110</x>
-          <y>20</y>
+          <y>10</y>
           <width>361</width>
           <height>51</height>
          </rect>
@@ -1474,6 +1663,19 @@
         </property>
         <property name="text">
          <string>Stop</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="insulinBack">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>20</y>
+          <width>51</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Back</string>
         </property>
        </widget>
       </widget>
