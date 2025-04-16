@@ -42,6 +42,8 @@ public:
     Profile *getCurrentProfile() { return currentProfile; }
     Profile *getProfile(size_t index); // implemented in .cpp to include out of bound checking
     double getCurrentGlucose() { return currentGlucose; }
+    double getIOB(){return currentIOB; } // for bolus
+    int getHourStepCounter(){return hourStepCounter;} //stepBolus temp?
 
     // Setters
     void setCurrentBatteryLevel(int level) { currentBatteryLevel = level; }

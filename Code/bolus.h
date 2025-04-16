@@ -38,7 +38,7 @@ public:
     void setCarbs(int carbs) { carbohydrates = carbs; };
 
     // Step function
-    void stepBolus(); // this will be used to manage amount of insulin in machine
+    void stepBolus(float exBol); // this will be used to manage amount of insulin in machine
 
 private:
     Ui::MainWindow *_ui;
@@ -47,7 +47,7 @@ private:
     machine *thisMachine;
     Insulin *_insulin;
     Profile *currProfile;
-    float currBolus;
+    int extendedCount;
 
 }; // Bolus class
 
