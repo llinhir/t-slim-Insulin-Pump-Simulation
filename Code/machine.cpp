@@ -19,11 +19,13 @@ machine::machine(Ui::MainWindow *ui)
     currentInsulinAmount = 100; // in units, will be out of 300 u
     currentBasalRate = 0;
     previousBasalRate = 0;
+    currentIOB = 0;
     isLoggedIn = false;
     isTurnedOn = true;
     isCharging = false;
     hourStepCounter = 0;
     glucoseStepCounter = 0;
+
 
     ui->batteryBar->setValue(currentBatteryLevel);
     ui->insulinBar->setValue(currentInsulinAmount);
@@ -310,7 +312,6 @@ Profile *machine::getProfile(size_t index)
 
 void machine::consumeInsulin(double amount)
 {
-
     if (currentInsulinAmount >= amount)
     {
         currentInsulinAmount -= amount;
@@ -321,8 +322,16 @@ void machine::consumeInsulin(double amount)
         ui->logger->append("Not enough insulin available!!!");
         currentInsulinAmount = 0;
     }
-    userInsulinOnBoard += amount;                   // Add to the insulin on board
+    udpateInsulinOnBoard(amount);                      // Add to the insulin on board
     ui->insulinBar->setValue(currentInsulinAmount); // Update the UI
+}
+
+void machine::udpateInsulinOnBoard(double amount){
+    currentIOB += amount;
+    if (currentIOB < 0) {
+        currentIOB = 0;
+    }
+    ui->IOBunitsText->setText(QString::number(currentIOB, 'f', 2) + " u");
 }
 
 
@@ -334,12 +343,11 @@ void machine::stepMachine()
 {
     stepTime();
     updateBatteryLevel();
+    stepInsulinOnBoard();
 
     // these are here for testing, remove them and uncomment the below area once fully implementing
-
     stepBloodGlucose();
     stepInsulin();
-
 
     //    // Only step insulin once every 12 calls (i.e., 60 seconds)
     //    hourStepCounter++;
@@ -479,4 +487,17 @@ void machine::stepBloodGlucose(){
         previousBasalRate = 0;
         ui->basalStatNumber->display(currentBasalRate);
     }
+}
+
+void machine::stepInsulinOnBoard(){
+    // Setting the current thing to -> the body absorbs 25% of IOB per hour
+    double decay = currentIOB * 0.25;
+
+    // Prevent negative IOB
+    if (currentIOB - decay < 0) {
+        currentIOB = 0;
+    } else {
+        udpateInsulinOnBoard(-decay);   // make this negative so it subtracts from IOB
+    }
+
 }

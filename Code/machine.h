@@ -57,14 +57,18 @@ public:
     void saveProfile(); // Helper function for editProfile()
     void deleteProfile();
     void setActiveProfile(int index);
+
+    // Insulin Functions
     void refillInsulin();
     void consumeInsulin(double amount);
+    void udpateInsulinOnBoard(double amount);
 
     // Step functions
     void stepTime(); // Update the simulation every 5 seconds irl
     void updateBatteryLevel();
     void stepInsulin();
     void stepBloodGlucose();
+    void stepInsulinOnBoard();
 
     // QoL functions to save space
     QString returnString(Profile *profile);
@@ -103,7 +107,7 @@ private:
     double currentBasalRate;        // The basal rate that the system drains from the Insulin gauge
     vector<float> *glucoseVector;   // Gets the from simulation
     double currentGlucose;          // Current Blood Glucose of User, in mmol/L
-    double userInsulinOnBoard;      // The amount of insulin still inside the body after a bolus injection
+    double currentIOB;              // Insulin on board. The amount of insulin still inside the body after a bolus injection
 
 private slots:
     void stepMachine(); // TODO: Implement machine step function

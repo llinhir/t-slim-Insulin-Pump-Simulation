@@ -52,6 +52,7 @@ void Insulin::pauseBasal()
         _machine->setBasalRate(0);
         _ui->logger->append("Basal paused");
         _ui->basalStatNumber->display(0);
+        _ui->pauseBasalButton->setText("Pause");
     }
     else if (isPausedBasal && currBasalRate != 0)
     {
@@ -59,6 +60,7 @@ void Insulin::pauseBasal()
         _machine->setBasalRate(currBasalRate);
         _ui->logger->append("Basal resumed");
         _ui->basalStatNumber->display(currBasalRate);
+        _ui->pauseBasalButton->setText("Unpause");
     }
 }
 
