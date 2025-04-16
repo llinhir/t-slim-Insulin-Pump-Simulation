@@ -74,17 +74,23 @@ MainWindow::MainWindow(QWidget *parent)
 
     // connecting slots for the back buttons
     connect(ui->optionsBack, &QPushButton::clicked, this, [this]()
-            { switchPage(prevPageMap[OPTIONS_PAGE]); });
+            { backPage(); });
     connect(ui->createProfileBack, &QPushButton::clicked, this, [this]()
-            { switchPage(prevPageMap[CREATE_PROFILE_PAGE]); });
+            { backPage(); });
     connect(ui->bolusBack, &QPushButton::clicked, this, [this]()
-            { switchPage(prevPageMap[BOLUS_PAGE]); });
+            { backPage(); });
     connect(ui->selectProfileBack, &QPushButton::clicked, this, [this]()
-            { switchPage(prevPageMap[SELECT_ACTIVE_PROFILE_PAGE]); });
+            { backPage(); });
     connect(ui->editProfileBack, &QPushButton::clicked, this, [this]()
-            { switchPage(prevPageMap[EDIT_PROFILE_PAGE]); });
+            { backPage(); });
     connect(ui->saveProfileBack, &QPushButton::clicked, this, [this]()
-            { switchPage(prevPageMap[EDIT_SPECIFIC_PROFILE_PAGE]); });
+            { backPage(); });
+    connect(ui->createProfileBack_2, &QPushButton::clicked, this, [this]()
+            { backPage(); });
+    connect(ui->graphBack, &QPushButton::clicked, this, [this]()
+            { backPage(); });
+    connect(ui->insulinBack, &QPushButton::clicked, this, [this]()
+            { backPage(); });
 
     // THIS IS ONLY FOR TESTING AND CONCEPT, please dont remove until done -_-
     QSplineSeries *batterySeries = new QSplineSeries(); // Curved line
@@ -150,7 +156,30 @@ void MainWindow::switchPage(PageIndex pageName)
 {
     if (mach->getIsLoggedIn())
     {
+        prevPage = ui->stackedWidget->currentIndex();
         ui->stackedWidget->setCurrentIndex(pageName);
+    }
+}
+
+void MainWindow::backPage(){
+    int currentPage = ui->stackedWidget->currentIndex();
+
+    // If a specific previous page is saved from before
+    if(prevPage != -1){
+        ui->stackedWidget->setCurrentIndex(prevPage);
+        prevPage = -1;
+        return;
+    }
+
+    // Otherwise, try to get the page from the map
+    if (prevPageMap.contains(static_cast<PageIndex>(currentPage)))
+    {
+        int previous = prevPageMap[static_cast<PageIndex>(currentPage)];
+        ui->stackedWidget->setCurrentIndex(previous);
+    }
+    else
+    {
+        qDebug() << "couldn't go back a page" << currentPage;
     }
 }
 
@@ -186,6 +215,9 @@ void MainWindow::setPrevPages()
     prevPageMap[EDIT_PROFILE_PAGE] = PROFILES_PAGE;
     prevPageMap[EDIT_SPECIFIC_PROFILE_PAGE] = EDIT_PROFILE_PAGE;
     prevPageMap[SELECT_ACTIVE_PROFILE_PAGE] = BOLUS_PAGE;
+    prevPageMap[PROFILES_PAGE] = OPTIONS_PAGE;
+    prevPageMap[INSULIN_PAGE] = OPTIONS_PAGE;
+    prevPageMap[GRAPH_PAGE] = HOME_PAGE;
 }
 
 // void MainWindow::charge what is this for???

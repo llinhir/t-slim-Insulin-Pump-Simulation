@@ -30,6 +30,7 @@ private:
     Ui::MainWindow *ui;
     Simulation *sim;
     machine *mach;
+    int prevPage;       // holds the integer for the previous page
 
     // page mappings for what their previous page was
     QMap<PageIndex, PageIndex> prevPageMap;
@@ -37,6 +38,7 @@ private:
 private slots:
     bool submitPassword();
     void switchPage(PageIndex pageName);
+    void backPage();    // goes back to the previous page
     void turnOnOff(PageIndex pageName);
     void chargeBattery();
 };
