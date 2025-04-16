@@ -876,7 +876,7 @@
         <property name="geometry">
          <rect>
           <x>460</x>
-          <y>130</y>
+          <y>160</y>
           <width>81</width>
           <height>21</height>
          </rect>
@@ -889,7 +889,7 @@
         <property name="geometry">
          <rect>
           <x>460</x>
-          <y>160</y>
+          <y>190</y>
           <width>81</width>
           <height>21</height>
          </rect>
@@ -921,6 +921,19 @@
          </rect>
         </property>
        </widget>
+       <widget class="QPushButton" name="manualButton">
+        <property name="geometry">
+         <rect>
+          <x>460</x>
+          <y>130</y>
+          <width>81</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>MANUAL</string>
+        </property>
+       </widget>
        <zorder>textBrowser</zorder>
        <zorder>label_11</zorder>
        <zorder>bolusBack</zorder>
@@ -940,6 +953,7 @@
        <zorder>extendedButton</zorder>
        <zorder>label_32</zorder>
        <zorder>immediateFractionBox</zorder>
+       <zorder>manualButton</zorder>
       </widget>
       <widget class="QWidget" name="profilesPage">
        <widget class="QPushButton" name="createProfileButton">

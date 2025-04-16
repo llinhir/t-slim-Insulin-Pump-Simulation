@@ -8,6 +8,7 @@
 
 #include <string>
 #include <vector>
+#include <QTimer>
 
 #include "machine.h"
 #include "profile.h"
@@ -16,7 +17,7 @@
 
 using namespace std;
 
-class Simulation
+class Simulation : public QObject // if this is breaking stuff, can remove from qobject
 {
 public:
     Simulation(Ui::MainWindow *ui);
@@ -32,6 +33,9 @@ private:
     Ui::MainWindow *ui;
     Insulin *insulin;
     vector<float> GlucoseVector; // This is for the glucose value at each time step, almost like the readings that a machine would get
+
+private slots:
+    void stepMachine();
 };
 
 #endif // SIMULATION_H

@@ -21,8 +21,8 @@ public:
 
     // bolus functions
     void startBolusDelivery(double bolus);
-    void pauseBolus();
-    void stopBolus();
+//    void pauseBolus();
+//    void stopBolus();
 
     // i kept these 2 functions for now cause i think jessica re
     //    void autoStopInsulin();

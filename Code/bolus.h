@@ -30,7 +30,7 @@ public:
     void cancelBolus();
 
     // Step function
-    void stepBolus(float exBol); // ????? this will be used to manage amount of insulin in machine
+    void stepBolus(); // ????? this will be used to manage amount of insulin in machine
 
 private:
     Ui::MainWindow *_ui;
@@ -44,6 +44,8 @@ private:
 
     int immediateFraction; // immediate bolus fraction
     int extendedCount; // amount of minutes left of extended bolus- decrement by 5
+    float extendedPortion; // certain amount of the extended bolus that is administered every 5 mins
+    float extendedFullAmt; //
     bool bolusPaused;
 
     // probably have something that prevents harmful amounts of insulin being used?

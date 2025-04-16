@@ -23,6 +23,12 @@ Simulation::Simulation(Ui::MainWindow *ui)
         9.7, 7.2, 6.0, 5.0, 4.3, 3.8, 3.6 // Evening / overnight dip
     };
     m->setGlucoseVector(&GlucoseVector);  // Initialized the glucose
+
+    // creates a timer that updates the time by 5 minutes (in simulation) every 5 seconds (irl)
+    m->getCurrentTime(); // Get current and apply time and date
+    QTimer *timer = new QTimer(this);
+    connect(timer, &QTimer::timeout, this, &Simulation::stepMachine);
+    timer->start(5000);
 }
 
 // Checks if user entered the correct password
@@ -37,4 +43,25 @@ bool Simulation::enterPassword(string input)
     {
         return false;
     }
+}
+
+void Simulation::stepMachine()
+{
+    m->stepTime();
+    m->updateBatteryLevel();
+    m->stepInsulinOnBoard();
+
+    // these are here for testing, remove them and uncomment the below area once fully implementing
+    m->stepBloodGlucose();
+    bolus->stepBolus();
+    m->stepInsulin();
+
+    //    // Only step insulin once every 12 calls (i.e., 60 seconds)
+    //    hourStepCounter++;
+    //    if (hourStepCounter >= 12) {
+    //
+    //        stepInsulin();
+    //        stepBloodGlucose();
+    //        hourStepCounter = 0;
+    //    }
 }

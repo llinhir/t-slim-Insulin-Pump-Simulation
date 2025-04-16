@@ -30,11 +30,11 @@ machine::machine(Ui::MainWindow *ui)
     ui->batteryBar->setValue(currentBatteryLevel);
     ui->insulinBar->setValue(currentInsulinAmount);
 
-    // creates a timer that updates the time by 5 minutes (in simulation) every 5 seconds (irl)
-    getCurrentTime(); // Get current and apply time and date
-    QTimer *timer = new QTimer(this);
-    connect(timer, &QTimer::timeout, this, &machine::stepMachine);
-    timer->start(5000);
+//    // creates a timer that updates the time by 5 minutes (in simulation) every 5 seconds (irl)
+//    getCurrentTime(); // Get current and apply time and date
+//    QTimer *timer = new QTimer(this);
+//     connect(timer, &QTimer::timeout, this, &machine::stepMachine);
+//    timer->start(5000);
 
     // print for testing
     cout << "Current time: " << currentHour << ":" << currentMinute << " " << currentDay << "/" << currentMonth << "/" << currentYear << endl;
@@ -339,25 +339,25 @@ void machine::udpateInsulinOnBoard(double amount){
 //          step functions start here            //
 ////////////////////////////////////////////////////
 
-void machine::stepMachine()
-{
-    stepTime();
-    updateBatteryLevel();
-    stepInsulinOnBoard();
+//void machine::stepMachine() REMOVE IF NO LONGER NEEDED
+//{
+//    stepTime();
+//    updateBatteryLevel();
+//    stepInsulinOnBoard();
 
-    // these are here for testing, remove them and uncomment the below area once fully implementing
-    stepBloodGlucose();
-    stepInsulin();
+//    // these are here for testing, remove them and uncomment the below area once fully implementing
+//    stepBloodGlucose();
+//    stepInsulin();
 
-    //    // Only step insulin once every 12 calls (i.e., 60 seconds)
-    //    hourStepCounter++;
-    //    if (hourStepCounter >= 12) {
-    //
-    //        stepInsulin();
-    //        stepBloodGlucose();
-    //        hourStepCounter = 0;
-    //    }
-}
+//    //    // Only step insulin once every 12 calls (i.e., 60 seconds)
+//    //    hourStepCounter++;
+//    //    if (hourStepCounter >= 12) {
+//    //
+//    //        stepInsulin();
+//    //        stepBloodGlucose();
+//    //        hourStepCounter = 0;
+//    //    }
+//}
 
 void machine::stepTime()
 {

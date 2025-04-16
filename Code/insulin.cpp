@@ -85,16 +85,18 @@ void Insulin::stopBasal()
 void Insulin::startBolusDelivery(double rate)
 {
     cout << "Delivering Bolus: " << rate << " units" << endl;
+    _ui->logger->append("Bolus delivery: " + QString::number(rate, 'f', 1) + " units");
     _machine->consumeInsulin(rate);
 }
 
-void Insulin::pauseBolus()
-{
-}
+//void Insulin::pauseBolus() no use?
+//{
 
-void Insulin::stopBolus()
-{
-}
+//}
+
+//void Insulin::stopBolus()
+//{
+//}
 
 ////////////////////////////////////////////////////
 //          extra functions start here            //

@@ -100,14 +100,27 @@ void Bolus::cgmCalculation()
     }
 }
 
-void Bolus::stepBolus(float exBol) // FIX- needs to be connected to the timer or stepper
+void Bolus::stepBolus()
 {
-    // I am using this wrong for now potentially- for extended bolus. can be a diff function if needed
-    /*if(extendedCount > 1 && thisMachine->getHourStepCounter() >= 12){
-        thisMachine->consumeInsulin(exBol);
-        extendedCount--; // under construction
-        cout << extendedCount - 1 << "hours left of extended bolus." << endl;
-    }*/
+    if(extendedCount >= 5 && extendedFullAmt > 0){
+
+        thisMachine->consumeInsulin(extendedPortion);
+        extendedFullAmt -= extendedPortion;
+        extendedCount -= 5;
+        _ui->logger->append("Bolus delivery: " + QString::number(extendedPortion, 'f', 2) + " units");
+
+        if(extendedCount >= 5){
+            cout << "BOLUS: " << extendedPortion << " units; " << extendedFullAmt << " units left to administer over " << extendedCount << " minutes." << endl;
+        } else{
+            cout << "BOLUS: " << extendedPortion << " units" << endl;
+
+            cout << "EXTENDED BOLUS COMPLETE" << endl;
+        }
+
+    } else{
+
+        // do nothing
+    }
 }
 
 // IN PROGRESS // + need to add to logger and probably in Insulin add to history vector
@@ -128,8 +141,13 @@ void Bolus::immediateBolus()
     double immediateBolus = finalBolus * (immediateFraction / 100.0);
 
     cout << "Immediate Bolus ("<<  immediateFraction << "%): " << immediateBolus << endl;
-    thisMachine->consumeInsulin(immediateBolus); // replaced the insulin function call cause it's just 1 more unecessary level
-    //
+    _ui->immediateButton->setStyleSheet("background-color: red;");
+    _ui->extendedButton->setStyleSheet("background-color: white;");
+    // need a var that chooses
+
+    // mmmmmm maybe only let the start button give insulin?
+    thisMachine->consumeInsulin(immediateBolus);
+    _ui->logger->append("Bolus delivery: " + QString::number(immediateBolus, 'f', 1) + " units");
 }
 
 void Bolus::extendedBolus() // NO MORE CHANGE HOURS :) fix it
@@ -139,25 +157,33 @@ void Bolus::extendedBolus() // NO MORE CHANGE HOURS :) fix it
     float extendedBolus = finalBolus * ((100 - immediateFraction) / 100.0);
 
     cout << "Extended Bolus (" <<  100 - immediateFraction << "%): " << extendedBolus << endl;
-    float div = extendedBolus / 3.0; // over 3 hours
-    cout << div << " units per hours over 3 hours" << endl;
-    div = div / 36.0; // this much every 5 mins
-    thisMachine->consumeInsulin(div); // AFTER MAYBE REMOVE THIS AND DELIVER STARTING AFTER 5 MINS
+    _ui->extendedButton->setStyleSheet("background-color: red;");
+    _ui->immediateButton->setStyleSheet("background-color: white;");
+    // need a var that chooses
+
+    // move to start?
+    extendedFullAmt = extendedBolus / 3.0; // over 3 hours
+    cout << extendedFullAmt << " units per hour over 3 hours" << endl;
+    extendedPortion = extendedFullAmt / 36.0; // this much every 5 mins
     extendedCount = 180; // 3 hours = 180 mins = 5mins * 36
-    cout << extendedCount - 5 << " minutes left of extended bolus" << endl;
-    //stepBolus(div); // make a getter for div and extendedCount when stepBolus is connected to timer
+    cout << extendedCount << " minutes left of extended bolus" << endl;
+    // now stepBolus takes it away :)
 }
 
 void Bolus::stopOngoingBolus()
 {
     bolusPaused = true;
-    _insulin->pauseBolus();
+    // _insulin->pauseBolus();
     cout << "Pausing bolus delivery..." << endl;
+    _ui->logger->append("Bolus paused.");
 }
 
 void Bolus::cancelBolus() // instead of just pause, get rid of the ongoing bolus
 {
+    bolusPaused = true;
     extendedCount = 0;
-    _insulin->stopBolus();
+    extendedFullAmt = 0;
+    //_insulin->stopBolus();
     cout << "Bolus delivery cancelled." << endl;
+    _ui->logger->append("Bolus cancelled.");
 }

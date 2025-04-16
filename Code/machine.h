@@ -112,6 +112,6 @@ private:
     double currentIOB;              // Insulin on board. The amount of insulin still inside the body after a bolus injection
 
 private slots:
-    void stepMachine(); // TODO: Implement machine step function
+    //void stepMachine(); // TODO: Implement machine step function
 };
 #endif // MACHINE_H
