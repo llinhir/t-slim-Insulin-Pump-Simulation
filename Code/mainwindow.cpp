@@ -111,6 +111,12 @@ MainWindow::MainWindow(QWidget *parent)
 
     // Set the chart view in the UI
     ui->chartLayout->addWidget(chartView);
+
+    // For the Immediate Bolus Fraction spinbox
+    ui->immediateFractionBox->setSingleStep(10);
+    ui->immediateFractionBox->setRange(0, 100);
+    ui->immediateFractionBox->setSuffix("%");
+    ui->immediateFractionBox->setValue(60);
 }
 
 MainWindow::~MainWindow()

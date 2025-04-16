@@ -29,25 +29,24 @@ public:
     void stopOngoingBolus();
     void cancelBolus();
 
-    // getters
-    float getGlucose() { return currGlucose; }; // IDK IF IT IS GOOD TO HAVE THESE HERE
-    int getCarbs() { return carbohydrates; };   // BECAUSE THEN STUFF WOULD HAVE TO HAVE A BOLUS
-
-    // setters
-    void setGlucose(float glucose) { currGlucose = glucose; };
-    void setCarbs(int carbs) { carbohydrates = carbs; };
-
     // Step function
-    void stepBolus(float exBol); // this will be used to manage amount of insulin in machine
+    void stepBolus(float exBol); // ????? this will be used to manage amount of insulin in machine
 
 private:
     Ui::MainWindow *_ui;
-    float currGlucose; // mmol/L
-    int carbohydrates; // grams
     machine *thisMachine;
     Insulin *_insulin;
     Profile *currProfile;
-    int extendedCount;
+
+    float currGlucose; // mmol/L
+    int carbohydrates; // grams
+    int currIOB;
+
+    int immediateFraction; // immediate bolus fraction
+    int extendedCount; // amount of minutes left of extended bolus- decrement by 5
+    bool bolusPaused;
+
+    // probably have something that prevents harmful amounts of insulin being used?
 
 }; // Bolus class
 
