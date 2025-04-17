@@ -97,6 +97,7 @@ void Bolus::cgmCalculation()
         carbohydrates = _ui->addCarbsButton->text().toFloat();
         currGlucose = thisMachine->getCurrentGlucose();
         currIOB = thisMachine->getIOB();
+        _ui->addGlucoseButton->setText(QString::number(currGlucose, 'f', 2));
 
         cout << "Carbs: " << carbohydrates << ", Glucose: " << currGlucose << ", IOB: " << currIOB << endl;
         bolusCalculation(carbohydrates, currGlucose, currIOB);
@@ -114,6 +115,9 @@ void Bolus::stepBolus()
 
         if(extendedCount >= 5){
             cout << "BOLUS: " << extendedPortion << " units; " << extendedFullAmt << " units left to administer over " << extendedCount << " minutes." << endl;
+            _ui->IOBtimeText->setText(QString::number(extendedCount) + " min");
+            _ui->IOBunitsText->setText(QString::number(extendedFullAmt, 'f', 2) + " u");
+
         } else{
             cout << "BOLUS: " << extendedPortion << " units" << endl;
 
@@ -135,10 +139,11 @@ void Bolus::startBolus() // delivers bolus (imm and ex just select a setting)
 
     } else if(bolusOption == 2){ // extended
 
-        cout << extendedFullAmt << " units per hour over 3 hours" << endl;
+        cout << extendedFullAmt << " units over 3 hours" << endl;
         extendedPortion = extendedFullAmt / 36.0; // this much every 5 mins
         extendedCount = 180; // 3 hours = 180 mins = 5mins * 36
         cout << extendedCount << " minutes left of extended bolus" << endl;
+        _ui->bolusStatNumber->display(QString::number(extendedFullAmt/3, 'f', 2)); //units per hour
         // now stepBolus takes it away :)
 
     }else{
@@ -180,6 +185,9 @@ void Bolus::stopOngoingBolus()
     // _insulin->pauseBolus();
     cout << "Pausing bolus delivery..." << endl;
     _ui->logger->append("Bolus paused.");
+    _ui->IOBtimeText->setText("paused");
+    _ui->IOBunitsText->setText("paused");
+    _ui->bolusStatNumber->display(0); //units per hour
 }
 
 void Bolus::cancelBolus() // instead of just pause, get rid of the ongoing bolus
@@ -190,4 +198,7 @@ void Bolus::cancelBolus() // instead of just pause, get rid of the ongoing bolus
     //_insulin->stopBolus();
     cout << "Bolus delivery cancelled." << endl;
     _ui->logger->append("Bolus cancelled.");
+    _ui->IOBunitsText->setText("0.00 u");
+    _ui->IOBtimeText->setText("0.00 min");
+    _ui->bolusStatNumber->display(0); //units per hour
 }
