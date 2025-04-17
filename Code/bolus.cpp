@@ -12,6 +12,7 @@ Bolus::Bolus(Ui::MainWindow *ui, machine *machine, Insulin *insulin)
 
     currProfile = thisMachine->getCurrentProfile();
     bolusPaused = true;
+    bolusOption = 0;
 
     connect(ui->viewCalculationButton, &QPushButton::clicked, this, [this]()
             { viewCalculation(); });
@@ -21,7 +22,9 @@ Bolus::Bolus(Ui::MainWindow *ui, machine *machine, Insulin *insulin)
             { _ui->stackedWidget->setCurrentIndex(SELECT_ACTIVE_PROFILE_PAGE); });
 
     connect(ui->startManualBolus, &QPushButton::clicked, this, [this]()
-            { manualBolus(); });
+            { startBolus(); });
+//    connect(ui->manualButton, &QPushButton::clicked, this, [this]()
+//            { manualBolus(); });
     connect(ui->immediateButton, &QPushButton::clicked, this, [this]()
             { immediateBolus(); });
     connect(ui->extendedButton, &QPushButton::clicked, this, [this]()
@@ -123,51 +126,52 @@ void Bolus::stepBolus()
     }
 }
 
-// IN PROGRESS // + need to add to logger and probably in Insulin add to history vector
-
-void Bolus::manualBolus() // perhaps START causes it to happen + has error handling, while imm and ex just select a setting
+void Bolus::startBolus() // delivers bolus (imm and ex just select a setting)
 {
-    float finalBolus = _ui->editManualBolus->text().toFloat();
-    _insulin->startBolusDelivery(finalBolus); // give float to function as param
-    // take parameter(finalBolus, how many hours) and take the insulin out of device and deliver to user
-    // change values accordingly
+    if(bolusOption == 1){ // immediate
+
+        thisMachine->consumeInsulin(immediateAmt);
+        _ui->logger->append("Bolus delivery: " + QString::number(immediateAmt, 'f', 1) + " units");
+
+    } else if(bolusOption == 2){ // extended
+
+        cout << extendedFullAmt << " units per hour over 3 hours" << endl;
+        extendedPortion = extendedFullAmt / 36.0; // this much every 5 mins
+        extendedCount = 180; // 3 hours = 180 mins = 5mins * 36
+        cout << extendedCount << " minutes left of extended bolus" << endl;
+        // now stepBolus takes it away :)
+
+    }else{
+        // nothing
+    }
+
+    bolusOption = 0;
 }
 
 void Bolus::immediateBolus()
 {
-    float finalBolus = _ui->editManualBolus->text().toFloat(); // or have an in-house var to take from
+    float finalBolus = _ui->editManualBolus->text().toFloat();
     immediateFraction = _ui->immediateFractionBox->value();
     cout << immediateFraction << endl;
-    double immediateBolus = finalBolus * (immediateFraction / 100.0);
+    immediateAmt = finalBolus * (immediateFraction / 100.0);
 
-    cout << "Immediate Bolus ("<<  immediateFraction << "%): " << immediateBolus << endl;
+    bolusOption = 1;
+    cout << "Immediate Bolus ("<<  immediateFraction << "%): " << immediateAmt << endl;
     _ui->immediateButton->setStyleSheet("background-color: red;");
     _ui->extendedButton->setStyleSheet("background-color: white;");
-    // need a var that chooses
-
-    // mmmmmm maybe only let the start button give insulin?
-    thisMachine->consumeInsulin(immediateBolus);
-    _ui->logger->append("Bolus delivery: " + QString::number(immediateBolus, 'f', 1) + " units");
 }
 
-void Bolus::extendedBolus() // NO MORE CHANGE HOURS :) fix it
+void Bolus::extendedBolus()
 {
     float finalBolus = _ui->editManualBolus->text().toFloat();
     immediateFraction = _ui->immediateFractionBox->value();
     float extendedBolus = finalBolus * ((100 - immediateFraction) / 100.0);
+    extendedFullAmt = extendedBolus / 3.0; // over 3 hours
 
+    bolusOption = 2;
     cout << "Extended Bolus (" <<  100 - immediateFraction << "%): " << extendedBolus << endl;
     _ui->extendedButton->setStyleSheet("background-color: red;");
     _ui->immediateButton->setStyleSheet("background-color: white;");
-    // need a var that chooses
-
-    // move to start?
-    extendedFullAmt = extendedBolus / 3.0; // over 3 hours
-    cout << extendedFullAmt << " units per hour over 3 hours" << endl;
-    extendedPortion = extendedFullAmt / 36.0; // this much every 5 mins
-    extendedCount = 180; // 3 hours = 180 mins = 5mins * 36
-    cout << extendedCount << " minutes left of extended bolus" << endl;
-    // now stepBolus takes it away :)
 }
 
 void Bolus::stopOngoingBolus()

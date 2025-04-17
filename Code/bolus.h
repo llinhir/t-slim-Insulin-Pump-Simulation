@@ -23,7 +23,8 @@ public:
     void bolusCalculation(int carbs, float glucose, int insulinOnBoard);
 
     // features- press button to administer/activate
-    void manualBolus();
+    void startBolus();
+//    void manualBolus(); // for the funny little button
     void immediateBolus();
     void extendedBolus();
     void stopOngoingBolus();
@@ -47,6 +48,8 @@ private:
     float extendedPortion; // certain amount of the extended bolus that is administered every 5 mins
     float extendedFullAmt; //
     bool bolusPaused;
+    int bolusOption; // 1, 2 = immediate, extended
+    float immediateAmt;
 
     // probably have something that prevents harmful amounts of insulin being used?
 
