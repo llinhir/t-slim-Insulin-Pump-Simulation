@@ -15,8 +15,8 @@ machine::machine(Ui::MainWindow *ui)
     this->ui = ui;
 
     // Initialize variables and classes
-    currentBatteryLevel = 100;
-    currentInsulinAmount = 100; // in units, will be out of 300 u
+    currentBatteryLevel = 22;
+    currentInsulinAmount = 50; // in units, will be out of 300 u
     currentBasalRate = 0;
     previousBasalRate = 0;
     currentIOB = 0;
@@ -26,15 +26,14 @@ machine::machine(Ui::MainWindow *ui)
     hourStepCounter = 0;
     glucoseStepCounter = 0;
 
-
     ui->batteryBar->setValue(currentBatteryLevel);
     ui->insulinBar->setValue(currentInsulinAmount);
 
-//    // creates a timer that updates the time by 5 minutes (in simulation) every 5 seconds (irl)
-//    getCurrentTime(); // Get current and apply time and date
-//    QTimer *timer = new QTimer(this);
-//     connect(timer, &QTimer::timeout, this, &machine::stepMachine);
-//    timer->start(5000);
+    //    // creates a timer that updates the time by 5 minutes (in simulation) every 5 seconds (irl)
+    //    getCurrentTime(); // Get current and apply time and date
+    //    QTimer *timer = new QTimer(this);
+    //     connect(timer, &QTimer::timeout, this, &machine::stepMachine);
+    //    timer->start(5000);
 
     // print for testing
     cout << "Current time: " << currentHour << ":" << currentMinute << " " << currentDay << "/" << currentMonth << "/" << currentYear << endl;
@@ -81,7 +80,6 @@ void machine::addToHistory(string event)
     history.push_back(event);
     cout << "Event added to history: " << event << endl;
 }
-
 
 // User can select a profile; if the selected profile is empty, it does not update current profile
 void machine::updateProfileInfo()
@@ -167,9 +165,6 @@ bool machine::loginAttempt(string passwordGuess)
     }
 }
 
-
-
-
 void machine::createProfile()
 {
     profiles.push_back(options->createProfile());
@@ -246,8 +241,6 @@ void machine::setActiveProfile(int index)
     ui->activeProfileLabel->setText(profileMessage);
 }
 
-
-
 void machine::refillInsulin()
 {
     currentInsulinAmount = 300; // in mL, will be out of 300 ml
@@ -322,28 +315,29 @@ void machine::consumeInsulin(double amount)
         ui->logger->append("Not enough insulin available!!!");
         currentInsulinAmount = 0;
     }
-    udpateInsulinOnBoard(amount);                      // Add to the insulin on board
+    udpateInsulinOnBoard(amount);                   // Add to the insulin on board
     ui->insulinBar->setValue(currentInsulinAmount); // Update the UI
 }
 
-void machine::udpateInsulinOnBoard(double amount){
+void machine::udpateInsulinOnBoard(double amount)
+{
     currentIOB += amount;
-    if (currentIOB < 0) {
+    if (currentIOB < 0)
+    {
         currentIOB = 0;
     }
     ui->IOBunitsText->setText(QString::number(currentIOB, 'f', 2) + " u");
 }
 
-
 ////////////////////////////////////////////////////
 //          step functions start here            //
 ////////////////////////////////////////////////////
 
-//void machine::stepMachine() REMOVE IF NO LONGER NEEDED
+// void machine::stepMachine() REMOVE IF NO LONGER NEEDED
 //{
-//    stepTime();
-//    updateBatteryLevel();
-//    stepInsulinOnBoard();
+//     stepTime();
+//     updateBatteryLevel();
+//     stepInsulinOnBoard();
 
 //    // these are here for testing, remove them and uncomment the below area once fully implementing
 //    stepBloodGlucose();
@@ -403,7 +397,6 @@ void machine::stepTime()
     ui->timeLabel->setText(timeString);
 }
 
-
 // Updates UI based on device status (on/off charging/not charging)
 void machine::updateBatteryLevel() // will be called every step
 {
@@ -435,6 +428,11 @@ void machine::updateBatteryLevel() // will be called every step
         {
             ui->logger->append("Warning: Battery Low");
             cout << "Battery low" << endl; // add this to history and ui
+
+            // adding to history
+            string currentTime = std::to_string(currentHour) + ":" + std::to_string(currentMinute) + " " + std::to_string(currentDay) + "/" + std::to_string(currentMonth) + "/" + std::to_string(currentYear);
+            string event = "Battery low at " + currentTime;
+            addToHistory(event);
         }
     }
 
@@ -445,7 +443,7 @@ void machine::updateBatteryLevel() // will be called every step
 // Updates UI based on how much insulin is stored in the device
 void machine::stepInsulin()
 {
-    //cout << "curr basal rate-------->: " << currentBasalRate << endl;
+    // cout << "curr basal rate-------->: " << currentBasalRate << endl;
     currentInsulinAmount = currentInsulinAmount - currentBasalRate;
     if (currentInsulinAmount <= 0)
     {
@@ -456,13 +454,14 @@ void machine::stepInsulin()
         ui->logger->append("Warning: Low Insulin");
     }
 
-
     ui->insulinBar->setValue(currentInsulinAmount);
 }
 
-void machine::stepBloodGlucose(){
+void machine::stepBloodGlucose()
+{
     glucoseStepCounter++;
-    if (glucoseStepCounter >= static_cast<int>(glucoseVector->size())) {
+    if (glucoseStepCounter >= static_cast<int>(glucoseVector->size()))
+    {
         glucoseStepCounter = 0;
     }
 
@@ -473,14 +472,17 @@ void machine::stepBloodGlucose(){
     ui->logger->append(QString::number(currentGlucose, 'f', 1) + " mmol/L");
     ui->glucoseStatNumber->display(currentGlucose);
 
-    if(currentGlucose <= 3.9 && currentBasalRate != 0){
+    if (currentGlucose <= 3.9 && currentBasalRate != 0)
+    {
         // this event needs to be logged for future reference
         std::cout << "[Low Glucose Levels]: basal rate stopped" << std::endl;
         ui->logger->append("[Low Glucose Levels]: basal rate stopped");
         previousBasalRate = currentBasalRate;
         this->setBasalRate(0);
         ui->basalStatNumber->display(0);
-    }else if(currentGlucose > 3.9 && previousBasalRate != 0 && currentBasalRate == 0){
+    }
+    else if (currentGlucose > 3.9 && previousBasalRate != 0 && currentBasalRate == 0)
+    {
         std::cout << "prev: " << previousBasalRate << std::endl;
         ui->logger->append("[Medium Glucose Levels]: basal rate resumed");
         this->setBasalRate(previousBasalRate);
@@ -489,15 +491,28 @@ void machine::stepBloodGlucose(){
     }
 }
 
-void machine::stepInsulinOnBoard(){
+void machine::stepInsulinOnBoard()
+{
     // Setting the current thing to -> the body absorbs 25% of IOB per hour
     double decay = currentIOB * 0.25;
 
     // Prevent negative IOB
-    if (currentIOB - decay < 0) {
+    if (currentIOB - decay < 0)
+    {
         currentIOB = 0;
-    } else {
-        udpateInsulinOnBoard(-decay);   // make this negative so it subtracts from IOB
     }
+    else
+    {
+        udpateInsulinOnBoard(-decay); // make this negative so it subtracts from IOB
+    }
+}
 
+void machine::stepHistoryBox()
+{
+    // Update the history box with the latest events
+    ui->historyTextBox->clear();
+    for (const auto &event : history)
+    {
+        ui->historyTextBox->append(QString::fromStdString(event));
+    }
 }

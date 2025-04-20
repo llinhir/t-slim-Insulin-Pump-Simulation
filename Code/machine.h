@@ -42,8 +42,8 @@ public:
     Profile *getCurrentProfile() { return currentProfile; }
     Profile *getProfile(size_t index); // implemented in .cpp to include out of bound checking
     double getCurrentGlucose() { return currentGlucose; }
-    double getIOB(){return currentIOB; } // for bolus
-    int getHourStepCounter(){return hourStepCounter;} //stepBolus temp?
+    double getIOB() { return currentIOB; }               // for bolus
+    int getHourStepCounter() { return hourStepCounter; } // stepBolus temp?
 
     // Setters
     void setCurrentBatteryLevel(int level) { currentBatteryLevel = level; }
@@ -71,14 +71,15 @@ public:
     void stepInsulin();
     void stepBloodGlucose();
     void stepInsulinOnBoard();
+    void stepHistoryBox();
 
     // QoL functions to save space
     QString returnString(Profile *profile);
 
 private:
     Ui::MainWindow *ui;
-    time_t rawTime;                 // Raw time data
-    struct tm *currentTime;         // Current time structure
+    time_t rawTime;         // Raw time data
+    struct tm *currentTime; // Current time structure
     int currentHour;
     int currentMinute;
     int currentDay;
@@ -86,32 +87,32 @@ private:
     int currentYear;
 
     // Step variables
-    int hourStepCounter;            // used to make sure certain variables (ex. insulin & glucose) is updated every 60 minutes (in simulation)
+    int hourStepCounter;    // used to make sure certain variables (ex. insulin & glucose) is updated every 60 minutes (in simulation)
     int glucoseStepCounter; //
 
     // variables for the machine
-    vector<string> history;         // History of events
+    vector<string> history; // History of events
     int currentPage;
-    double currentInsulinAmount;    // This is the amount of insulin in the machine in u, will be out of 300 u
+    double currentInsulinAmount; // This is the amount of insulin in the machine in u, will be out of 300 u
     int currentBatteryLevel;
     bool isCharging;
     bool isTurnedOn;
     bool isLoggedIn;
-    int insulinStepCounter;         // used to make sure insulin is delivered every 60 minutes (in simulation)
-    double previousBasalRate;       // saves the previous basal rate for when glucose levels go below zero
+    int insulinStepCounter;   // used to make sure insulin is delivered every 60 minutes (in simulation)
+    double previousBasalRate; // saves the previous basal rate for when glucose levels go below zero
 
     string password;  // Password for login
     Options *options; // System Options
 
     // User info
-    vector<Profile *> profiles;     // The user can have multiple profiles
-    Profile *currentProfile;        // Current profile
-    double currentBasalRate;        // The basal rate that the system drains from the Insulin gauge
-    vector<float> *glucoseVector;   // Gets the from simulation
-    double currentGlucose;          // Current Blood Glucose of User, in mmol/L
-    double currentIOB;              // Insulin on board. The amount of insulin still inside the body after a bolus injection
+    vector<Profile *> profiles;   // The user can have multiple profiles
+    Profile *currentProfile;      // Current profile
+    double currentBasalRate;      // The basal rate that the system drains from the Insulin gauge
+    vector<float> *glucoseVector; // Gets the from simulation
+    double currentGlucose;        // Current Blood Glucose of User, in mmol/L
+    double currentIOB;            // Insulin on board. The amount of insulin still inside the body after a bolus injection
 
 private slots:
-    //void stepMachine(); // TODO: Implement machine step function
+    // void stepMachine(); // TODO: Implement machine step function
 };
 #endif // MACHINE_H

@@ -69,8 +69,11 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->viewGraphButton, &QPushButton::clicked, this, [this]()
             { switchPage(GRAPH_PAGE); });
     connect(ui->insulinButton, &QPushButton::clicked, this, [this]()
-            { switchPage(INSULIN_PAGE); // TODO: also call the set basal rate function
-                });
+            {
+                switchPage(INSULIN_PAGE); // TODO: also call the set basal rate function
+            });
+    connect(ui->historyButton, &QPushButton::clicked, this, [this]()
+            { switchPage(HISTORY_PAGE); });
 
     // connecting slots for the back buttons
     connect(ui->optionsBack, &QPushButton::clicked, this, [this]()
@@ -90,6 +93,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->graphBack, &QPushButton::clicked, this, [this]()
             { backPage(); });
     connect(ui->insulinBack, &QPushButton::clicked, this, [this]()
+            { backPage(); });
+    connect(ui->historyBack, &QPushButton::clicked, this, [this]()
             { backPage(); });
 
     // THIS IS ONLY FOR TESTING AND CONCEPT, please dont remove until done -_-
@@ -167,11 +172,13 @@ void MainWindow::switchPage(PageIndex pageName)
     }
 }
 
-void MainWindow::backPage(){
+void MainWindow::backPage()
+{
     int currentPage = ui->stackedWidget->currentIndex();
 
     // If a specific previous page is saved from before
-    if(prevPage != -1){
+    if (prevPage != -1)
+    {
         ui->stackedWidget->setCurrentIndex(prevPage);
         prevPage = -1;
         return;
@@ -224,6 +231,7 @@ void MainWindow::setPrevPages()
     prevPageMap[PROFILES_PAGE] = OPTIONS_PAGE;
     prevPageMap[INSULIN_PAGE] = OPTIONS_PAGE;
     prevPageMap[GRAPH_PAGE] = HOME_PAGE;
+    prevPageMap[HISTORY_PAGE] = OPTIONS_PAGE;
 }
 
 // void MainWindow::charge what is this for???
