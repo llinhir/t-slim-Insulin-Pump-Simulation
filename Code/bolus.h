@@ -24,10 +24,11 @@ public:
 
     // features- press button to administer/activate
     void startBolus();
-//    void manualBolus(); // for the funny little button
+//    void manualBolus();
     void immediateBolus();
     void extendedBolus();
     void stopOngoingBolus();
+    void continueBolus();
     void cancelBolus();
 
     // Step function
@@ -43,13 +44,20 @@ private:
     int carbohydrates; // grams
     int currIOB;
 
+    int bolusOption; // 1, 2 = immediate, extended
     int immediateFraction; // immediate bolus fraction
     int extendedCount; // amount of minutes left of extended bolus- decrement by 5
+    float extendedFullAmt;
     float extendedPortion; // certain amount of the extended bolus that is administered every 5 mins
-    float extendedFullAmt; //
-    bool bolusPaused;
-    int bolusOption; // 1, 2 = immediate, extended
+
+
     float immediateAmt;
+
+    // holding values while bolus is paused
+    bool bolusPaused;
+    float bPausedCount;
+    float bPausedAmt;
+
 
     // probably have something that prevents harmful amounts of insulin being used?
 

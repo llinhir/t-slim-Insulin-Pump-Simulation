@@ -23,8 +23,6 @@ Bolus::Bolus(Ui::MainWindow *ui, machine *machine, Insulin *insulin)
 
     connect(ui->startManualBolus, &QPushButton::clicked, this, [this]()
             { startBolus(); });
-//    connect(ui->manualButton, &QPushButton::clicked, this, [this]()
-//            { manualBolus(); });
     connect(ui->immediateButton, &QPushButton::clicked, this, [this]()
             { immediateBolus(); });
     connect(ui->extendedButton, &QPushButton::clicked, this, [this]()
@@ -32,6 +30,8 @@ Bolus::Bolus(Ui::MainWindow *ui, machine *machine, Insulin *insulin)
 
     connect(ui->pauseBolusButton, &QPushButton::clicked, this, [this]()
             { stopOngoingBolus(); });
+    connect(ui->continueBolusButton, &QPushButton::clicked, this, [this]()
+            { continueBolus(); });
     connect(ui->cancelBolusButton, &QPushButton::clicked, this, [this]()
             { cancelBolus(); });
 }
@@ -43,9 +43,9 @@ Bolus::~Bolus()
 // Gathers user input for bolus calculation
 void Bolus::viewCalculation()
 {
-    if(_ui->editManualBolus->text().toFloat() != 0 || _ui->addGlucoseButton->text().toFloat() == 0){
+    if(_ui->addGlucoseButton->text().toFloat() == 0){ // _ui->editManualBolus->text().toFloat() != 0 ||
 
-        cout << "Add values to GLUCOSE (CARBS if needed), select the CGM calculation for use of stored values, OR clear the manual bolus textbox." << endl;
+        cout << "Add values to GLUCOSE (CARBS if needed) OR select the CGM calculation for use of stored values." << endl;
 
     } else{
 
@@ -78,19 +78,25 @@ void Bolus::bolusCalculation(int carbs, float glucose, int insulinOnBoard)
 //    cout << totalBolus << endl;
 //    cout << finalBolus << endl;
 
-    cout << "View Calculation: " << fixed << setprecision(2) << finalBolus << endl;
-    QString floatString = QString::number(finalBolus, 'f', 2);
-    _ui->editManualBolus->setText(floatString);
+    if(finalBolus > 0){
+
+        cout << "View Calculation: " << fixed << setprecision(2) << finalBolus << endl;
+        QString floatString = QString::number(finalBolus, 'f', 2);
+        _ui->editManualBolus->setText(floatString);
+
+    } else{
+        cout << "The calculation was negative. Submit carbs and/or glucose. Either your insulin levels are too high for a delivery or your glucose is too low / estimated to become too low." << endl;
+    }
 }
 
 void Bolus::cgmCalculation()
 {
     cout << "Getting CGM values..." << endl;
-    if(_ui->editManualBolus->text().toFloat() != 0 || _ui->addCarbsButton->text().toFloat() == 0){
+//    if(_ui->addCarbsButton->text().toFloat() == 0){ // _ui->editManualBolus->text().toFloat() != 0 ||
 
-        cout << "Please enter carbs and/or revert manual bolus to 0." << endl;
+//        cout << "Please enter carbs." << endl;
 
-    } else{
+//    } else{
 
         // Update current profile based on selected
         currProfile = thisMachine->getCurrentProfile();
@@ -101,7 +107,7 @@ void Bolus::cgmCalculation()
 
         cout << "Carbs: " << carbohydrates << ", Glucose: " << currGlucose << ", IOB: " << currIOB << endl;
         bolusCalculation(carbohydrates, currGlucose, currIOB);
-    }
+    //}
 }
 
 void Bolus::stepBolus()
@@ -111,7 +117,7 @@ void Bolus::stepBolus()
         thisMachine->consumeInsulin(extendedPortion);
         extendedFullAmt -= extendedPortion;
         extendedCount -= 5;
-        _ui->logger->append("Bolus delivery: " + QString::number(extendedPortion, 'f', 2) + " units");
+        _ui->logger->append("Bolus delivery: " + QString::number(extendedPortion, 'f', 2) + " u");
 
         if(extendedCount >= 5){
             cout << "BOLUS: " << extendedPortion << " units; " << extendedFullAmt << " units left to administer over " << extendedCount << " minutes." << endl;
@@ -135,10 +141,11 @@ void Bolus::startBolus() // delivers bolus (imm and ex just select a setting)
     if(bolusOption == 1){ // immediate
 
         thisMachine->consumeInsulin(immediateAmt);
-        _ui->logger->append("Bolus delivery: " + QString::number(immediateAmt, 'f', 1) + " units");
+        _ui->logger->append("Bolus delivery: " + QString::number(immediateAmt, 'f', 1) + " u");
 
     } else if(bolusOption == 2){ // extended
 
+        bolusPaused = false;
         cout << extendedFullAmt << " units over 3 hours" << endl;
         extendedPortion = extendedFullAmt / 36.0; // this much every 5 mins
         extendedCount = 180; // 3 hours = 180 mins = 5mins * 36
@@ -150,7 +157,9 @@ void Bolus::startBolus() // delivers bolus (imm and ex just select a setting)
         // nothing
     }
 
-    bolusOption = 0;
+//    _ui->immediateButton->setStyleSheet("background-color: white;");
+//    _ui->extendedButton->setStyleSheet("background-color: white;");
+    //bolusOption = 0;
 }
 
 void Bolus::immediateBolus()
@@ -182,6 +191,11 @@ void Bolus::extendedBolus()
 void Bolus::stopOngoingBolus()
 {
     bolusPaused = true;
+    bPausedCount = extendedCount;
+    bPausedAmt = extendedFullAmt;
+    extendedCount = 0;
+    extendedFullAmt = 0;
+
     // _insulin->pauseBolus();
     cout << "Pausing bolus delivery..." << endl;
     _ui->logger->append("Bolus paused.");
@@ -190,12 +204,40 @@ void Bolus::stopOngoingBolus()
     _ui->bolusStatNumber->display(0); //units per hour
 }
 
-void Bolus::cancelBolus() // instead of just pause, get rid of the ongoing bolus
+void Bolus::continueBolus(){
+
+    if(bolusPaused == true){
+
+        bolusPaused = false;
+        extendedCount = bPausedCount;
+        extendedFullAmt = bPausedAmt;
+        bPausedCount = 0;
+        bPausedAmt = 0;
+
+        //_insulin->stopBolus();
+
+        cout << "Resuming bolus delivery..." << endl;
+        _ui->logger->append("Bolus resumed.");
+        _ui->IOBunitsText->setText(QString::number(extendedFullAmt, 'f', 2) + " u");
+        _ui->IOBtimeText->setText(QString::number(extendedCount, 'f', 2) + " min");
+        _ui->bolusStatNumber->display(QString::number(extendedPortion, 'f', 2)); //units per hour
+    }else{
+        // nothing
+    }
+}
+
+// instead of just pause, get rid of the ongoing bolus
+void Bolus::cancelBolus()
 {
     bolusPaused = true;
     extendedCount = 0;
     extendedFullAmt = 0;
+    extendedPortion = 0;
+    bPausedCount = 0;
+    bPausedAmt = 0;
+
     //_insulin->stopBolus();
+
     cout << "Bolus delivery cancelled." << endl;
     _ui->logger->append("Bolus cancelled.");
     _ui->IOBunitsText->setText("0.00 u");
