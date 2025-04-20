@@ -424,13 +424,14 @@ void machine::updateBatteryLevel() // will be called every step
             ui->simulation->setCurrentIndex(OFF);
         }
         // check if battery is low
-        if (currentBatteryLevel == 20)
+        if (currentBatteryLevel <= 20)
         {
             ui->logger->append("Warning: Battery Low");
             cout << "Battery low" << endl; // add this to history and ui
 
             // adding to history
-            string currentTime = std::to_string(currentHour) + ":" + std::to_string(currentMinute) + " " + std::to_string(currentDay) + "/" + std::to_string(currentMonth) + "/" + std::to_string(currentYear);
+            string minuteStr = (currentMinute < 10) ? "0" + std::to_string(currentMinute) : std::to_string(currentMinute);
+            string currentTime = std::to_string(currentHour) + ":" + minuteStr + " " + std::to_string(currentDay) + "/" + std::to_string(currentMonth) + "/" + std::to_string(currentYear);
             string event = "Battery low at " + currentTime;
             addToHistory(event);
         }
@@ -452,6 +453,10 @@ void machine::stepInsulin()
     if (currentInsulinAmount < 70)
     {
         ui->logger->append("Warning: Low Insulin");
+        string minuteStr = (currentMinute < 10) ? "0" + std::to_string(currentMinute) : std::to_string(currentMinute);
+        string currentTime = std::to_string(currentHour) + ":" + minuteStr + " " + std::to_string(currentDay) + "/" + std::to_string(currentMonth) + "/" + std::to_string(currentYear);
+        string event = "Low insulin at " + currentTime;
+        addToHistory(event);
     }
 
     ui->insulinBar->setValue(currentInsulinAmount);
@@ -471,12 +476,19 @@ void machine::stepBloodGlucose()
     std::cout << "Blood Glucose: " << currentGlucose << " mmol/L" << std::endl;
     ui->logger->append(QString::number(currentGlucose, 'f', 1) + " mmol/L");
     ui->glucoseStatNumber->display(currentGlucose);
-
     if (currentGlucose <= 3.9 && currentBasalRate != 0)
     {
         // this event needs to be logged for future reference
         std::cout << "[Low Glucose Levels]: basal rate stopped" << std::endl;
         ui->logger->append("[Low Glucose Levels]: basal rate stopped");
+
+        // add to history
+        string minuteStr = (currentMinute < 10) ? "0" + std::to_string(currentMinute) : std::to_string(currentMinute);
+        string currentTime = std::to_string(currentHour) + ":" + minuteStr + " " + std::to_string(currentDay) + "/" + std::to_string(currentMonth) + "/" + std::to_string(currentYear);
+        string event = "Low glucose at " + currentTime;
+        event += ", basal rate stopped";
+        addToHistory(event);
+
         previousBasalRate = currentBasalRate;
         this->setBasalRate(0);
         ui->basalStatNumber->display(0);
@@ -485,6 +497,14 @@ void machine::stepBloodGlucose()
     {
         std::cout << "prev: " << previousBasalRate << std::endl;
         ui->logger->append("[Medium Glucose Levels]: basal rate resumed");
+
+        // add to history
+        string minuteStr = (currentMinute < 10) ? "0" + std::to_string(currentMinute) : std::to_string(currentMinute);
+        string currentTime = std::to_string(currentHour) + ":" + minuteStr + " " + std::to_string(currentDay) + "/" + std::to_string(currentMonth) + "/" + std::to_string(currentYear);
+        string event = "Medium glucose at " + currentTime;
+        event += ", basal rate resumed";
+        addToHistory(event);
+
         this->setBasalRate(previousBasalRate);
         previousBasalRate = 0;
         ui->basalStatNumber->display(currentBasalRate);
