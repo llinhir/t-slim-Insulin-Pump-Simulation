@@ -14,19 +14,25 @@ Arjun - coded machine.cpp + bolus graph
 Header Files:
 defs.h
 bolus.h
+createprofile.h
+insulin.h
 machine.h
 mainwindow.h
 options.h
-user.h
+profile.h
+simulation.h
 
 Source Files:
 bolus.cpp
+createprofile.cpp
+insulin.cpp
 machine.cpp
 main.cpp
 mainwindow.cpp
 mainwindow.ui
 options.cpp
-user.cpp
+profile.cpp
+simulation.cpp
 
 Others
 Code.pro
