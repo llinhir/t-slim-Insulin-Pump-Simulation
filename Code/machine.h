@@ -35,6 +35,7 @@ public:
     int getCurrentPage() { return currentPage; }
     double getCurrentInsulinAmount() { return currentInsulinAmount; }
     int getCurrentBatteryLevel() { return currentBatteryLevel; }
+    double getCurrentBasalRate() { return currentBasalRate; }
     bool getIsCharging() { return isCharging; }
     bool getIsTurnedOn() { return isTurnedOn; }
     bool getIsLoggedIn() { return isLoggedIn; }
@@ -45,6 +46,7 @@ public:
     double getIOB() { return currentIOB; }                                                 // for bolus
     int getHourStepCounter() { return hourStepCounter; }                                   // stepBolus temp?
     double getCurrentGlucoseFromVector() { return glucoseVector->at(glucoseStepCounter); } // get the last value from the vector
+    double getGlucoseFromVectorInThirtyMins();
 
     // Setters
     void setCurrentBatteryLevel(int level) { currentBatteryLevel = level; }
@@ -53,6 +55,7 @@ public:
     void setIsCharging(bool charging) { isCharging = charging; }
     void setBasalRate(double rate) { currentBasalRate = rate; }
     void setGlucoseVector(vector<float> *vector) { glucoseVector = vector; }
+    void setCurrentGlucose(double glucose) { currentGlucose = glucose; }
 
     // Machine Functinos
     void createProfile();
@@ -73,6 +76,7 @@ public:
     void stepBloodGlucose();
     void stepInsulinOnBoard();
     void stepHistoryBox();
+    void stepBloodGlucoseVector();
 
     // QoL functions to save space
     QString returnString(Profile *profile);

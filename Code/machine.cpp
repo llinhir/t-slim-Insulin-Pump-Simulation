@@ -35,10 +35,6 @@ machine::machine(Ui::MainWindow *ui)
     //     connect(timer, &QTimer::timeout, this, &machine::stepMachine);
     //    timer->start(5000);
 
-    // print for testing
-    cout << "Current time: " << currentHour << ":" << currentMinute << " " << currentDay << "/" << currentMonth << "/" << currentYear << endl;
-    cout << "Current Date: " << currentDay << "/" << currentMonth << "/" << currentYear << endl;
-
     // initalize the other classes
     options = new Options(ui);
 
@@ -444,6 +440,7 @@ void machine::updateBatteryLevel() // will be called every step
 // Updates UI based on how much insulin is stored in the device
 void machine::stepInsulin()
 {
+
     // cout << "curr basal rate-------->: " << currentBasalRate << endl;
     currentInsulinAmount = currentInsulinAmount - currentBasalRate;
     if (currentInsulinAmount <= 0)
@@ -464,18 +461,19 @@ void machine::stepInsulin()
 
 void machine::stepBloodGlucose()
 {
-    glucoseStepCounter++;
-    if (glucoseStepCounter >= static_cast<int>(glucoseVector->size()))
-    {
-        glucoseStepCounter = 0;
-    }
+    // glucoseStepCounter++;
+    // if (glucoseStepCounter >= static_cast<int>(glucoseVector->size()))
+    // {
+    //     glucoseStepCounter = 0;
+    // }
 
     // Current glucose amount - (the basal rate + extended bolus rate)
     currentGlucose = glucoseVector->at(glucoseStepCounter) - currentBasalRate;
 
-    std::cout << "Blood Glucose: " << currentGlucose << " mmol/L" << std::endl;
-    ui->logger->append(QString::number(currentGlucose, 'f', 1) + " mmol/L");
-    ui->glucoseStatNumber->display(currentGlucose);
+    // std::cout << "Blood Glucose: " << currentGlucose << " mmol/L" << std::endl;
+    // ui->logger->append(QString::number(currentGlucose, 'f', 1) + " mmol/L");
+    // ui->glucoseStatNumber->display(currentGlucose);
+    // ui->basalStatNumber->display(currentBasalRate);
 
     // Basal rate management
     if (currentGlucose <= 3.9 && currentBasalRate != 0)
@@ -494,6 +492,7 @@ void machine::stepBloodGlucose()
         previousBasalRate = currentBasalRate;
         this->setBasalRate(0);
         ui->basalStatNumber->display(0);
+        return;
     }
     else if (currentGlucose > 3.9 && previousBasalRate != 0 && currentBasalRate == 0)
     {
@@ -507,9 +506,49 @@ void machine::stepBloodGlucose()
         event += ", basal rate resumed";
         addToHistory(event);
 
+        // to make sure I dont kill them right out of the gate
+        double futureGlucose = getGlucoseFromVectorInThirtyMins();
+        if (futureGlucose < currentGlucose && currentBasalRate != 0)
+        {
+            // decrease insulin delivery to account for drop in gluces
+            currentBasalRate *= 0.75; // decrease by 25%
+            cout << "Predicted glucose is lower than current glucose, decreasing basal rate to: " << currentBasalRate << endl;
+        }
+
         this->setBasalRate(previousBasalRate);
         previousBasalRate = 0;
+        // currentBasalRate = currentProfile->getBasalRate();
         ui->basalStatNumber->display(currentBasalRate);
+        return;
+    }
+
+    // Check 30 mins ahead
+    //  First check thirty mins in the future, then adjust the currentBasalrate to match the scenario
+    double futureGlucose = getGlucoseFromVectorInThirtyMins();
+
+    if (futureGlucose > 10 && currentBasalRate != 0)
+    {
+        // calculate for correction
+        double correction = std::abs((currentGlucose - currentProfile->getTargetGlucoseLevel()) / currentProfile->getCorrectionFactor());
+        cout << "Predicted blood glucose is too high, correction being applied: " << correction << endl;
+        currentGlucose = glucoseVector->at(glucoseStepCounter) - correction;
+        std::cout << "Blood Glucose: " << currentGlucose << " mmol/L" << std::endl;
+        ui->logger->append("[High Glucose Levels]: correction bolus applied: " + QString::number(correction, 'f', 2) + " units");
+        ui->logger->append(QString::number(currentGlucose, 'f', 1) + " mmol/L");
+        ui->glucoseStatNumber->display(currentGlucose);
+        return;
+    }
+    else if (futureGlucose < currentGlucose && currentBasalRate != 0)
+    {
+        // decrease insulin delivery to account for drop in gluces
+        currentBasalRate *= 0.75; // decrease by 25%
+        cout << "Predicted glucose is lower than current glucose, decreasing basal rate to: " << currentBasalRate << endl;
+    }
+    else if (futureGlucose > currentGlucose && currentBasalRate != 0)
+    {
+        // increase insulin delivery to account for rise in glucose
+        currentBasalRate *= 1.25; // increase by 25%
+        cout << "Predicted glucose is higher than current glucose, increasing basal rate to: " << currentBasalRate << endl;
     }
 }
 
@@ -537,4 +576,20 @@ void machine::stepHistoryBox()
     {
         ui->historyTextBox->append(QString::fromStdString(event));
     }
+}
+
+void machine::stepBloodGlucoseVector()
+{
+    glucoseStepCounter++;
+    if (glucoseStepCounter >= static_cast<int>(glucoseVector->size()))
+    {
+        glucoseStepCounter = 0;
+    }
+}
+
+double machine::getGlucoseFromVectorInThirtyMins()
+{
+    // Get the glucose level from the vector in 30 minutes
+    int index = (glucoseStepCounter + 6) % glucoseVector->size();
+    return glucoseVector->at(index);
 }

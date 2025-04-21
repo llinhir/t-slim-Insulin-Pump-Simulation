@@ -116,25 +116,30 @@ void Bolus::cgmCalculation()
 
 void Bolus::stepBolus()
 {
-    if (thisMachine->getCurrentGlucoseFromVector() <= 3.9) // if glucose is too low, exit
-    {
-        cout << "Glucose is too low. Stop bolus delivery." << endl;
-        struct tm *timeInfo = thisMachine->getCurrentTimeStruct();
-        string minuteStr = (timeInfo->tm_min < 10) ? "0" + std::to_string(timeInfo->tm_min) : std::to_string(timeInfo->tm_min);
-        string currentTime = std::to_string(timeInfo->tm_hour) + ":" + minuteStr + " " + std::to_string(timeInfo->tm_mday) + "/" + std::to_string(timeInfo->tm_mon + 1) + "/" + std::to_string(timeInfo->tm_year + 1900);
-        string event = "Low glucose at " + currentTime;
-        event += ", Extended bolus delivery has been paused";
-        thisMachine->addToHistory(event);
-        _ui->logger->append("[Low glucose levels]: Extended bolus delivery has been paused");
-        stopOngoingBolus();
-        // cancelBolus();
-        return;
-    }
+    // if (thisMachine->getCurrentGlucoseFromVector() <= 3.9) // if glucose is too low, exit
+    // {
+    //     cout << "Glucose is too low. Stop bolus delivery." << endl;
+    //     struct tm *timeInfo = thisMachine->getCurrentTimeStruct();
+    //     string minuteStr = (timeInfo->tm_min < 10) ? "0" + std::to_string(timeInfo->tm_min) : std::to_string(timeInfo->tm_min);
+    //     string currentTime = std::to_string(timeInfo->tm_hour) + ":" + minuteStr + " " + std::to_string(timeInfo->tm_mday) + "/" + std::to_string(timeInfo->tm_mon + 1) + "/" + std::to_string(timeInfo->tm_year + 1900);
+    //     string event = "Low glucose at " + currentTime;
+    //     event += ", Extended bolus delivery has been paused";
+    //     thisMachine->addToHistory(event);
+    //     _ui->logger->append("[Low glucose levels]: Extended bolus delivery has been paused");
+    //     stopOngoingBolus();
+    //     // cancelBolus();
+    //     return;
+    // }
 
     if (extendedCount >= 5 && extendedFullAmt > 0)
     {
 
         thisMachine->consumeInsulin(extendedPortion);
+
+        // this is the glucose math
+        double newGlucose = thisMachine->getCurrentGlucose() - extendedPortion;
+        thisMachine->setCurrentGlucose(newGlucose);
+
         extendedFullAmt -= extendedPortion;
         extendedCount -= 5;
         _ui->logger->append("Bolus delivery: " + QString::number(extendedPortion, 'f', 2) + " u");
@@ -157,6 +162,13 @@ void Bolus::stepBolus()
 
         // do nothing
     }
+
+    double currentGlucose = thisMachine->getCurrentGlucose();
+    double currentBasalRate = thisMachine->getCurrentBasalRate();
+    std::cout << "Blood Glucose: " << currentGlucose << " mmol/L" << std::endl;
+    _ui->logger->append(QString::number(currentGlucose, 'f', 1) + " mmol/L");
+    _ui->glucoseStatNumber->display(currentGlucose);
+    _ui->basalStatNumber->display(currentBasalRate);
 }
 
 void Bolus::startBolus() // delivers bolus (imm and ex just select a setting)
@@ -165,7 +177,18 @@ void Bolus::startBolus() // delivers bolus (imm and ex just select a setting)
     { // immediate
 
         thisMachine->consumeInsulin(immediateAmt);
+
         _ui->logger->append("Bolus delivery: " + QString::number(immediateAmt, 'f', 1) + " u");
+
+        double newGlucose = thisMachine->getCurrentGlucose() - immediateAmt;
+        thisMachine->setCurrentGlucose(newGlucose);
+
+        double currentGlucose = thisMachine->getCurrentGlucose();
+        double currentBasalRate = thisMachine->getCurrentBasalRate();
+        std::cout << "Blood Glucose: " << currentGlucose << " mmol/L" << std::endl;
+        _ui->logger->append(QString::number(currentGlucose, 'f', 1) + " mmol/L");
+        _ui->glucoseStatNumber->display(currentGlucose);
+        _ui->basalStatNumber->display(currentBasalRate);
     }
     else if (bolusOption == 2)
     { // extended
@@ -191,18 +214,18 @@ void Bolus::startBolus() // delivers bolus (imm and ex just select a setting)
 void Bolus::immediateBolus()
 {
 
-    if (thisMachine->getCurrentGlucoseFromVector() <= 3.9) // if glucose is too low, dont allow this
-    {
-        cout << "Glucose is too low. Immediate bolus delivery has been denied." << endl;
-        struct tm *timeInfo = thisMachine->getCurrentTimeStruct();
-        string minuteStr = (timeInfo->tm_min < 10) ? "0" + std::to_string(timeInfo->tm_min) : std::to_string(timeInfo->tm_min);
-        string currentTime = std::to_string(timeInfo->tm_hour) + ":" + minuteStr + " " + std::to_string(timeInfo->tm_mday) + "/" + std::to_string(timeInfo->tm_mon + 1) + "/" + std::to_string(timeInfo->tm_year + 1900);
-        string event = "Low glucose at " + currentTime;
-        event += ", Immediate bolus delivery has been denied";
-        thisMachine->addToHistory(event);
-        _ui->logger->append("[Low glucose levels]: Immediate bolus delivery has been denied");
-        return;
-    }
+    // if (thisMachine->getCurrentGlucoseFromVector() <= 3.9) // if glucose is too low, dont allow this
+    // {
+    //     cout << "Glucose is too low. Immediate bolus delivery has been denied." << endl;
+    //     struct tm *timeInfo = thisMachine->getCurrentTimeStruct();
+    //     string minuteStr = (timeInfo->tm_min < 10) ? "0" + std::to_string(timeInfo->tm_min) : std::to_string(timeInfo->tm_min);
+    //     string currentTime = std::to_string(timeInfo->tm_hour) + ":" + minuteStr + " " + std::to_string(timeInfo->tm_mday) + "/" + std::to_string(timeInfo->tm_mon + 1) + "/" + std::to_string(timeInfo->tm_year + 1900);
+    //     string event = "Low glucose at " + currentTime;
+    //     event += ", Immediate bolus delivery has been denied at " + currentTime;
+    //     thisMachine->addToHistory(event);
+    //     _ui->logger->append("[Low glucose levels]: Immediate bolus delivery has been denied");
+    //     return;
+    // }
 
     float finalBolus = _ui->editManualBolus->text().toFloat();
     immediateFraction = _ui->immediateFractionBox->value();
