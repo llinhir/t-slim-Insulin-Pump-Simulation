@@ -15,8 +15,8 @@ machine::machine(Ui::MainWindow *ui)
     this->ui = ui;
 
     // Initialize variables and classes
-    currentBatteryLevel = 22;
-    currentInsulinAmount = 50; // in units, will be out of 300 u
+    currentBatteryLevel = 100;
+    currentInsulinAmount = 200; // in units, will be out of 300 u
     currentBasalRate = 0;
     previousBasalRate = 0;
     currentIOB = 0;
@@ -476,6 +476,8 @@ void machine::stepBloodGlucose()
     std::cout << "Blood Glucose: " << currentGlucose << " mmol/L" << std::endl;
     ui->logger->append(QString::number(currentGlucose, 'f', 1) + " mmol/L");
     ui->glucoseStatNumber->display(currentGlucose);
+
+    // Basal rate management
     if (currentGlucose <= 3.9 && currentBasalRate != 0)
     {
         // this event needs to be logged for future reference

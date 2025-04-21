@@ -42,8 +42,9 @@ public:
     Profile *getCurrentProfile() { return currentProfile; }
     Profile *getProfile(size_t index); // implemented in .cpp to include out of bound checking
     double getCurrentGlucose() { return currentGlucose; }
-    double getIOB() { return currentIOB; }               // for bolus
-    int getHourStepCounter() { return hourStepCounter; } // stepBolus temp?
+    double getIOB() { return currentIOB; }                                                 // for bolus
+    int getHourStepCounter() { return hourStepCounter; }                                   // stepBolus temp?
+    double getCurrentGlucoseFromVector() { return glucoseVector->at(glucoseStepCounter); } // get the last value from the vector
 
     // Setters
     void setCurrentBatteryLevel(int level) { currentBatteryLevel = level; }

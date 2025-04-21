@@ -18,13 +18,13 @@ public:
     ~Bolus();
 
     // calculator
-    void viewCalculation();                                              // calls regular bolus calculation
-    void cgmCalculation();                                               // calls CGM bolus calculation IN PROGRESS
+    void viewCalculation(); // calls regular bolus calculation
+    void cgmCalculation();  // calls CGM bolus calculation IN PROGRESS
     void bolusCalculation(int carbs, float glucose, int insulinOnBoard);
 
     // features- press button to administer/activate
     void startBolus();
-//    void manualBolus();
+    //    void manualBolus();
     void immediateBolus();
     void extendedBolus();
     void stopOngoingBolus();
@@ -32,7 +32,7 @@ public:
     void cancelBolus();
 
     // Step function
-    void stepBolus(); // ????? this will be used to manage amount of insulin in machine
+    void stepBolus(); // this will be used to manage amount of insulin in machine
 
 private:
     Ui::MainWindow *_ui;
@@ -44,12 +44,11 @@ private:
     int carbohydrates; // grams
     int currIOB;
 
-    int bolusOption; // 1, 2 = immediate, extended
+    int bolusOption;       // 1, 2 = immediate, extended
     int immediateFraction; // immediate bolus fraction
-    int extendedCount; // amount of minutes left of extended bolus- decrement by 5
+    int extendedCount;     // amount of minutes left of extended bolus- decrement by 5
     float extendedFullAmt;
     float extendedPortion; // certain amount of the extended bolus that is administered every 5 mins
-
 
     float immediateAmt;
 
@@ -57,7 +56,6 @@ private:
     bool bolusPaused;
     float bPausedCount;
     float bPausedAmt;
-
 
     // probably have something that prevents harmful amounts of insulin being used?
 
