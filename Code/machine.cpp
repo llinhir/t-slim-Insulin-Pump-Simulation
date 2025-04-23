@@ -77,6 +77,12 @@ void machine::addToHistory(string event)
     cout << "Event added to history: " << event << endl;
 }
 
+void machine::addToHistory(QString event)
+{
+    history.push_back(event.toStdString());
+    cout << "Event added to history (QString)" << endl;
+}
+
 // User can select a profile; if the selected profile is empty, it does not update current profile
 void machine::updateProfileInfo()
 {
@@ -151,6 +157,7 @@ bool machine::loginAttempt(string passwordGuess)
     if (passwordGuess == password)
     {
         ui->logger->append("Login Successful");
+        addToHistory(std::string("Login Successful"));
         isLoggedIn = true;
         return true;
     }
@@ -242,6 +249,7 @@ void machine::refillInsulin()
     currentInsulinAmount = 300; // in mL, will be out of 300 ml
     ui->insulinBar->setValue(currentInsulinAmount);
     ui->logger->append("Insulin Refilled");
+    addToHistory(std::string("Insulin Refilled"));
 }
 
 void machine::connectSlots()
@@ -309,6 +317,7 @@ void machine::consumeInsulin(double amount)
     {
         cout << "Not enough insulin available!!!" << endl;
         ui->logger->append("Not enough insulin available!!!");
+        addToHistory(std::string("Not enough insulin available!!!"));
         currentInsulinAmount = 0;
     }
     udpateInsulinOnBoard(amount);                   // Add to the insulin on board
@@ -391,6 +400,11 @@ void machine::stepTime()
         }
     }
     ui->timeLabel->setText(timeString);
+
+    // adding to history
+    string minuteStr = (currentMinute < 10) ? "0" + std::to_string(currentMinute) : std::to_string(currentMinute);
+    string currentTime = std::to_string(currentHour) + ":" + minuteStr + " " + std::to_string(currentDay) + "/" + std::to_string(currentMonth) + "/" + std::to_string(currentYear);
+    addToHistory(currentTime);
 }
 
 // Updates UI based on device status (on/off charging/not charging)
@@ -423,6 +437,7 @@ void machine::updateBatteryLevel() // will be called every step
         if (currentBatteryLevel <= 20)
         {
             ui->logger->append("Warning: Battery Low");
+            addToHistory(std::string("Warning: Battery Low"));
             cout << "Battery low" << endl; // add this to history and ui
 
             // adding to history
@@ -450,6 +465,7 @@ void machine::stepInsulin()
     if (currentInsulinAmount < 70)
     {
         ui->logger->append("Warning: Low Insulin");
+        addToHistory(std::string("Warning: Low Insulin"));
         string minuteStr = (currentMinute < 10) ? "0" + std::to_string(currentMinute) : std::to_string(currentMinute);
         string currentTime = std::to_string(currentHour) + ":" + minuteStr + " " + std::to_string(currentDay) + "/" + std::to_string(currentMonth) + "/" + std::to_string(currentYear);
         string event = "Low insulin at " + currentTime;
@@ -471,11 +487,8 @@ void machine::stepBloodGlucose()
     currentGlucose = glucoseVector->at(glucoseStepCounter) - currentBasalRate;
 
     // adding to history
-    string minuteStr = (currentMinute < 10) ? "0" + std::to_string(currentMinute) : std::to_string(currentMinute);
-    string currentTime = std::to_string(currentHour) + ":" + minuteStr + " " + std::to_string(currentDay) + "/" + std::to_string(currentMonth) + "/" + std::to_string(currentYear);
-    string event = "Blood glucose at " + currentTime;
-    event += ", " + std::to_string(currentGlucose) + " mmol/L";
-    addToHistory(event);
+    QString event = "Blood glucose: " + QString::number(currentGlucose, 'f', 2) + " mmol/L";
+    addToHistory(event.toStdString());
 
     // std::cout << "Blood Glucose: " << currentGlucose << " mmol/L" << std::endl;
     // ui->logger->append(QString::number(currentGlucose, 'f', 1) + " mmol/L");
@@ -488,6 +501,7 @@ void machine::stepBloodGlucose()
         // this event needs to be logged for future reference
         std::cout << "[Low Glucose Levels]: basal rate stopped" << std::endl;
         ui->logger->append("[Low Glucose Levels]: basal rate stopped");
+        addToHistory(std::string("[Low Glucose Levels]: basal rate stopped"));
 
         // add to history
         string minuteStr = (currentMinute < 10) ? "0" + std::to_string(currentMinute) : std::to_string(currentMinute);
@@ -505,6 +519,7 @@ void machine::stepBloodGlucose()
     {
         std::cout << "prev: " << previousBasalRate << std::endl;
         ui->logger->append("[Medium Glucose Levels]: basal rate resumed");
+        addToHistory(std::string("[Medium Glucose Levels]: basal rate resumed"));
 
         // add to history
         string minuteStr = (currentMinute < 10) ? "0" + std::to_string(currentMinute) : std::to_string(currentMinute);
@@ -546,7 +561,8 @@ void machine::stepPredictBasal(){
         std::cout << "Blood Glucose: " << currentGlucose << " mmol/L" << std::endl;
 
         ui->logger->append("[High Glucose Levels]: correction bolus applied: " + QString::number(correction, 'f', 2) + " units");
-        ui->logger->append(QString::number(currentGlucose, 'f', 1) + " mmol/L");
+        ui->logger->append(QString::number(currentGlucose, 'f', 2) + " mmol/L");
+        addToHistory(QString::number(currentGlucose, 'f', 2) + " mmol/L");
         ui->glucoseStatNumber->display(currentGlucose);
         return;
     }
@@ -555,12 +571,14 @@ void machine::stepPredictBasal(){
         // decrease insulin delivery to account for drop in gluces
         currentBasalRate *= 0.75; // decrease by 25%
         cout << "Predicted glucose is lower than current glucose, decreasing basal rate to: " << currentBasalRate << endl;
+        addToHistory("Predicted glucose is lower than current glucose, decreasing basal rate to: " + QString::number(currentBasalRate, 'f', 2) + " units/hour");
     }
     else if (futureGlucose > currentGlucose && currentBasalRate != 0)
     {
         // increase insulin delivery to account for rise in glucose
         currentBasalRate *= 1.25; // increase by 25%
         cout << "Predicted glucose is higher than current glucose, increasing basal rate to: " << currentBasalRate << endl;
+        addToHistory("Predicted glucose is higher than current glucose, increasing basal rate to: " + QString::number(currentBasalRate, 'f', 2) + " units/hour");
     }
 }
 

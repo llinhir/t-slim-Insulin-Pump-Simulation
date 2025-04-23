@@ -178,7 +178,8 @@ void Bolus::startBolus() // delivers bolus (imm and ex just select a setting)
 
         thisMachine->consumeInsulin(immediateAmt);
 
-        _ui->logger->append("Bolus delivery: " + QString::number(immediateAmt, 'f', 1) + " u");
+        _ui->logger->append("Bolus delivery start: " + QString::number(immediateAmt, 'f', 2) + " u");
+        thisMachine->addToHistory("Bolus delivery start: " + QString::number(immediateAmt, 'f', 2) + " u");
 
         double newGlucose = thisMachine->getCurrentGlucose() - immediateAmt;
         thisMachine->setCurrentGlucose(newGlucose);
@@ -186,7 +187,7 @@ void Bolus::startBolus() // delivers bolus (imm and ex just select a setting)
         double currentGlucose = thisMachine->getCurrentGlucose();
         double currentBasalRate = thisMachine->getCurrentBasalRate();
         std::cout << "Blood Glucose: " << currentGlucose << " mmol/L" << std::endl;
-        _ui->logger->append(QString::number(currentGlucose, 'f', 1) + " mmol/L");
+        _ui->logger->append(QString::number(currentGlucose, 'f', 2) + " mmol/L");
         _ui->glucoseStatNumber->display(currentGlucose);
         _ui->basalStatNumber->display(currentBasalRate);
     }
@@ -264,6 +265,7 @@ void Bolus::stopOngoingBolus()
     _ui->logger->append("Bolus paused.");
     _ui->IOBtimeText->setText("paused");
     _ui->IOBunitsText->setText("paused");
+    thisMachine->addToHistory(std::string("Bolus paused."));
     _ui->bolusStatNumber->display(0); // units per hour
 }
 
@@ -286,6 +288,7 @@ void Bolus::continueBolus()
         _ui->IOBunitsText->setText(QString::number(extendedFullAmt, 'f', 2) + " u");
         _ui->IOBtimeText->setText(QString::number(extendedCount, 'f', 2) + " min");
         _ui->bolusStatNumber->display(QString::number(extendedPortion, 'f', 2)); // units per hour
+        thisMachine->addToHistory(std::string("Bolus resumed."));
     }
     else
     {
@@ -309,5 +312,6 @@ void Bolus::cancelBolus()
     _ui->logger->append("Bolus cancelled.");
     _ui->IOBunitsText->setText("0.00 u");
     _ui->IOBtimeText->setText("0.00 min");
+    thisMachine->addToHistory(std::string("Bolus cancelled."));
     _ui->bolusStatNumber->display(0); // units per hour
 }

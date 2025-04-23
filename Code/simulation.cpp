@@ -68,6 +68,7 @@ void Simulation::stepMachine()
     bolus->stepBolus();
     m->stepInsulin();
     m->stepHistoryBox();
+    m->addToHistory(std::string("\n"));
 
     //    // Only step insulin once every 12 calls (i.e., 60 seconds)
     //    hourStepCounter++;

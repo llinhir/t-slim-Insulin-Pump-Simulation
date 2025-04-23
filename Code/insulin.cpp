@@ -40,6 +40,7 @@ void Insulin::startBasalDelivery()
 
     _machine->setBasalRate(currBasalRate);
     _ui->logger->append("Set basal rate: " + QString::number(currBasalRate, 'f', 2) + "u/h");
+    _machine->addToHistory("Set basal rate: " + QString::number(currBasalRate, 'f', 2) + "units/hour");
     _ui->basalStatNumber->display(currBasalRate);
 }
 
@@ -53,6 +54,7 @@ void Insulin::pauseBasal()
         _ui->logger->append("Basal paused");
         _ui->basalStatNumber->display(0);
         _ui->pauseBasalButton->setText("Pause");
+        _machine->addToHistory(std::string("Basal paused"));
     }
     else if (isPausedBasal && currBasalRate != 0)
     {
@@ -61,6 +63,7 @@ void Insulin::pauseBasal()
         _ui->logger->append("Basal resumed");
         _ui->basalStatNumber->display(currBasalRate);
         _ui->pauseBasalButton->setText("Unpause");
+        _machine->addToHistory(std::string("Basal resumed"));
     }
 }
 
@@ -76,6 +79,7 @@ void Insulin::stopBasal()
     _ui->logger->append("Basal stopped");
     _ui->yourBasalRateText->setText("0.0 units/hour");
     _ui->basalStatNumber->display(currBasalRate);
+    _machine->addToHistory(std::string("Basal stopped"));
 }
 
 ////////////////////////////////////////////////////
@@ -85,7 +89,8 @@ void Insulin::stopBasal()
 void Insulin::startBolusDelivery(double rate)
 {
     cout << "Delivering Bolus: " << rate << " units" << endl;
-    _ui->logger->append("Bolus delivery: " + QString::number(rate, 'f', 1) + " units");
+    _ui->logger->append("Bolus delivery: " + QString::number(rate, 'f', 2) + " units");
+    _machine->addToHistory("Bolus delivery start: " + QString::number(rate, 'f', 2) + " units");
     _machine->consumeInsulin(rate);
 }
 

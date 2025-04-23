@@ -24,6 +24,7 @@ public:
     void connectSlots();             // Function holding all the slot connects to declutter the machine constructor
     tm *getCurrentTime();            // Get current time
     void addToHistory(string event); // Add event to history
+    void addToHistory(QString event); // QString version because changing it to a string every time was killing me
     void updateProfileInfo();
     bool loginAttempt(string passwordGuess);
     void powerOff() { isTurnedOn = false; };
