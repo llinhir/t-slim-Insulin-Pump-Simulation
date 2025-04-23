@@ -470,6 +470,13 @@ void machine::stepBloodGlucose()
     // Current glucose amount - (the basal rate + extended bolus rate)
     currentGlucose = glucoseVector->at(glucoseStepCounter) - currentBasalRate;
 
+    // adding to history
+    string minuteStr = (currentMinute < 10) ? "0" + std::to_string(currentMinute) : std::to_string(currentMinute);
+    string currentTime = std::to_string(currentHour) + ":" + minuteStr + " " + std::to_string(currentDay) + "/" + std::to_string(currentMonth) + "/" + std::to_string(currentYear);
+    string event = "Blood glucose at " + currentTime;
+    event += ", " + std::to_string(currentGlucose) + " mmol/L";
+    addToHistory(event);
+
     // std::cout << "Blood Glucose: " << currentGlucose << " mmol/L" << std::endl;
     // ui->logger->append(QString::number(currentGlucose, 'f', 1) + " mmol/L");
     // ui->glucoseStatNumber->display(currentGlucose);
@@ -537,6 +544,7 @@ void machine::stepPredictBasal(){
         cout << "Predicted blood glucose is too high, correction being applied: " << correction << endl;
         currentGlucose = glucoseVector->at(glucoseStepCounter) - correction;
         std::cout << "Blood Glucose: " << currentGlucose << " mmol/L" << std::endl;
+
         ui->logger->append("[High Glucose Levels]: correction bolus applied: " + QString::number(correction, 'f', 2) + " units");
         ui->logger->append(QString::number(currentGlucose, 'f', 1) + " mmol/L");
         ui->glucoseStatNumber->display(currentGlucose);
