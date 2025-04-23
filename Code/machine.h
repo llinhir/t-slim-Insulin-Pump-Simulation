@@ -25,6 +25,7 @@ public:
     tm *getCurrentTime();            // Get current time
     void addToHistory(string event); // Add event to history
     void addToHistory(QString event); // QString version because changing it to a string every time was killing me
+    void addTimetoHistory(string error); // for ease of use
     void updateProfileInfo();
     bool loginAttempt(string passwordGuess);
     void powerOff() { isTurnedOn = false; };
@@ -48,9 +49,15 @@ public:
     int getHourStepCounter() { return hourStepCounter; }                                   // stepBolus temp?
     double getCurrentGlucoseFromVector() { return glucoseVector->at(glucoseStepCounter); } // get the last value from the vector
     double getGlucoseFromVectorInThirtyMins();
+//    int getCurrentHour(){ return currentHour; };
+//    int getCurrentMinute(){ return currentMinute; };
+//    int getCurrentDay(){ return currentDay; };
+//    int getCurrentMonth(){ return currentMonth; };
+//    int getCurrentYear(){ return currentYear; };
 
     // Setters
     void setCurrentBatteryLevel(int level) { currentBatteryLevel = level; }
+    void setcurrentInsulinAmount(double deviceInsulin){ currentInsulinAmount = deviceInsulin; };
     void setIsLoggedIn(bool loggedIn) { isLoggedIn = loggedIn; }
     void setIsTurnedOn(bool turnedOn) { isTurnedOn = turnedOn; }
     void setIsCharging(bool charging) { isCharging = charging; }

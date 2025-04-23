@@ -39,6 +39,23 @@ Simulation::Simulation(Ui::MainWindow *ui)
     QTimer *timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &Simulation::stepMachine);
     timer->start(5000);
+
+    connect(ui->CGMdisconnectButton, &QPushButton::clicked, this, [this]()
+            { adminErrors(1); });
+    connect(ui->lowBatteryButton, &QPushButton::clicked, this, [this]()
+            { adminErrors(2); });
+    connect(ui->lowInsulinButton, &QPushButton::clicked, this, [this]()
+            { adminErrors(3); });
+    connect(ui->occlusionButton, &QPushButton::clicked, this, [this]()
+            { adminErrors(4); });
+    connect(ui->criticalFailureButton, &QPushButton::clicked, this, [this]()
+            { adminErrors(5); });
+    connect(ui->pumpShutdownButton, &QPushButton::clicked, this, [this]()
+            { adminErrors(6); });
+    connect(ui->lowBGButton, &QPushButton::clicked, this, [this]()
+            { adminErrors(7); });
+    connect(ui->highBGButton, &QPushButton::clicked, this, [this]()
+            { adminErrors(8); });
 }
 
 // Checks if user entered the correct password
@@ -79,3 +96,62 @@ void Simulation::stepMachine()
     //        hourStepCounter = 0;
     //    }
 }
+
+// Admin-controlled errors and error-handling
+void Simulation::adminErrors(int option){ // add to everywhere
+
+    switch(option) {
+        case 1: // CGM disconnection
+            ui->logger->append("Warning: CGM Sensor Not Detected - see MY CGM");
+            m->addTimetoHistory(std::string("Warning: CGM Sensor Not Detected at "));
+            m->addToHistory(std::string("Please check the connection between the CGM transmitter and pump, and ensure the sensor is properly in place.\nIf this does not work, refer to your user manual for restarting or recalibrating your CGM."));
+            break;
+        case 2: // low battery
+            m->setCurrentBatteryLevel(15);
+            // machine handles this with updateBatteryLevel()
+            break;
+        case 3: // low insulin
+            m->setcurrentInsulinAmount(50);
+            // machine handles this with stepInsulin()
+            break;
+        case 4: // occlusion
+            ui->logger->append("Warning: Occlusion Detected - see MY CGM");
+            m->addTimetoHistory(std::string("Warning: Occlusion Detected at "));
+            m->addToHistory(std::string("Please check the infusion site for blockages.\nIf the issue persists or you are unsure how to proceed, call Tandem Diabetes customer support at XXX-XXX-XXXX or visit our website for further instructions."));
+            break;
+        case 5: // critical failure
+            ui->logger->append("Warning: Critical Failure - see MY CGM\nStopping insulin delivery.");
+            m->addTimetoHistory(std::string("Warning: Critical Failure at "));
+            m->addToHistory(std::string("Stopping insulin delivery to prevent incorrect dosing.\nPlease inspect your pump to look for any obstructions or damage.\nIf the issue persists or you are unsure how to proceed, call Tandem Diabetes customer support at XXX-XXX-XXXX or visit our website for further instructions."));
+            //stopping insulin delivery
+            m->setBasalRate(0);
+            bolus->stopOngoingBolus();
+            break;
+        case 6: // pump shutdown
+            ui->logger->append("Warning: Pump Shutdown - see MY CGM\nStopping insulin delivery.");
+            m->addTimetoHistory(std::string("Warning: Pump Shutdown at "));
+            m->addToHistory(std::string("Stopping insulin delivery to prevent incorrect dosing.\nRestart the system by pressing POWER OFF in the OPTIONS page or refer to your user manual.\nIf the issue persists or you are unsure how to proceed, call Tandem Diabetes customer support at XXX-XXX-XXXX or visit our website for further instructions."));
+            //stopping insulin delivery
+            m->setBasalRate(0);
+            bolus->stopOngoingBolus();
+            break;
+        case 7: // critically low blood glucose
+            m->setCurrentGlucose(3.2);
+            // machine handles this with stepBloodGlucose()
+            break;
+        case 8: // critically high blood glucose
+            m->setCurrentGlucose(23);
+            //machine handles this with stepBloodGlucose()
+            break;
+      default:
+        cout << "Admin error." << endl;
+    }
+
+}
+
+//ui->logger->append("Warning: Low Insulin");
+//addToHistory(std::string("Warning: Low Insulin"));
+//string minuteStr = (currentMinute < 10) ? "0" + std::to_string(currentMinute) : std::to_string(currentMinute);
+//string currentTime = std::to_string(currentHour) + ":" + minuteStr + " " + std::to_string(currentDay) + "/" + std::to_string(currentMonth) + "/" + std::to_string(currentYear);
+//string event = "Low insulin at " + currentTime;
+//addToHistory(event);

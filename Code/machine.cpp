@@ -54,6 +54,42 @@ machine::~machine()
     // cout << "Destructor called" << endl;
 }
 
+void machine::connectSlots()
+{
+    connect(ui->createProfileSaveButton, &QPushButton::clicked, this, [this]()
+            { createProfile(); });
+
+    connect(ui->editProfileButton, &QPushButton::clicked, this, [this]()
+            { updateProfileInfo(); });
+
+    connect(ui->profile1Button, &QPushButton::clicked, this, [this]()
+            { editProfile(0); });
+    connect(ui->profile2Button, &QPushButton::clicked, this, [this]()
+            { editProfile(1); });
+    connect(ui->profile3Button, &QPushButton::clicked, this, [this]()
+            { editProfile(2); });
+    connect(ui->profile4Button, &QPushButton::clicked, this, [this]()
+            { editProfile(3); });
+    connect(ui->profile5Button, &QPushButton::clicked, this, [this]()
+            { editProfile(4); });
+
+    connect(ui->selectProfile1, &QPushButton::clicked, this, [this]()
+            { setActiveProfile(0); });
+    connect(ui->selectProfile2, &QPushButton::clicked, this, [this]()
+            { setActiveProfile(1); });
+    connect(ui->selectProfile3, &QPushButton::clicked, this, [this]()
+            { setActiveProfile(2); });
+    connect(ui->selectProfile4, &QPushButton::clicked, this, [this]()
+            { setActiveProfile(3); });
+    connect(ui->selectProfile5, &QPushButton::clicked, this, [this]()
+            { setActiveProfile(4); });
+
+    connect(ui->saveProfileButton, &QPushButton::clicked, this, [this]()
+            { saveProfile(); });
+    connect(ui->deleteProfileButton, &QPushButton::clicked, this, [this]()
+            { deleteProfile(); });
+}
+
 // Break  down time into usable data for the ui and program
 tm *machine::getCurrentTime() // as a note, the current time should not be compute heavy, if it is just stick to updating the time
 {
@@ -81,6 +117,15 @@ void machine::addToHistory(QString event)
 {
     history.push_back(event.toStdString());
     cout << "Event added to history (QString)" << endl;
+}
+
+void machine::addTimetoHistory(string error){
+
+    string minuteStr = (currentMinute < 10) ? "0" + std::to_string(currentMinute) : std::to_string(currentMinute);
+    string currentTime = std::to_string(currentHour) + ":" + minuteStr + " " + std::to_string(currentDay) + "/" + std::to_string(currentMonth) + "/" + std::to_string(currentYear);
+    string event = error + currentTime; // error example : "Low insulin at "
+    addToHistory(event);
+
 }
 
 // User can select a profile; if the selected profile is empty, it does not update current profile
@@ -168,6 +213,10 @@ bool machine::loginAttempt(string passwordGuess)
     }
 }
 
+////////////////////////////////////////////////////
+//         Machine functions start here           //
+////////////////////////////////////////////////////
+
 void machine::createProfile()
 {
     profiles.push_back(options->createProfile());
@@ -244,67 +293,23 @@ void machine::setActiveProfile(int index)
     ui->activeProfileLabel->setText(profileMessage);
 }
 
+Profile *machine::getProfile(size_t index)
+{
+    if (index >= profiles.size())
+        return nullptr;
+    return profiles[index];
+}
+
+////////////////////////////////////////////////////
+//         Insulin functions start here           //
+////////////////////////////////////////////////////
+
 void machine::refillInsulin()
 {
     currentInsulinAmount = 300; // in mL, will be out of 300 ml
     ui->insulinBar->setValue(currentInsulinAmount);
     ui->logger->append("Insulin Refilled");
     addToHistory(std::string("Insulin Refilled"));
-}
-
-void machine::connectSlots()
-{
-    connect(ui->createProfileSaveButton, &QPushButton::clicked, this, [this]()
-            { createProfile(); });
-
-    connect(ui->editProfileButton, &QPushButton::clicked, this, [this]()
-            { updateProfileInfo(); });
-
-    connect(ui->profile1Button, &QPushButton::clicked, this, [this]()
-            { editProfile(0); });
-    connect(ui->profile2Button, &QPushButton::clicked, this, [this]()
-            { editProfile(1); });
-    connect(ui->profile3Button, &QPushButton::clicked, this, [this]()
-            { editProfile(2); });
-    connect(ui->profile4Button, &QPushButton::clicked, this, [this]()
-            { editProfile(3); });
-    connect(ui->profile5Button, &QPushButton::clicked, this, [this]()
-            { editProfile(4); });
-
-    connect(ui->selectProfile1, &QPushButton::clicked, this, [this]()
-            { setActiveProfile(0); });
-    connect(ui->selectProfile2, &QPushButton::clicked, this, [this]()
-            { setActiveProfile(1); });
-    connect(ui->selectProfile3, &QPushButton::clicked, this, [this]()
-            { setActiveProfile(2); });
-    connect(ui->selectProfile4, &QPushButton::clicked, this, [this]()
-            { setActiveProfile(3); });
-    connect(ui->selectProfile5, &QPushButton::clicked, this, [this]()
-            { setActiveProfile(4); });
-
-    connect(ui->saveProfileButton, &QPushButton::clicked, this, [this]()
-            { saveProfile(); });
-    connect(ui->deleteProfileButton, &QPushButton::clicked, this, [this]()
-            { deleteProfile(); });
-}
-
-QString machine::returnString(Profile *profile)
-{
-    std::string name = profile->getProfileName();
-    double rate = profile->getBasalRate();
-
-    std::ostringstream stream;
-    stream << name << "\n"
-           << std::fixed << std::setprecision(2) << rate;
-
-    return QString::fromStdString(stream.str());
-}
-
-Profile *machine::getProfile(size_t index)
-{
-    if (index >= profiles.size())
-        return nullptr;
-    return profiles[index];
 }
 
 void machine::consumeInsulin(double amount)
@@ -334,29 +339,10 @@ void machine::udpateInsulinOnBoard(double amount)
     ui->IOBunitsText->setText(QString::number(currentIOB, 'f', 2) + " u");
 }
 
+
 ////////////////////////////////////////////////////
 //          step functions start here            //
 ////////////////////////////////////////////////////
-
-// void machine::stepMachine() REMOVE IF NO LONGER NEEDED
-//{
-//     stepTime();
-//     updateBatteryLevel();
-//     stepInsulinOnBoard();
-
-//    // these are here for testing, remove them and uncomment the below area once fully implementing
-//    stepBloodGlucose();
-//    stepInsulin();
-
-//    //    // Only step insulin once every 12 calls (i.e., 60 seconds)
-//    //    hourStepCounter++;
-//    //    if (hourStepCounter >= 12) {
-//    //
-//    //        stepInsulin();
-//    //        stepBloodGlucose();
-//    //        hourStepCounter = 0;
-//    //    }
-//}
 
 void machine::stepTime()
 {
@@ -436,15 +422,11 @@ void machine::updateBatteryLevel() // will be called every step
         // check if battery is low
         if (currentBatteryLevel <= 20)
         {
-            ui->logger->append("Warning: Battery Low");
-            addToHistory(std::string("Warning: Battery Low"));
-            cout << "Battery low" << endl; // add this to history and ui
 
-            // adding to history
-            string minuteStr = (currentMinute < 10) ? "0" + std::to_string(currentMinute) : std::to_string(currentMinute);
-            string currentTime = std::to_string(currentHour) + ":" + minuteStr + " " + std::to_string(currentDay) + "/" + std::to_string(currentMonth) + "/" + std::to_string(currentYear);
-            string event = "Battery low at " + currentTime;
-            addToHistory(event);
+            cout << "Battery low" << endl;
+            ui->logger->append("Warning: Low Battery");
+            addTimetoHistory(std::string("Warning: Low Battery at "));
+            addToHistory(std::string("Please recharge the pump by using the provided USB cable.\nLook for the charging indicator to make sure it is correctly plugged in."));
         }
     }
 
@@ -464,12 +446,11 @@ void machine::stepInsulin()
     }
     if (currentInsulinAmount < 70)
     {
+        cout << "Low insulin" << endl;
         ui->logger->append("Warning: Low Insulin");
-        addToHistory(std::string("Warning: Low Insulin"));
-        string minuteStr = (currentMinute < 10) ? "0" + std::to_string(currentMinute) : std::to_string(currentMinute);
-        string currentTime = std::to_string(currentHour) + ":" + minuteStr + " " + std::to_string(currentDay) + "/" + std::to_string(currentMonth) + "/" + std::to_string(currentYear);
-        string event = "Low insulin at " + currentTime;
-        addToHistory(event);
+        addTimetoHistory(std::string("Warning: Low Insulin at "));
+        addToHistory(std::string("Please refill the pump with insulin.\nWARNING: Please ensure your body is not connected to the pump during refill as this could cause over delivery of insulin."));
+
     }
 
     ui->insulinBar->setValue(currentInsulinAmount);
@@ -501,19 +482,35 @@ void machine::stepBloodGlucose()
         // this event needs to be logged for future reference
         std::cout << "[Low Glucose Levels]: basal rate stopped" << std::endl;
         ui->logger->append("[Low Glucose Levels]: basal rate stopped");
-        addToHistory(std::string("[Low Glucose Levels]: basal rate stopped"));
+        addToHistory(std::string("[Low Glucose Levels]: basal rate stopped\nSeek out nourishment to increase your blood sugar or consider calling for help if you feel unwell."));
 
         // add to history
         string minuteStr = (currentMinute < 10) ? "0" + std::to_string(currentMinute) : std::to_string(currentMinute);
         string currentTime = std::to_string(currentHour) + ":" + minuteStr + " " + std::to_string(currentDay) + "/" + std::to_string(currentMonth) + "/" + std::to_string(currentYear);
         string event = "Low glucose at " + currentTime;
-        event += ", basal rate stopped";
+        event += ", basal rate stopped.";
         addToHistory(event);
 
         previousBasalRate = currentBasalRate;
         this->setBasalRate(0);
         ui->basalStatNumber->display(0);
         return;
+    }
+    else if(currentGlucose > 13.9){
+
+        double correction = std::abs((currentGlucose - currentProfile->getTargetGlucoseLevel()) / currentProfile->getCorrectionFactor());
+        cout << "Predicted blood glucose is too high, correction being applied: " << correction << endl;
+        currentGlucose = glucoseVector->at(glucoseStepCounter) - correction;
+        cout << "Blood Glucose: " << currentGlucose << " mmol/L" << std::endl;
+
+        ui->logger->append("Warning: High Blood Glucose");
+        addTimetoHistory(std::string("Warning: High Blood Glucose at "));
+        addToHistory(std::string("Please monitor your blood glucose levels."));
+
+        ui->logger->append("[High Glucose Levels]: correction bolus applied: " + QString::number(correction, 'f', 2) + " units");
+        ui->logger->append(QString::number(currentGlucose, 'f', 2) + " mmol/L");
+        addToHistory(QString::number(currentGlucose, 'f', 2) + " mmol/L");
+        ui->glucoseStatNumber->display(currentGlucose);
     }
     else if (currentGlucose > 3.9 && previousBasalRate != 0 && currentBasalRate == 0)
     {
@@ -542,6 +539,13 @@ void machine::stepBloodGlucose()
         // currentBasalRate = currentProfile->getBasalRate();
         ui->basalStatNumber->display(currentBasalRate);
         return;
+    }
+    else if(currentGlucose <= 3.9)
+    {
+        cout << "[Low Glucose Levels]" << endl;
+        ui->logger->append("[Low Glucose Levels]");
+        addTimetoHistory(std::string("Warning: Low Glucose at "));
+        addToHistory(std::string("Seek out nourishment to increase your blood sugar or consider calling for help if you feel unwell."));
     }
 
 
@@ -617,9 +621,23 @@ void machine::stepBloodGlucoseVector()
     }
 }
 
+// etc.
+
 double machine::getGlucoseFromVectorInThirtyMins()
 {
     // Get the glucose level from the vector in 30 minutes
     int index = (glucoseStepCounter + 6) % glucoseVector->size();
     return glucoseVector->at(index);
+}
+
+QString machine::returnString(Profile *profile)
+{
+    std::string name = profile->getProfileName();
+    double rate = profile->getBasalRate();
+
+    std::ostringstream stream;
+    stream << name << "\n"
+           << std::fixed << std::setprecision(2) << rate;
+
+    return QString::fromStdString(stream.str());
 }

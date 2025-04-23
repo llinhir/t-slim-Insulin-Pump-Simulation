@@ -23,6 +23,7 @@ public:
     Simulation(Ui::MainWindow *ui);
     void startSimulation();
     bool enterPassword(string input);
+    void adminErrors(int option); // 1 to 6
 
     machine *getMachine() { return m; }
 

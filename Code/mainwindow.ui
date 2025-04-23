@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>800</width>
-    <height>600</height>
+    <height>692</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -65,7 +65,7 @@
        </rect>
       </property>
       <property name="currentIndex">
-       <number>11</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="loginPage">
        <widget class="QLabel" name="label_8">
@@ -2013,6 +2013,136 @@
        <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
       </property>
      </widget>
+     <widget class="QLabel" name="label_34">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>550</y>
+        <width>311</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>SIMULATION ADMIN PANEL - ERROR TRIGGERS</string>
+      </property>
+     </widget>
+     <widget class="Line" name="line">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>530</y>
+        <width>801</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="CGMdisconnectButton">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>580</y>
+        <width>141</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>CGM disconnection</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="lowBatteryButton">
+      <property name="geometry">
+       <rect>
+        <x>180</x>
+        <y>580</y>
+        <width>91</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Low battery</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="lowInsulinButton">
+      <property name="geometry">
+       <rect>
+        <x>290</x>
+        <y>580</y>
+        <width>141</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Low insulin (device)</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="occlusionButton">
+      <property name="geometry">
+       <rect>
+        <x>450</x>
+        <y>580</y>
+        <width>71</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Occlusion</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="criticalFailureButton">
+      <property name="geometry">
+       <rect>
+        <x>540</x>
+        <y>580</y>
+        <width>101</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Critical failure</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pumpShutdownButton">
+      <property name="geometry">
+       <rect>
+        <x>660</x>
+        <y>580</y>
+        <width>111</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Pump shutdown</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="lowBGButton">
+      <property name="geometry">
+       <rect>
+        <x>360</x>
+        <y>550</y>
+        <width>191</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Critically Low Blood Glucose</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="highBGButton">
+      <property name="geometry">
+       <rect>
+        <x>570</x>
+        <y>550</y>
+        <width>201</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Critically High Blood Glucose</string>
+      </property>
+     </widget>
      <zorder>stackedWidget</zorder>
      <zorder>homeButton</zorder>
      <zorder>insulinBar</zorder>
@@ -2030,6 +2160,16 @@
      <zorder>label_55</zorder>
      <zorder>label_59</zorder>
      <zorder>label_60</zorder>
+     <zorder>label_34</zorder>
+     <zorder>line</zorder>
+     <zorder>CGMdisconnectButton</zorder>
+     <zorder>lowBatteryButton</zorder>
+     <zorder>lowInsulinButton</zorder>
+     <zorder>occlusionButton</zorder>
+     <zorder>criticalFailureButton</zorder>
+     <zorder>pumpShutdownButton</zorder>
+     <zorder>lowBGButton</zorder>
+     <zorder>highBGButton</zorder>
     </widget>
    </widget>
    <widget class="QPushButton" name="chargeButton">
