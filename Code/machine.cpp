@@ -522,6 +522,10 @@ void machine::stepBloodGlucose()
         return;
     }
 
+
+}
+
+void machine::stepPredictBasal(){
     // Check 30 mins ahead
     //  First check thirty mins in the future, then adjust the currentBasalrate to match the scenario
     double futureGlucose = getGlucoseFromVectorInThirtyMins();

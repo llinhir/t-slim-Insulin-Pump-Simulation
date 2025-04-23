@@ -63,6 +63,7 @@ void Simulation::stepMachine()
 
     // these are here for testing, remove them and uncomment the below area once fully implementing
     m->stepBloodGlucoseVector();
+    m->stepPredictBasal();
     m->stepBloodGlucose();
     bolus->stepBolus();
     m->stepInsulin();

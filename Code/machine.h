@@ -74,6 +74,7 @@ public:
     void updateBatteryLevel();
     void stepInsulin();
     void stepBloodGlucose();
+    void stepPredictBasal();
     void stepInsulinOnBoard();
     void stepHistoryBox();
     void stepBloodGlucoseVector();
