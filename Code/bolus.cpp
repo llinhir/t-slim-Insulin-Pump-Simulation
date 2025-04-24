@@ -181,7 +181,7 @@ void Bolus::startBolus() // delivers bolus (imm and ex just select a setting)
         _ui->logger->append("Bolus delivery start: " + QString::number(immediateAmt, 'f', 2) + " u");
         thisMachine->addToHistory("Bolus delivery start: " + QString::number(immediateAmt, 'f', 2) + " u");
 
-        double newGlucose = thisMachine->getCurrentGlucose() - immediateAmt;
+        double newGlucose = thisMachine->getCurrentGlucose() - immediateAmt + carbohydrates;
         thisMachine->setCurrentGlucose(newGlucose);
 
         double currentGlucose = thisMachine->getCurrentGlucose();

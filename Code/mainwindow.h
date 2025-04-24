@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QtGlobal>
+#include <QtCharts/QSplineSeries>
 
 #include "machine.h" //testing
 #include "profile.h" //testing
@@ -34,6 +35,7 @@ private:
 
     // page mappings for what their previous page was
     QMap<PageIndex, PageIndex> prevPageMap;
+    QtCharts::QSplineSeries *glucoseSeries;
 
 private slots:
     bool submitPassword();

@@ -38,7 +38,7 @@ Simulation::Simulation(Ui::MainWindow *ui)
     m->getCurrentTime(); // Get current and apply time and date
     QTimer *timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &Simulation::stepMachine);
-    timer->start(5000);
+    timer->start(1000);
 
     connect(ui->CGMdisconnectButton, &QPushButton::clicked, this, [this]()
             { adminErrors(1); });
@@ -85,6 +85,7 @@ void Simulation::stepMachine()
     bolus->stepBolus();
     m->stepInsulin();
     m->stepHistoryBox();
+    m->stepGraph();
     m->addToHistory(std::string("\n"));
 
     //    // Only step insulin once every 12 calls (i.e., 60 seconds)
@@ -141,11 +142,13 @@ void Simulation::adminErrors(int option){ // add to everywhere
             break;
         case 8: // critically high blood glucose
             m->setCurrentGlucose(23);
+            m->stepErrorGlucose();
             //machine handles this with stepBloodGlucose()
             break;
       default:
         cout << "Admin error." << endl;
     }
+
 
 }
 

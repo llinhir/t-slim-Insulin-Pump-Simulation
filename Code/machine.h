@@ -7,6 +7,8 @@
 #include <QTimer>
 #include <sstream>
 #include <iomanip>
+#include <QtCharts/QSplineSeries>
+
 
 #include <string>
 #include "defs.h"
@@ -64,6 +66,7 @@ public:
     void setBasalRate(double rate) { currentBasalRate = rate; }
     void setGlucoseVector(vector<float> *vector) { glucoseVector = vector; }
     void setCurrentGlucose(double glucose) { currentGlucose = glucose; }
+    void setGlucoseSeries(QtCharts::QSplineSeries *newGlucoseSeries) {glucoseSeries = newGlucoseSeries;}
 
     // Machine Functinos
     void createProfile();
@@ -86,6 +89,8 @@ public:
     void stepInsulinOnBoard();
     void stepHistoryBox();
     void stepBloodGlucoseVector();
+    void stepGraph();
+    void stepErrorGlucose();
 
     // QoL functions to save space
     QString returnString(Profile *profile);
@@ -123,6 +128,7 @@ private:
     Profile *currentProfile;      // Current profile
     double currentBasalRate;      // The basal rate that the system drains from the Insulin gauge
     vector<float> *glucoseVector; // Gets the from simulation
+    QtCharts::QSplineSeries *glucoseSeries;
     double currentGlucose;        // Current Blood Glucose of User, in mmol/L
     double currentIOB;            // Insulin on board. The amount of insulin still inside the body after a bolus injection
 

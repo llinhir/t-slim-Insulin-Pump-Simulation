@@ -98,20 +98,35 @@ MainWindow::MainWindow(QWidget *parent)
             { backPage(); });
 
     // THIS IS ONLY FOR TESTING AND CONCEPT, please dont remove until done -_-
-    QSplineSeries *batterySeries = new QSplineSeries(); // Curved line
-    *batterySeries << QPointF(0, 100) << QPointF(1, 40) << QPointF(2, 80) << QPointF(3, 50);
+    glucoseSeries = new QSplineSeries(); // Curved line
+    mach->setGlucoseSeries(glucoseSeries);
+    QValueAxis *xAxis = new QValueAxis();
+    QValueAxis *yAxis = new QValueAxis();
+
+    // Y-axis: fixed 0 to 15
+    yAxis->setRange(0, 15);
+    yAxis->setTitleText("Glucose (mmol/L)");
+    yAxis->setTickCount(6); // Optional
+
+    // X-axis: start from 0, will grow later
+    xAxis->setRange(0, 72); // Initial 10 steps shown
+
+    //glucoseSeries->append(0, 0); // the 4.2 is hard coded
 
     QPen pen(Qt::blue);
     pen.setStyle(Qt::DotLine);
     pen.setWidth(2);
-    batterySeries->setPen(pen);
+    glucoseSeries->setPen(pen);
 
-    QChart *batteryChart = new QChart();
-    batteryChart->addSeries(batterySeries);
-    batteryChart->createDefaultAxes();
-    batteryChart->setTitle("Fake data for graph testing");
+    QChart *glucoseChart = new QChart();
+    glucoseChart->addSeries(glucoseSeries);
+    glucoseChart->setTitle("Blood Glucose Monitoring");
+    glucoseChart->addAxis(xAxis, Qt::AlignBottom);
+    glucoseChart->addAxis(yAxis, Qt::AlignLeft);
+    glucoseSeries->attachAxis(xAxis);
+    glucoseSeries->attachAxis(yAxis);
 
-    QChartView *chartView = new QChartView(batteryChart);
+    QChartView *chartView = new QChartView(glucoseChart);
     chartView->setRenderHint(QPainter::Antialiasing);
 
     // Set the chart view in the UI
@@ -128,6 +143,11 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
+
+//void MainWindow::createGraph(){
+//    glucoseSeries = new QSplineSeries();
+//    glucoseSeries->append(0, GlucoseVector[0]);
+//}
 
 bool MainWindow::submitPassword()
 {

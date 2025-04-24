@@ -39,7 +39,7 @@ machine::machine(Ui::MainWindow *ui)
     options = new Options(ui);
 
     // hard coding a test profile as the initial active profile, uses values from the List of Features
-    currentProfile = new Profile(0.8, 1, 1, 5, "Dim Javies"); // was 0.8, 2, 3, 4
+    currentProfile = new Profile(0.5, 1, 1, 5, "Bean Senjamin"); // was 0.8, 2, 3, 4
     profiles.push_back(currentProfile);
     setActiveProfile(0);
     updateProfileInfo();
@@ -497,20 +497,7 @@ void machine::stepBloodGlucose()
         return;
     }
     else if(currentGlucose > 13.9){
-
-        double correction = std::abs((currentGlucose - currentProfile->getTargetGlucoseLevel()) / currentProfile->getCorrectionFactor());
-        cout << "Predicted blood glucose is too high, correction being applied: " << correction << endl;
-        currentGlucose = glucoseVector->at(glucoseStepCounter) - correction;
-        cout << "Blood Glucose: " << currentGlucose << " mmol/L" << std::endl;
-
-        ui->logger->append("Warning: High Blood Glucose");
-        addTimetoHistory(std::string("Warning: High Blood Glucose at "));
-        addToHistory(std::string("Please monitor your blood glucose levels."));
-
-        ui->logger->append("[High Glucose Levels]: correction bolus applied: " + QString::number(correction, 'f', 2) + " units");
-        ui->logger->append(QString::number(currentGlucose, 'f', 2) + " mmol/L");
-        addToHistory(QString::number(currentGlucose, 'f', 2) + " mmol/L");
-        ui->glucoseStatNumber->display(currentGlucose);
+        stepErrorGlucose();
     }
     else if (currentGlucose > 3.9 && previousBasalRate != 0 && currentBasalRate == 0)
     {
@@ -551,6 +538,22 @@ void machine::stepBloodGlucose()
 
 }
 
+void machine::stepErrorGlucose(){
+    double correction = std::abs(((currentGlucose - currentProfile->getTargetGlucoseLevel()) / currentProfile->getCorrectionFactor())/2);
+    cout << "Predicted blood glucose is too high, correction being applied: " << correction << endl;
+    currentGlucose = glucoseVector->at(glucoseStepCounter) - correction;
+    cout << "Blood Glucose: " << currentGlucose << " mmol/L" << std::endl;
+
+    ui->logger->append("Warning: High Blood Glucose");
+    addTimetoHistory(std::string("Warning: High Blood Glucose at "));
+    addToHistory(std::string("Please monitor your blood glucose levels."));
+
+    ui->logger->append("[High Glucose Levels]: correction bolus applied: " + QString::number(correction, 'f', 2) + " units");
+    ui->logger->append(QString::number(currentGlucose, 'f', 2) + " mmol/L");
+    addToHistory(QString::number(currentGlucose, 'f', 2) + " mmol/L");
+    ui->glucoseStatNumber->display(currentGlucose);
+}
+
 void machine::stepPredictBasal(){
     // Check 30 mins ahead
     //  First check thirty mins in the future, then adjust the currentBasalrate to match the scenario
@@ -580,7 +583,7 @@ void machine::stepPredictBasal(){
     else if (futureGlucose > currentGlucose && currentBasalRate != 0)
     {
         // increase insulin delivery to account for rise in glucose
-        currentBasalRate *= 1.25; // increase by 25%
+        currentBasalRate *= 1.1; // increase by 10%
         cout << "Predicted glucose is higher than current glucose, increasing basal rate to: " << currentBasalRate << endl;
         addToHistory("Predicted glucose is higher than current glucose, increasing basal rate to: " + QString::number(currentBasalRate, 'f', 2) + " units/hour");
     }
@@ -611,6 +614,12 @@ void machine::stepHistoryBox()
         ui->historyTextBox->append(QString::fromStdString(event));
     }
 }
+
+void machine::stepGraph() {
+    glucoseSeries->append(static_cast<qreal>(glucoseStepCounter), static_cast<qreal>(glucoseVector->at(glucoseStepCounter)));
+
+}
+
 
 void machine::stepBloodGlucoseVector()
 {
