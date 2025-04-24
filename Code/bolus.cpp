@@ -192,7 +192,7 @@ void Bolus::startBolus() // delivers bolus (imm and ex just select a setting)
         _ui->basalStatNumber->display(currentBasalRate);
     }
     else if (bolusOption == 2)
-    { // extended
+    { // extendedSS
 
         bolusPaused = false;
         cout << extendedFullAmt << " units over 3 hours" << endl;
