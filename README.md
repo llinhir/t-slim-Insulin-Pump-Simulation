@@ -3,6 +3,7 @@
 Qt C++ simulation
 Team 22
 Collaborators: Arjun Bedi, Eli Roberts, Katherine Ma, Jessica Hill
+Github: https://github.com/llinhir/t-slim-Insulin-Pump-Simulation
 
 What each member did:
 (we had a lot of overlap on what we worked on since we worked in-person a lot and did alot of pair programming)
