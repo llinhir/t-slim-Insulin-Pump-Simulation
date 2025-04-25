@@ -12,10 +12,15 @@ Eli - coded the profile.cpp and create profile.cpp pages
 Arjun - coded machine.cpp + bolus graph initialzation + simulation.cpp + history page + blood glucose vector/data
 
 Documentation:
-Use Cases: Everyone contribuited to these
+Use Cases: Arjun, Eli, Jessica, Kathy
+Use case diagram: Jessica
 Class diagram: Kathy
 Sequence diagrams: Eli
-Tracability matrix, state machine, use case diagram: Jessica
+State machine: Jessica
+Tracability matrix: Jessica
+
+Note: all our documentation (minus class diagram) is in the document
+---------------------------------------
 
 Header Files:
 defs.h
