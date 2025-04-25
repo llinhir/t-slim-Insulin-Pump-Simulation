@@ -5,11 +5,17 @@ Team 22
 Collaborators: Arjun Bedi, Eli Roberts, Katherine Ma, Jessica Hill
 
 What each member did:
-Katherine - Made the simulation UI, coded the login and options page
-Jessica - Coded the bolus.cpp page + calculations
+(we had a lot of overlap on what we worked on since we worked in-person a lot and did alot of pair programming)
+Katherine - Made the simulation UI, coded the login/options page + insulin.cpp + bolus graph ploting
+Jessica - Coded the bolus.cpp page + calculations + alerts + logger + state diagram
 Eli - coded the profile.cpp and create profile.cpp pages
-Arjun - coded machine.cpp + bolus graph
-(we had a lot of overlap on what we worked on since we worked in-person a lot)
+Arjun - coded machine.cpp + bolus graph initialzation + simulation.cpp + history page + blood glucose vector/data
+
+Documentation:
+Use Cases: Everyone contribuited to these
+Class diagram: Kathy
+Sequence diagrams: Eli
+Tracability matrix, state machine, use case diagram: Jessica
 
 Header Files:
 defs.h
